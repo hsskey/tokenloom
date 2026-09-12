@@ -24,6 +24,33 @@ snapshot
 Instead of making a coding agent explore the entire Figma node tree, tokenloom finds the relevant
 component and variants first and exposes only the context needed for the current task.
 
+## Try it now
+
+You can run tokenloom end to end in about 30 seconds with no Figma access. This repository ships
+sample snapshots under `samples/`, so `npx` can drive the published package against them directly.
+Node.js 22 or later is required.
+
+Clone this repository, then from its root retrieve the design context for the `Button` component in
+the bundled sample:
+
+```sh
+npx @hsskey/tokenloom context Button --from samples/button/snapshot.json --view agent --json
+```
+
+This prints the structure, variants, and token references for that component as JSON.
+
+Build design tokens from the same snapshot into CSS, Swift, and Kotlin:
+
+```sh
+npx @hsskey/tokenloom tokens build --from samples/button/snapshot.json --out /tmp/tk --platform css,swift,kotlin
+```
+
+This writes a DTCG token document, CSS custom properties, and Swift and Kotlin source under
+`/tmp/tk`.
+
+More snapshots are available under `samples/`, including `real-design-system`, `four-modes`, and
+`twenty-variants`. Point `--from` at any of their `snapshot.json` files.
+
 ## Getting started
 
 ### 1. Install tokenloom
@@ -44,10 +71,16 @@ Claude Code can now use tokenloom to retrieve component context from a Figma exp
 
 ### 2. Export a Figma page
 
-Install the **tokenloom exporter** plugin from Figma Community.
+The **tokenloom exporter** plugin is in review for Figma Community and is not publicly installable
+yet. Until it is published, use the bundled snapshots under `samples/` (see [Try it now](#try-it-now))
+to run tokenloom without Figma.
 
-Run it on the page that contains the component you want to implement, download the snapshot, and save
-it somewhere inside your project.
+For the full Figma loop today, build the exporter from source and load it in the Figma desktop app:
+build `packages/adapters/plugin`, then in Figma choose **Plugins > Development > Import plugin from
+manifest** and select that package's `manifest.json`.
+
+Run the plugin on the page that contains the component you want to implement, download the snapshot,
+and save it somewhere inside your project.
 
 For example:
 
