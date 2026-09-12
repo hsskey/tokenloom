@@ -26,11 +26,11 @@ snapshot
 
 ## 바로 실행해보기
 
-Figma 없이 30초 안에 tokenloom을 처음부터 끝까지 실행할 수 있습니다. 이 저장소는 `samples/` 아래에
-sample snapshot을 포함하므로, `npx`로 배포된 패키지를 그 snapshot에 바로 실행하면 됩니다.
-Node.js 22 이상이 필요합니다.
+Figma 없이 tokenloom을 처음부터 끝까지 실행해 볼 수 있습니다. `samples/` 아래에 sample snapshot이
+들어 있어, `npx`로 배포된 패키지를 이 snapshot에 바로 돌려볼 수 있습니다. Node.js 22 이상이
+필요합니다.
 
-이 저장소를 clone한 뒤, 루트에서 bundled sample의 `Button` 컴포넌트 design context를 조회합니다.
+이 저장소를 clone한 뒤 루트에서 bundled sample의 `Button` 컴포넌트 design context를 조회합니다.
 
 ```sh
 npx @hsskey/tokenloom context Button --from samples/button/snapshot.json --view agent --json

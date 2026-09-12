@@ -26,9 +26,9 @@ component and variants first and exposes only the context needed for the current
 
 ## Try it now
 
-You can run tokenloom end to end in about 30 seconds with no Figma access. This repository ships
-sample snapshots under `samples/`, so `npx` can drive the published package against them directly.
-Node.js 22 or later is required.
+You can run tokenloom end to end with no Figma access. This repository ships sample snapshots under
+`samples/`, so `npx` can drive the published package against them directly. Node.js 22 or later is
+required.
 
 Clone this repository, then from its root retrieve the design context for the `Button` component in
 the bundled sample:
