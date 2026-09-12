@@ -1,6 +1,6 @@
 {
   "name": "tokenloom exporter",
-  "id": "tokenloom-exporter",
+  "id": "1680544980365532256",
   "api": "1.0.0",
   "main": "dist/code.js",
   "ui": "src/ui.html",
