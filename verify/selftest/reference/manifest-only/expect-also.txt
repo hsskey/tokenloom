@@ -1,0 +1,3 @@
+# Mutating the manifest also breaks packages/eval/test/trajectory.test.ts: the reference-provenance
+# guard refuses to run the trajectory harness when a reference input no longer matches the manifest.
+tests

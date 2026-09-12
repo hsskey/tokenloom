@@ -1,0 +1,114 @@
+{
+  "annotations": [
+    {
+      "kind": "a11y",
+      "nodeId": "1:10",
+      "text": "라벨을 시각적으로 숨기지 않는다"
+    },
+    {
+      "kind": "behavior",
+      "nodeId": "1:13",
+      "text": "Enter/Space로 활성화"
+    }
+  ],
+  "component": {
+    "base": {
+      "props": {
+        "variant": "primary"
+      },
+      "root": {
+        "children": [
+          {
+            "children": [],
+            "id": "1:10",
+            "layout": {
+              "dir": "none",
+              "sizing": {
+                "h": "hug",
+                "w": "hug"
+              }
+            },
+            "name": "button",
+            "role": "text",
+            "style": {
+              "fg": "color.button.primary.fg"
+            },
+            "text": {
+              "content": "Button",
+              "typo": "typo.label.md"
+            }
+          }
+        ],
+        "id": "1:12",
+        "layout": {
+          "align": "center",
+          "crossAlign": "center",
+          "dir": "row",
+          "gap": "space.sm",
+          "pad": [
+            "space.sm",
+            "space.md",
+            "space.sm",
+            "space.md"
+          ],
+          "sizing": {
+            "h": "hug",
+            "w": "hug"
+          }
+        },
+        "name": "button",
+        "role": "container",
+        "style": {
+          "bg": "color.button.primary.bg"
+        }
+      }
+    },
+    "block": "button",
+    "name": "Button",
+    "props": {
+      "variant": [
+        "primary",
+        "secondary"
+      ]
+    },
+    "variants": [
+      {
+        "delta": [
+          {
+            "path": "/children/0/style/fg",
+            "value": "color.button.secondary.fg"
+          },
+          {
+            "path": "/style/bg",
+            "value": "color.button.secondary.bg"
+          }
+        ],
+        "props": {
+          "variant": "secondary"
+        }
+      }
+    ]
+  },
+  "source": {
+    "contentHash": "sha256:1009d7ce97ab8cddcb8ff5d736dc78b215f14900fe9612a346b059fa310a4cc2",
+    "fetchedAt": "2026-09-05T09:51:24.333Z",
+    "fileKey": "ZtennPjJ74ctxDfWe2wqN9",
+    "fileVersion": "1788601884333",
+    "nodeId": "1:13"
+  },
+  "tokensUsed": [
+    "color.button.primary.bg",
+    "color.button.primary.fg",
+    "color.button.secondary.bg",
+    "color.button.secondary.fg",
+    "space.md",
+    "space.sm",
+    "typo.label.md.fontFamily",
+    "typo.label.md.fontSize",
+    "typo.label.md.fontWeight",
+    "typo.label.md.letterSpacing",
+    "typo.label.md.lineHeight"
+  ],
+  "version": 1,
+  "warnings": []
+}

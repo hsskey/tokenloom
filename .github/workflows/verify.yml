@@ -1,0 +1,71 @@
+# tokenloom CI uses committed test data. Only dependency installation needs network access;
+# verification makes no Figma REST, MCP, or LLM call.
+#
+# Two jobs split the cost of verification.
+# - `fast` runs on every push to `fm/**` and `main`: typechecking, the whole test suite including
+#   the architecture checks, and the gates that do not depend on runner speed.
+# - `full` runs on pushes to `main` and `fm/tokenloom-full-build`, and on manual dispatch. It runs
+#   every gate including the verifier self-test, which takes minutes. Without an environment
+#   baseline for the runner, the benchmark gate judges only environment-independent measurements.
+#
+# Revisit automatic full runs when monthly runner usage crosses the recorded budget threshold.
+name: verify
+
+on:
+  push:
+    branches: ["fm/**", "main"]
+  workflow_dispatch:
+    inputs:
+      selftestParallel:
+        description: Self-test copy-pool width; empty keeps the verifier default of 4.
+        default: ""
+      selftestVitestWorkers:
+        description: Vitest workers for self-test copies only; empty keeps Vitest's default. Host gates are unchanged.
+        default: ""
+
+jobs:
+  fast:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The scoring gate resolves reference-lock provenance from history.
+          fetch-depth: 0
+      - run: corepack enable
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm verify --gate types,patterns,reference,determinism,mutations,rules,scope,encoding
+
+  full:
+    if: >-
+      ${{ github.ref_name == 'fm/tokenloom-full-build'
+      || github.ref_name == 'main'
+      || github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: corepack enable
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - run: pnpm verify
+        env:
+          TOKENLOOM_SELFTEST_PARALLEL: ${{ inputs.selftestParallel }}
+          TOKENLOOM_SELFTEST_VITEST_WORKERS: ${{ inputs.selftestVitestWorkers }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: verify-report
+          path: verify/verify-*.json

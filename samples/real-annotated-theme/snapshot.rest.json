@@ -1,0 +1,235 @@
+{
+  "annotations": [
+    {
+      "nodeId": "1:10",
+      "source": "devmode",
+      "text": "[a11y] 라벨을 시각적으로 숨기지 않는다"
+    },
+    {
+      "nodeId": "1:13",
+      "source": "devmode",
+      "text": "[behavior] Enter/Space로 활성화"
+    }
+  ],
+  "collections": [],
+  "componentSets": [
+    {
+      "components": [
+        {
+          "id": "1:12",
+          "props": {
+            "variant": "primary"
+          },
+          "root": {
+            "bbox": {
+              "h": 36,
+              "w": 78,
+              "x": -109,
+              "y": -110
+            },
+            "bound": {
+              "fill": "VariableID:1:3",
+              "gap": "VariableID:1:8",
+              "padding": [
+                "VariableID:1:8",
+                "VariableID:1:9",
+                "VariableID:1:8",
+                "VariableID:1:9"
+              ]
+            },
+            "children": [
+              {
+                "bbox": {
+                  "h": 20,
+                  "w": 46,
+                  "x": -93,
+                  "y": -102
+                },
+                "bound": {
+                  "fill": "VariableID:1:4",
+                  "textStyle": "1:16"
+                },
+                "children": [],
+                "fills": [
+                  {
+                    "color": {
+                      "a": 1,
+                      "b": 1,
+                      "g": 1,
+                      "r": 1
+                    },
+                    "type": "SOLID"
+                  }
+                ],
+                "id": "1:10",
+                "name": "Button",
+                "text": {
+                  "characters": "Button",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 600,
+                  "lineHeight": 20
+                },
+                "type": "TEXT",
+                "visible": true
+              }
+            ],
+            "fills": [
+              {
+                "color": {
+                  "a": 1,
+                  "b": 0.9215686321258545,
+                  "g": 0.38823530077934265,
+                  "r": 0.14509804546833038
+                },
+                "type": "SOLID"
+              }
+            ],
+            "id": "1:12",
+            "layout": {
+              "counterAlign": "CENTER",
+              "gap": 8,
+              "mode": "HORIZONTAL",
+              "padding": [
+                8,
+                16,
+                8,
+                16
+              ],
+              "primaryAlign": "CENTER",
+              "sizingH": "FIXED",
+              "sizingV": "FIXED"
+            },
+            "name": "variant=primary",
+            "type": "COMPONENT",
+            "visible": true
+          }
+        },
+        {
+          "id": "1:14",
+          "props": {
+            "variant": "secondary"
+          },
+          "root": {
+            "bbox": {
+              "h": 36,
+              "w": 78,
+              "x": -109,
+              "y": -59
+            },
+            "bound": {
+              "fill": "VariableID:1:5",
+              "gap": "VariableID:1:8",
+              "padding": [
+                "VariableID:1:8",
+                "VariableID:1:9",
+                "VariableID:1:8",
+                "VariableID:1:9"
+              ]
+            },
+            "children": [
+              {
+                "bbox": {
+                  "h": 20,
+                  "w": 46,
+                  "x": -93,
+                  "y": -51
+                },
+                "bound": {
+                  "fill": "VariableID:1:6",
+                  "textStyle": "1:16"
+                },
+                "children": [],
+                "fills": [
+                  {
+                    "color": {
+                      "a": 1,
+                      "b": 0.23137255012989044,
+                      "g": 0.16078431904315948,
+                      "r": 0.11764705926179886
+                    },
+                    "type": "SOLID"
+                  }
+                ],
+                "id": "1:15",
+                "name": "Button",
+                "text": {
+                  "characters": "Button",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 600,
+                  "lineHeight": 20
+                },
+                "type": "TEXT",
+                "visible": true
+              }
+            ],
+            "fills": [
+              {
+                "color": {
+                  "a": 1,
+                  "b": 0.9411764740943909,
+                  "g": 0.9098039269447327,
+                  "r": 0.886274516582489
+                },
+                "type": "SOLID"
+              }
+            ],
+            "id": "1:14",
+            "layout": {
+              "counterAlign": "CENTER",
+              "gap": 8,
+              "mode": "HORIZONTAL",
+              "padding": [
+                8,
+                16,
+                8,
+                16
+              ],
+              "primaryAlign": "CENTER",
+              "sizingH": "FIXED",
+              "sizingV": "FIXED"
+            },
+            "name": "variant=secondary",
+            "type": "COMPONENT",
+            "visible": true
+          }
+        }
+      ],
+      "extra": {
+        "parents": [
+          "Page 1"
+        ]
+      },
+      "id": "1:13",
+      "name": "Button",
+      "props": {
+        "variant": [
+          "primary",
+          "secondary"
+        ]
+      }
+    }
+  ],
+  "source": {
+    "annotationsSupport": "read",
+    "apiVersion": "v1",
+    "fetchedAt": "2026-09-05T10:32:13.152Z",
+    "fileKey": "ZtennPjJ74ctxDfWe2wqN9",
+    "fileVersion": "2395642804999070852",
+    "kind": "rest",
+    "plan": "pro"
+  },
+  "textStyles": [
+    {
+      "fontFamily": "Inter",
+      "fontSize": 14,
+      "fontWeight": 600,
+      "id": "1:16",
+      "lineHeight": 20,
+      "name": "label/md"
+    }
+  ],
+  "variables": [],
+  "version": 1
+}

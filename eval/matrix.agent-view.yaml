@@ -1,0 +1,12 @@
+# This matrix pairs each sample's annotated canonical context with its Agent view, so one
+# run isolates the projection: the two inputs differ only by the removed top-level version and source.
+# matrix.mvp.yaml and matrix.full.yaml stay as recorded, because their committed rows correspond to
+# their current contents (docs/reference/spec.md section 9.6). The model and prompt template match
+# matrix.mvp.yaml so rows stay comparable under that same section.
+samples: [button, icon-button, twenty-variants]
+inputs: [snapshot]
+inputVariants: [compact+annotations, agent]
+platforms: [css]
+repeats: 1
+maxInputTokens: 20000
+model: opus

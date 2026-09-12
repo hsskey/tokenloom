@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "lib": ["ES2023", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "baseUrl": ".",
+    "paths": {
+      "@tokenloom/schema": ["./packages/schema/src/index.ts"],
+      "@tokenloom/parser": ["./packages/parser/src/index.ts"],
+      "@tokenloom/tokens": ["./packages/tokens/src/index.ts"],
+      "@tokenloom/cache": ["./packages/cache/src/index.ts"],
+      "@tokenloom/eval": ["./packages/eval/src/index.ts"],
+      "@tokenloom/verify": ["./packages/verify/src/index.ts"],
+      "@tokenloom/rest": ["./packages/adapters/rest/src/index.ts"],
+      "@tokenloom/plugin": ["./packages/adapters/plugin/src/index.ts"],
+      "@tokenloom/mcp": ["./packages/mcp/src/index.ts"]
+    },
+    "moduleDetection": "force",
+    "resolveJsonModule": true,
+    "types": ["node"],
+    "strict": true,
+    "noImplicitOverride": true,
+    "noUncheckedIndexedAccess": true,
+    "noFallthroughCasesInSwitch": true,
+    "exactOptionalPropertyTypes": false,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": [
+    "packages/**/*.ts",
+    "apps/**/*.ts",
+    "bench/**/*.ts",
+    "scripts/**/*.ts",
+    "architecture.test.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/dist"
+  ]
+}

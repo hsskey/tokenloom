@@ -1,0 +1,3008 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "fixture",
+    "plan": "unknown",
+    "fileKey": "FIXTURE",
+    "fileVersion": "fixture-1",
+    "fetchedAt": "2026-01-01T00:00:00Z"
+  },
+  "collections": [
+    {
+      "id": "c1",
+      "name": "Primitives",
+      "modes": [
+        {
+          "id": "m0",
+          "name": "Value"
+        }
+      ],
+      "defaultModeId": "m0"
+    },
+    {
+      "id": "c2",
+      "name": "Semantic",
+      "modes": [
+        {
+          "id": "ml",
+          "name": "Light"
+        },
+        {
+          "id": "md",
+          "name": "Dark"
+        }
+      ],
+      "defaultModeId": "ml"
+    }
+  ],
+  "variables": [
+    {
+      "id": "p1",
+      "name": "color/brand/500",
+      "collectionId": "c1",
+      "type": "COLOR",
+      "valuesByMode": {
+        "m0": {
+          "r": 0.102,
+          "g": 0.451,
+          "b": 0.91,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "p2",
+      "name": "color/brand/700",
+      "collectionId": "c1",
+      "type": "COLOR",
+      "valuesByMode": {
+        "m0": {
+          "r": 0.062,
+          "g": 0.322,
+          "b": 0.667,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "p3",
+      "name": "color/neutral/0",
+      "collectionId": "c1",
+      "type": "COLOR",
+      "valuesByMode": {
+        "m0": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "p4",
+      "name": "color/neutral/100",
+      "collectionId": "c1",
+      "type": "COLOR",
+      "valuesByMode": {
+        "m0": {
+          "r": 0.945,
+          "g": 0.953,
+          "b": 0.957,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "p5",
+      "name": "color/neutral/300",
+      "collectionId": "c1",
+      "type": "COLOR",
+      "valuesByMode": {
+        "m0": {
+          "r": 0.855,
+          "g": 0.867,
+          "b": 0.878,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "p6",
+      "name": "color/neutral/600",
+      "collectionId": "c1",
+      "type": "COLOR",
+      "valuesByMode": {
+        "m0": {
+          "r": 0.376,
+          "g": 0.392,
+          "b": 0.404,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "p7",
+      "name": "color/neutral/900",
+      "collectionId": "c1",
+      "type": "COLOR",
+      "valuesByMode": {
+        "m0": {
+          "r": 0.122,
+          "g": 0.122,
+          "b": 0.122,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "p8",
+      "name": "color/danger/500",
+      "collectionId": "c1",
+      "type": "COLOR",
+      "valuesByMode": {
+        "m0": {
+          "r": 0.839,
+          "g": 0.204,
+          "b": 0.204,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "p9",
+      "name": "space/xs",
+      "collectionId": "c1",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "m0": 4
+      }
+    },
+    {
+      "id": "p10",
+      "name": "space/sm",
+      "collectionId": "c1",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "m0": 8
+      }
+    },
+    {
+      "id": "p11",
+      "name": "space/md",
+      "collectionId": "c1",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "m0": 16
+      }
+    },
+    {
+      "id": "p12",
+      "name": "space/lg",
+      "collectionId": "c1",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "m0": 24
+      }
+    },
+    {
+      "id": "p13",
+      "name": "radius/sm",
+      "collectionId": "c1",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "m0": 4
+      }
+    },
+    {
+      "id": "p14",
+      "name": "radius/md",
+      "collectionId": "c1",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "m0": 8
+      }
+    },
+    {
+      "id": "p15",
+      "name": "size/icon",
+      "collectionId": "c1",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "m0": 24
+      }
+    },
+    {
+      "id": "p16",
+      "name": "border/thin",
+      "collectionId": "c1",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "m0": 1
+      }
+    },
+    {
+      "id": "s1",
+      "name": "color/action/bg",
+      "collectionId": "c2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "ml": {
+          "alias": "p1"
+        },
+        "md": {
+          "alias": "p2"
+        }
+      }
+    },
+    {
+      "id": "s2",
+      "name": "color/action/fg",
+      "collectionId": "c2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "ml": {
+          "alias": "p3"
+        },
+        "md": {
+          "alias": "p3"
+        }
+      }
+    },
+    {
+      "id": "s3",
+      "name": "color/action/border",
+      "collectionId": "c2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "ml": {
+          "alias": "p2"
+        },
+        "md": {
+          "alias": "p1"
+        }
+      }
+    },
+    {
+      "id": "s4",
+      "name": "color/surface/bg",
+      "collectionId": "c2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "ml": {
+          "alias": "p3"
+        },
+        "md": {
+          "alias": "p7"
+        }
+      }
+    },
+    {
+      "id": "s5",
+      "name": "color/surface/fg",
+      "collectionId": "c2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "ml": {
+          "alias": "p7"
+        },
+        "md": {
+          "alias": "p3"
+        }
+      }
+    },
+    {
+      "id": "s6",
+      "name": "color/surface/muted",
+      "collectionId": "c2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "ml": {
+          "alias": "p6"
+        },
+        "md": {
+          "alias": "p5"
+        }
+      }
+    },
+    {
+      "id": "p17",
+      "name": "border/width/sm",
+      "collectionId": "c1",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "m0": 1
+      }
+    }
+  ],
+  "textStyles": [
+    {
+      "id": "t1",
+      "name": "label/md",
+      "fontFamily": "Inter",
+      "fontSize": 14,
+      "fontWeight": 600,
+      "lineHeight": 20
+    },
+    {
+      "id": "t2",
+      "name": "label/sm",
+      "fontFamily": "Inter",
+      "fontSize": 12,
+      "fontWeight": 600,
+      "lineHeight": 16
+    },
+    {
+      "id": "t3",
+      "name": "body/md",
+      "fontFamily": "Inter",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "lineHeight": 20
+    },
+    {
+      "id": "t4",
+      "name": "title/lg",
+      "fontFamily": "Inter",
+      "fontSize": 20,
+      "fontWeight": 700,
+      "lineHeight": 28
+    }
+  ],
+  "componentSets": [
+    {
+      "id": "90:1",
+      "name": "AbsoluteCard",
+      "props": {
+        "elevation": [
+          "flat",
+          "raised"
+        ],
+        "tone": [
+          "neutral",
+          "brand",
+          "danger"
+        ]
+      },
+      "components": [
+        {
+          "id": "100:1",
+          "props": {
+            "elevation": "flat",
+            "tone": "neutral"
+          },
+          "root": {
+            "id": "100:1",
+            "name": "Absolute Card",
+            "type": "COMPONENT",
+            "visible": true,
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "w": 320,
+              "h": 220
+            },
+            "bound": {
+              "fill": "s4",
+              "radius": "p14"
+            },
+            "children": [
+              {
+                "id": "100:2",
+                "name": "Media",
+                "type": "RECTANGLE",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 320,
+                  "h": 120
+                },
+                "bound": {},
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "IMAGE"
+                  }
+                ]
+              },
+              {
+                "id": "100:3",
+                "name": "Badge Icon",
+                "type": "INSTANCE",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 20,
+                  "h": 20
+                },
+                "bound": {},
+                "children": [
+                  {
+                    "id": "100:4",
+                    "name": "Badge Icon Canvas",
+                    "type": "FRAME",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 20,
+                      "h": 20
+                    },
+                    "bound": {},
+                    "children": [
+                      {
+                        "id": "100:5",
+                        "name": "Badge Icon Path A",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 20,
+                          "h": 20
+                        },
+                        "bound": {
+                          "fill": "s1"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": "100:6",
+                        "name": "Badge Icon Path B",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 16,
+                          "h": 16
+                        },
+                        "bound": {
+                          "fill": "s1"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "layout": {
+                      "mode": "NONE",
+                      "sizingH": "FIXED",
+                      "sizingV": "FIXED"
+                    }
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "mainComponentId": "80:3"
+              },
+              {
+                "id": "100:7",
+                "name": "Focus Ring",
+                "type": "FRAME",
+                "visible": false,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 120,
+                  "h": 44
+                },
+                "bound": {
+                  "stroke": "s3",
+                  "radius": "p14"
+                },
+                "children": [
+                  {
+                    "id": "100:8",
+                    "name": "Ring Outline",
+                    "type": "RECTANGLE",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 120,
+                      "h": 44
+                    },
+                    "bound": {
+                      "fill": "s3"
+                    },
+                    "children": [],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "fills": [
+                      {
+                        "type": "SOLID",
+                        "color": {
+                          "r": 0.062,
+                          "g": 0.322,
+                          "b": 0.667,
+                          "a": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "layout": {
+                  "mode": "NONE",
+                  "sizingH": "FIXED",
+                  "sizingV": "FIXED"
+                },
+                "strokes": [
+                  {
+                    "color": {
+                      "r": 0.062,
+                      "g": 0.322,
+                      "b": 0.667,
+                      "a": 1
+                    },
+                    "weight": 2
+                  }
+                ],
+                "radius": 8
+              },
+              {
+                "id": "100:9",
+                "name": "Title",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 200,
+                  "h": 28
+                },
+                "bound": {
+                  "fill": "s5",
+                  "textStyle": "t4"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.122,
+                      "g": 0.122,
+                      "b": 0.122,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "Card title",
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": 700,
+                  "lineHeight": 28
+                }
+              },
+              {
+                "id": "100:10",
+                "name": "Description",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 288,
+                  "h": 20
+                },
+                "bound": {
+                  "fill": "s6",
+                  "textStyle": "t3"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.376,
+                      "g": 0.392,
+                      "b": 0.404,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "Supporting text for the card.",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 400,
+                  "lineHeight": 20
+                }
+              }
+            ],
+            "extra": {
+              "blendMode": "PASS_THROUGH",
+              "clipsContent": false,
+              "strokeAlign": "INSIDE",
+              "strokeWeight": 1,
+              "constraints": {
+                "vertical": "TOP",
+                "horizontal": "LEFT"
+              },
+              "effects": [],
+              "exportSettings": [],
+              "layoutAlign": "INHERIT",
+              "layoutGrow": 0,
+              "preserveRatio": false
+            },
+            "layout": {
+              "mode": "NONE",
+              "sizingH": "FIXED",
+              "sizingV": "FIXED"
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                }
+              }
+            ],
+            "radius": 8
+          }
+        },
+        {
+          "id": "100:11",
+          "props": {
+            "elevation": "flat",
+            "tone": "brand"
+          },
+          "root": {
+            "id": "100:11",
+            "name": "Absolute Card",
+            "type": "COMPONENT",
+            "visible": true,
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "w": 320,
+              "h": 220
+            },
+            "bound": {
+              "fill": "s4",
+              "radius": "p14"
+            },
+            "children": [
+              {
+                "id": "100:12",
+                "name": "Media",
+                "type": "RECTANGLE",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 320,
+                  "h": 120
+                },
+                "bound": {},
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "IMAGE"
+                  }
+                ]
+              },
+              {
+                "id": "100:13",
+                "name": "Badge Icon",
+                "type": "INSTANCE",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 20,
+                  "h": 20
+                },
+                "bound": {},
+                "children": [
+                  {
+                    "id": "100:14",
+                    "name": "Badge Icon Canvas",
+                    "type": "FRAME",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 20,
+                      "h": 20
+                    },
+                    "bound": {},
+                    "children": [
+                      {
+                        "id": "100:15",
+                        "name": "Badge Icon Path A",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 20,
+                          "h": 20
+                        },
+                        "bound": {
+                          "fill": "s1"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": "100:16",
+                        "name": "Badge Icon Path B",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 16,
+                          "h": 16
+                        },
+                        "bound": {
+                          "fill": "s1"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "layout": {
+                      "mode": "NONE",
+                      "sizingH": "FIXED",
+                      "sizingV": "FIXED"
+                    }
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "mainComponentId": "80:3"
+              },
+              {
+                "id": "100:17",
+                "name": "Focus Ring",
+                "type": "FRAME",
+                "visible": false,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 120,
+                  "h": 44
+                },
+                "bound": {
+                  "stroke": "s3",
+                  "radius": "p14"
+                },
+                "children": [
+                  {
+                    "id": "100:18",
+                    "name": "Ring Outline",
+                    "type": "RECTANGLE",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 120,
+                      "h": 44
+                    },
+                    "bound": {
+                      "fill": "s3"
+                    },
+                    "children": [],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "fills": [
+                      {
+                        "type": "SOLID",
+                        "color": {
+                          "r": 0.062,
+                          "g": 0.322,
+                          "b": 0.667,
+                          "a": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "layout": {
+                  "mode": "NONE",
+                  "sizingH": "FIXED",
+                  "sizingV": "FIXED"
+                },
+                "strokes": [
+                  {
+                    "color": {
+                      "r": 0.062,
+                      "g": 0.322,
+                      "b": 0.667,
+                      "a": 1
+                    },
+                    "weight": 2
+                  }
+                ],
+                "radius": 8
+              },
+              {
+                "id": "100:19",
+                "name": "Title",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 200,
+                  "h": 28
+                },
+                "bound": {
+                  "fill": "s1",
+                  "textStyle": "t4"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.122,
+                      "g": 0.122,
+                      "b": 0.122,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "Card title",
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": 700,
+                  "lineHeight": 28
+                }
+              },
+              {
+                "id": "100:20",
+                "name": "Description",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 288,
+                  "h": 20
+                },
+                "bound": {
+                  "fill": "s6",
+                  "textStyle": "t3"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.376,
+                      "g": 0.392,
+                      "b": 0.404,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "Supporting text for the card.",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 400,
+                  "lineHeight": 20
+                }
+              }
+            ],
+            "extra": {
+              "blendMode": "PASS_THROUGH",
+              "clipsContent": false,
+              "strokeAlign": "INSIDE",
+              "strokeWeight": 1,
+              "constraints": {
+                "vertical": "TOP",
+                "horizontal": "LEFT"
+              },
+              "effects": [],
+              "exportSettings": [],
+              "layoutAlign": "INHERIT",
+              "layoutGrow": 0,
+              "preserveRatio": false
+            },
+            "layout": {
+              "mode": "NONE",
+              "sizingH": "FIXED",
+              "sizingV": "FIXED"
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                }
+              }
+            ],
+            "radius": 8
+          }
+        },
+        {
+          "id": "100:21",
+          "props": {
+            "elevation": "flat",
+            "tone": "danger"
+          },
+          "root": {
+            "id": "100:21",
+            "name": "Absolute Card",
+            "type": "COMPONENT",
+            "visible": true,
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "w": 320,
+              "h": 220
+            },
+            "bound": {
+              "fill": "s4",
+              "radius": "p14"
+            },
+            "children": [
+              {
+                "id": "100:22",
+                "name": "Media",
+                "type": "RECTANGLE",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 320,
+                  "h": 120
+                },
+                "bound": {},
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "IMAGE"
+                  }
+                ]
+              },
+              {
+                "id": "100:23",
+                "name": "Badge Icon",
+                "type": "INSTANCE",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 20,
+                  "h": 20
+                },
+                "bound": {},
+                "children": [
+                  {
+                    "id": "100:24",
+                    "name": "Badge Icon Canvas",
+                    "type": "FRAME",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 20,
+                      "h": 20
+                    },
+                    "bound": {},
+                    "children": [
+                      {
+                        "id": "100:25",
+                        "name": "Badge Icon Path A",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 20,
+                          "h": 20
+                        },
+                        "bound": {
+                          "fill": "s1"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": "100:26",
+                        "name": "Badge Icon Path B",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 16,
+                          "h": 16
+                        },
+                        "bound": {
+                          "fill": "s1"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "layout": {
+                      "mode": "NONE",
+                      "sizingH": "FIXED",
+                      "sizingV": "FIXED"
+                    }
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "mainComponentId": "80:3"
+              },
+              {
+                "id": "100:27",
+                "name": "Focus Ring",
+                "type": "FRAME",
+                "visible": false,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 120,
+                  "h": 44
+                },
+                "bound": {
+                  "stroke": "s3",
+                  "radius": "p14"
+                },
+                "children": [
+                  {
+                    "id": "100:28",
+                    "name": "Ring Outline",
+                    "type": "RECTANGLE",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 120,
+                      "h": 44
+                    },
+                    "bound": {
+                      "fill": "s3"
+                    },
+                    "children": [],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "fills": [
+                      {
+                        "type": "SOLID",
+                        "color": {
+                          "r": 0.062,
+                          "g": 0.322,
+                          "b": 0.667,
+                          "a": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "layout": {
+                  "mode": "NONE",
+                  "sizingH": "FIXED",
+                  "sizingV": "FIXED"
+                },
+                "strokes": [
+                  {
+                    "color": {
+                      "r": 0.062,
+                      "g": 0.322,
+                      "b": 0.667,
+                      "a": 1
+                    },
+                    "weight": 2
+                  }
+                ],
+                "radius": 8
+              },
+              {
+                "id": "100:29",
+                "name": "Title",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 200,
+                  "h": 28
+                },
+                "bound": {
+                  "fill": "p8",
+                  "textStyle": "t4"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.122,
+                      "g": 0.122,
+                      "b": 0.122,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "Card title",
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": 700,
+                  "lineHeight": 28
+                }
+              },
+              {
+                "id": "100:30",
+                "name": "Description",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 288,
+                  "h": 20
+                },
+                "bound": {
+                  "fill": "s6",
+                  "textStyle": "t3"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.376,
+                      "g": 0.392,
+                      "b": 0.404,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "Supporting text for the card.",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 400,
+                  "lineHeight": 20
+                }
+              }
+            ],
+            "extra": {
+              "blendMode": "PASS_THROUGH",
+              "clipsContent": false,
+              "strokeAlign": "INSIDE",
+              "strokeWeight": 1,
+              "constraints": {
+                "vertical": "TOP",
+                "horizontal": "LEFT"
+              },
+              "effects": [],
+              "exportSettings": [],
+              "layoutAlign": "INHERIT",
+              "layoutGrow": 0,
+              "preserveRatio": false
+            },
+            "layout": {
+              "mode": "NONE",
+              "sizingH": "FIXED",
+              "sizingV": "FIXED"
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                }
+              }
+            ],
+            "radius": 8
+          }
+        },
+        {
+          "id": "100:31",
+          "props": {
+            "elevation": "raised",
+            "tone": "neutral"
+          },
+          "root": {
+            "id": "100:31",
+            "name": "Absolute Card",
+            "type": "COMPONENT",
+            "visible": true,
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "w": 320,
+              "h": 220
+            },
+            "bound": {
+              "fill": "s4",
+              "stroke": "s3",
+              "strokeWeight": "p17",
+              "radius": "p14"
+            },
+            "children": [
+              {
+                "id": "100:32",
+                "name": "Media",
+                "type": "RECTANGLE",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 320,
+                  "h": 120
+                },
+                "bound": {},
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "IMAGE"
+                  }
+                ]
+              },
+              {
+                "id": "100:33",
+                "name": "Badge Icon",
+                "type": "INSTANCE",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 20,
+                  "h": 20
+                },
+                "bound": {},
+                "children": [
+                  {
+                    "id": "100:34",
+                    "name": "Badge Icon Canvas",
+                    "type": "FRAME",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 20,
+                      "h": 20
+                    },
+                    "bound": {},
+                    "children": [
+                      {
+                        "id": "100:35",
+                        "name": "Badge Icon Path A",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 20,
+                          "h": 20
+                        },
+                        "bound": {
+                          "fill": "s1"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": "100:36",
+                        "name": "Badge Icon Path B",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 16,
+                          "h": 16
+                        },
+                        "bound": {
+                          "fill": "s1"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "layout": {
+                      "mode": "NONE",
+                      "sizingH": "FIXED",
+                      "sizingV": "FIXED"
+                    }
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "mainComponentId": "80:3"
+              },
+              {
+                "id": "100:37",
+                "name": "Focus Ring",
+                "type": "FRAME",
+                "visible": false,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 120,
+                  "h": 44
+                },
+                "bound": {
+                  "stroke": "s3",
+                  "radius": "p14"
+                },
+                "children": [
+                  {
+                    "id": "100:38",
+                    "name": "Ring Outline",
+                    "type": "RECTANGLE",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 120,
+                      "h": 44
+                    },
+                    "bound": {
+                      "fill": "s3"
+                    },
+                    "children": [],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "fills": [
+                      {
+                        "type": "SOLID",
+                        "color": {
+                          "r": 0.062,
+                          "g": 0.322,
+                          "b": 0.667,
+                          "a": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "layout": {
+                  "mode": "NONE",
+                  "sizingH": "FIXED",
+                  "sizingV": "FIXED"
+                },
+                "strokes": [
+                  {
+                    "color": {
+                      "r": 0.062,
+                      "g": 0.322,
+                      "b": 0.667,
+                      "a": 1
+                    },
+                    "weight": 2
+                  }
+                ],
+                "radius": 8
+              },
+              {
+                "id": "100:39",
+                "name": "Title",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 200,
+                  "h": 28
+                },
+                "bound": {
+                  "fill": "s5",
+                  "textStyle": "t4"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.122,
+                      "g": 0.122,
+                      "b": 0.122,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "Card title",
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": 700,
+                  "lineHeight": 28
+                }
+              },
+              {
+                "id": "100:40",
+                "name": "Description",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 288,
+                  "h": 20
+                },
+                "bound": {
+                  "fill": "s6",
+                  "textStyle": "t3"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.376,
+                      "g": 0.392,
+                      "b": 0.404,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "Supporting text for the card.",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 400,
+                  "lineHeight": 20
+                }
+              }
+            ],
+            "extra": {
+              "blendMode": "PASS_THROUGH",
+              "clipsContent": false,
+              "strokeAlign": "INSIDE",
+              "strokeWeight": 1,
+              "constraints": {
+                "vertical": "TOP",
+                "horizontal": "LEFT"
+              },
+              "effects": [],
+              "exportSettings": [],
+              "layoutAlign": "INHERIT",
+              "layoutGrow": 0,
+              "preserveRatio": false
+            },
+            "layout": {
+              "mode": "NONE",
+              "sizingH": "FIXED",
+              "sizingV": "FIXED"
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                }
+              }
+            ],
+            "strokes": [
+              {
+                "color": {
+                  "r": 0.062,
+                  "g": 0.322,
+                  "b": 0.667,
+                  "a": 1
+                },
+                "weight": 1
+              }
+            ],
+            "radius": 8
+          }
+        },
+        {
+          "id": "100:41",
+          "props": {
+            "elevation": "raised",
+            "tone": "brand"
+          },
+          "root": {
+            "id": "100:41",
+            "name": "Absolute Card",
+            "type": "COMPONENT",
+            "visible": true,
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "w": 320,
+              "h": 220
+            },
+            "bound": {
+              "fill": "s4",
+              "stroke": "s3",
+              "strokeWeight": "p17",
+              "radius": "p14"
+            },
+            "children": [
+              {
+                "id": "100:42",
+                "name": "Media",
+                "type": "RECTANGLE",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 320,
+                  "h": 120
+                },
+                "bound": {},
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "IMAGE"
+                  }
+                ]
+              },
+              {
+                "id": "100:43",
+                "name": "Badge Icon",
+                "type": "INSTANCE",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 20,
+                  "h": 20
+                },
+                "bound": {},
+                "children": [
+                  {
+                    "id": "100:44",
+                    "name": "Badge Icon Canvas",
+                    "type": "FRAME",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 20,
+                      "h": 20
+                    },
+                    "bound": {},
+                    "children": [
+                      {
+                        "id": "100:45",
+                        "name": "Badge Icon Path A",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 20,
+                          "h": 20
+                        },
+                        "bound": {
+                          "fill": "s1"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": "100:46",
+                        "name": "Badge Icon Path B",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 16,
+                          "h": 16
+                        },
+                        "bound": {
+                          "fill": "s1"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "layout": {
+                      "mode": "NONE",
+                      "sizingH": "FIXED",
+                      "sizingV": "FIXED"
+                    }
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "mainComponentId": "80:3"
+              },
+              {
+                "id": "100:47",
+                "name": "Focus Ring",
+                "type": "FRAME",
+                "visible": false,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 120,
+                  "h": 44
+                },
+                "bound": {
+                  "stroke": "s3",
+                  "radius": "p14"
+                },
+                "children": [
+                  {
+                    "id": "100:48",
+                    "name": "Ring Outline",
+                    "type": "RECTANGLE",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 120,
+                      "h": 44
+                    },
+                    "bound": {
+                      "fill": "s3"
+                    },
+                    "children": [],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "fills": [
+                      {
+                        "type": "SOLID",
+                        "color": {
+                          "r": 0.062,
+                          "g": 0.322,
+                          "b": 0.667,
+                          "a": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "layout": {
+                  "mode": "NONE",
+                  "sizingH": "FIXED",
+                  "sizingV": "FIXED"
+                },
+                "strokes": [
+                  {
+                    "color": {
+                      "r": 0.062,
+                      "g": 0.322,
+                      "b": 0.667,
+                      "a": 1
+                    },
+                    "weight": 2
+                  }
+                ],
+                "radius": 8
+              },
+              {
+                "id": "100:49",
+                "name": "Title",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 200,
+                  "h": 28
+                },
+                "bound": {
+                  "fill": "s1",
+                  "textStyle": "t4"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.122,
+                      "g": 0.122,
+                      "b": 0.122,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "Card title",
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": 700,
+                  "lineHeight": 28
+                }
+              },
+              {
+                "id": "100:50",
+                "name": "Description",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 288,
+                  "h": 20
+                },
+                "bound": {
+                  "fill": "s6",
+                  "textStyle": "t3"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.376,
+                      "g": 0.392,
+                      "b": 0.404,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "Supporting text for the card.",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 400,
+                  "lineHeight": 20
+                }
+              }
+            ],
+            "extra": {
+              "blendMode": "PASS_THROUGH",
+              "clipsContent": false,
+              "strokeAlign": "INSIDE",
+              "strokeWeight": 1,
+              "constraints": {
+                "vertical": "TOP",
+                "horizontal": "LEFT"
+              },
+              "effects": [],
+              "exportSettings": [],
+              "layoutAlign": "INHERIT",
+              "layoutGrow": 0,
+              "preserveRatio": false
+            },
+            "layout": {
+              "mode": "NONE",
+              "sizingH": "FIXED",
+              "sizingV": "FIXED"
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                }
+              }
+            ],
+            "strokes": [
+              {
+                "color": {
+                  "r": 0.062,
+                  "g": 0.322,
+                  "b": 0.667,
+                  "a": 1
+                },
+                "weight": 1
+              }
+            ],
+            "radius": 8
+          }
+        },
+        {
+          "id": "100:51",
+          "props": {
+            "elevation": "raised",
+            "tone": "danger"
+          },
+          "root": {
+            "id": "100:51",
+            "name": "Absolute Card",
+            "type": "COMPONENT",
+            "visible": true,
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "w": 320,
+              "h": 220
+            },
+            "bound": {
+              "fill": "s4",
+              "stroke": "s3",
+              "strokeWeight": "p17",
+              "radius": "p14"
+            },
+            "children": [
+              {
+                "id": "100:52",
+                "name": "Media",
+                "type": "RECTANGLE",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 320,
+                  "h": 120
+                },
+                "bound": {},
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "IMAGE"
+                  }
+                ]
+              },
+              {
+                "id": "100:53",
+                "name": "Badge Icon",
+                "type": "INSTANCE",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 20,
+                  "h": 20
+                },
+                "bound": {},
+                "children": [
+                  {
+                    "id": "100:54",
+                    "name": "Badge Icon Canvas",
+                    "type": "FRAME",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 20,
+                      "h": 20
+                    },
+                    "bound": {},
+                    "children": [
+                      {
+                        "id": "100:55",
+                        "name": "Badge Icon Path A",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 20,
+                          "h": 20
+                        },
+                        "bound": {
+                          "fill": "s1"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": "100:56",
+                        "name": "Badge Icon Path B",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 16,
+                          "h": 16
+                        },
+                        "bound": {
+                          "fill": "s1"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "layout": {
+                      "mode": "NONE",
+                      "sizingH": "FIXED",
+                      "sizingV": "FIXED"
+                    }
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "mainComponentId": "80:3"
+              },
+              {
+                "id": "100:57",
+                "name": "Focus Ring",
+                "type": "FRAME",
+                "visible": false,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 120,
+                  "h": 44
+                },
+                "bound": {
+                  "stroke": "s3",
+                  "radius": "p14"
+                },
+                "children": [
+                  {
+                    "id": "100:58",
+                    "name": "Ring Outline",
+                    "type": "RECTANGLE",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 120,
+                      "h": 44
+                    },
+                    "bound": {
+                      "fill": "s3"
+                    },
+                    "children": [],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "fills": [
+                      {
+                        "type": "SOLID",
+                        "color": {
+                          "r": 0.062,
+                          "g": 0.322,
+                          "b": 0.667,
+                          "a": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "layout": {
+                  "mode": "NONE",
+                  "sizingH": "FIXED",
+                  "sizingV": "FIXED"
+                },
+                "strokes": [
+                  {
+                    "color": {
+                      "r": 0.062,
+                      "g": 0.322,
+                      "b": 0.667,
+                      "a": 1
+                    },
+                    "weight": 2
+                  }
+                ],
+                "radius": 8
+              },
+              {
+                "id": "100:59",
+                "name": "Title",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 200,
+                  "h": 28
+                },
+                "bound": {
+                  "fill": "p8",
+                  "textStyle": "t4"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.122,
+                      "g": 0.122,
+                      "b": 0.122,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "Card title",
+                  "fontFamily": "Inter",
+                  "fontSize": 20,
+                  "fontWeight": 700,
+                  "lineHeight": 28
+                }
+              },
+              {
+                "id": "100:60",
+                "name": "Description",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 288,
+                  "h": 20
+                },
+                "bound": {
+                  "fill": "s6",
+                  "textStyle": "t3"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.376,
+                      "g": 0.392,
+                      "b": 0.404,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "Supporting text for the card.",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 400,
+                  "lineHeight": 20
+                }
+              }
+            ],
+            "extra": {
+              "blendMode": "PASS_THROUGH",
+              "clipsContent": false,
+              "strokeAlign": "INSIDE",
+              "strokeWeight": 1,
+              "constraints": {
+                "vertical": "TOP",
+                "horizontal": "LEFT"
+              },
+              "effects": [],
+              "exportSettings": [],
+              "layoutAlign": "INHERIT",
+              "layoutGrow": 0,
+              "preserveRatio": false
+            },
+            "layout": {
+              "mode": "NONE",
+              "sizingH": "FIXED",
+              "sizingV": "FIXED"
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                }
+              }
+            ],
+            "strokes": [
+              {
+                "color": {
+                  "r": 0.062,
+                  "g": 0.322,
+                  "b": 0.667,
+                  "a": 1
+                },
+                "weight": 1
+              }
+            ],
+            "radius": 8
+          }
+        }
+      ]
+    }
+  ],
+  "annotations": []
+}

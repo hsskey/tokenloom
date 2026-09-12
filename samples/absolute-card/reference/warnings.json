@@ -1,0 +1,32 @@
+[
+  {
+    "code": "ABSOLUTE_POSITION",
+    "detail": "4 children without auto layout",
+    "nodeId": "100:1"
+  },
+  {
+    "code": "ABSOLUTE_POSITION",
+    "detail": "4 children without auto layout",
+    "nodeId": "100:11"
+  },
+  {
+    "code": "ABSOLUTE_POSITION",
+    "detail": "4 children without auto layout",
+    "nodeId": "100:21"
+  },
+  {
+    "code": "ABSOLUTE_POSITION",
+    "detail": "4 children without auto layout",
+    "nodeId": "100:31"
+  },
+  {
+    "code": "ABSOLUTE_POSITION",
+    "detail": "4 children without auto layout",
+    "nodeId": "100:41"
+  },
+  {
+    "code": "ABSOLUTE_POSITION",
+    "detail": "4 children without auto layout",
+    "nodeId": "100:51"
+  }
+]

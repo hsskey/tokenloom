@@ -1,0 +1,2 @@
+# Mutating the canonical context also breaks the A01 rule test, which holds the same invariant.
+tests

@@ -1,0 +1,22 @@
+{
+  "source": {
+    "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+    "checkedAt": "2026-09-06"
+  },
+  "models": {
+    "opus": {
+      "resolvedModel": "claude-opus-5",
+      "inputPerMTok": 5,
+      "cacheWrite1hPerMTok": 10,
+      "cacheReadPerMTok": 0.5,
+      "outputPerMTok": 25
+    },
+    "sonnet": {
+      "resolvedModel": "claude-sonnet-5",
+      "inputPerMTok": 2,
+      "cacheWrite1hPerMTok": 4,
+      "cacheReadPerMTok": 0.2,
+      "outputPerMTok": 10
+    }
+  }
+}

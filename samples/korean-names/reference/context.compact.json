@@ -1,0 +1,238 @@
+{
+  "annotations": [
+    {
+      "kind": "a11y",
+      "nodeId": "90:1",
+      "text": "레이어 이름이 한글이어도 토큰 경로는 ASCII를 유지한다."
+    }
+  ],
+  "component": {
+    "base": {
+      "props": {
+        "size": "sm",
+        "state": "default"
+      },
+      "root": {
+        "children": [
+          {
+            "children": [],
+            "id": "100:2",
+            "instanceOf": "80-5",
+            "layout": {
+              "dir": "none",
+              "sizing": {
+                "h": "hug",
+                "w": "hug"
+              }
+            },
+            "name": "앞-아이콘",
+            "role": "instance",
+            "style": {}
+          },
+          {
+            "children": [],
+            "id": "100:8",
+            "layout": {
+              "dir": "none",
+              "sizing": {
+                "h": "hug",
+                "w": "hug"
+              }
+            },
+            "name": "라벨",
+            "role": "text",
+            "style": {
+              "fg": "color.action.fg"
+            },
+            "text": {
+              "content": "확인",
+              "typo": "typo.label.md"
+            }
+          },
+          {
+            "children": [],
+            "id": "100:9",
+            "layout": {
+              "dir": "none",
+              "sizing": {
+                "h": "hug",
+                "w": "hug"
+              }
+            },
+            "name": "보조-라벨",
+            "role": "text",
+            "style": {
+              "fg": "color.surface.muted"
+            },
+            "text": {
+              "content": "선택 사항",
+              "typo": "typo.label.sm"
+            }
+          }
+        ],
+        "id": "100:1",
+        "layout": {
+          "align": "center",
+          "crossAlign": "center",
+          "dir": "row",
+          "gap": "space.xs",
+          "pad": [
+            "space.sm",
+            "space.md",
+            "space.sm",
+            "space.md"
+          ],
+          "sizing": {
+            "h": "hug",
+            "w": "hug"
+          }
+        },
+        "name": "확인-버튼",
+        "role": "container",
+        "style": {
+          "bg": "color.action.bg",
+          "radius": "radius.md"
+        }
+      }
+    },
+    "block": "확인-버튼",
+    "name": "확인 버튼",
+    "props": {
+      "size": [
+        "sm",
+        "md",
+        "lg",
+        "xl"
+      ],
+      "state": [
+        "default",
+        "disabled"
+      ]
+    },
+    "variants": [
+      {
+        "delta": [
+          {
+            "path": "/style/bg",
+            "value": "color.surface.muted"
+          }
+        ],
+        "props": {
+          "size": "sm",
+          "state": "disabled"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.sm"
+          }
+        ],
+        "props": {
+          "size": "md",
+          "state": "default"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.sm"
+          },
+          {
+            "path": "/style/bg",
+            "value": "color.surface.muted"
+          }
+        ],
+        "props": {
+          "size": "md",
+          "state": "disabled"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.md"
+          }
+        ],
+        "props": {
+          "size": "lg",
+          "state": "default"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.md"
+          },
+          {
+            "path": "/style/bg",
+            "value": "color.surface.muted"
+          }
+        ],
+        "props": {
+          "size": "lg",
+          "state": "disabled"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.lg"
+          }
+        ],
+        "props": {
+          "size": "xl",
+          "state": "default"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.lg"
+          },
+          {
+            "path": "/style/bg",
+            "value": "color.surface.muted"
+          }
+        ],
+        "props": {
+          "size": "xl",
+          "state": "disabled"
+        }
+      }
+    ]
+  },
+  "source": {
+    "contentHash": "sha256:6577aa92857223f8b9b01cae363246383886348b9218cc2087b566a428d3867c",
+    "fetchedAt": "2026-01-01T00:00:00Z",
+    "fileKey": "FIXTURE",
+    "fileVersion": "fixture-1",
+    "nodeId": "90:1"
+  },
+  "tokensUsed": [
+    "color.action.bg",
+    "color.action.fg",
+    "color.surface.muted",
+    "radius.md",
+    "space.lg",
+    "space.md",
+    "space.sm",
+    "space.xs",
+    "typo.label.md.fontFamily",
+    "typo.label.md.fontSize",
+    "typo.label.md.fontWeight",
+    "typo.label.md.lineHeight",
+    "typo.label.sm.fontFamily",
+    "typo.label.sm.fontSize",
+    "typo.label.sm.fontWeight",
+    "typo.label.sm.lineHeight"
+  ],
+  "version": 1,
+  "warnings": []
+}

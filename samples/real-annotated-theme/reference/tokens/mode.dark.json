@@ -1,0 +1,26 @@
+{
+  "color": {
+    "button": {
+      "primary": {
+        "bg": {
+          "$type": "color",
+          "$value": "#60a5fa"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "#0f172a"
+        }
+      },
+      "secondary": {
+        "bg": {
+          "$type": "color",
+          "$value": "#334155"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "#f8fafc"
+        }
+      }
+    }
+  }
+}

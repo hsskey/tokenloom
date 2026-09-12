@@ -1,0 +1,223 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "fixture",
+    "plan": "unknown",
+    "fileKey": "FIXTURE",
+    "fileVersion": "fixture-1",
+    "fetchedAt": "2026-01-01T00:00:00Z"
+  },
+  "collections": [
+    {
+      "id": "c1",
+      "name": "Primitives",
+      "modes": [
+        {
+          "id": "m0",
+          "name": "Value"
+        }
+      ],
+      "defaultModeId": "m0"
+    },
+    {
+      "id": "c2",
+      "name": "Semantic",
+      "modes": [
+        {
+          "id": "ml",
+          "name": "Light"
+        },
+        {
+          "id": "md",
+          "name": "Dark"
+        }
+      ],
+      "defaultModeId": "ml"
+    }
+  ],
+  "variables": [
+    {
+      "id": "v1",
+      "name": "color/brand/500",
+      "collectionId": "c1",
+      "type": "COLOR",
+      "valuesByMode": {
+        "m0": {
+          "r": 0.102,
+          "g": 0.451,
+          "b": 0.91,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "v2",
+      "name": "color/neutral/0",
+      "collectionId": "c1",
+      "type": "COLOR",
+      "valuesByMode": {
+        "m0": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "v3",
+      "name": "color/neutral/100",
+      "collectionId": "c1",
+      "type": "COLOR",
+      "valuesByMode": {
+        "m0": {
+          "r": 0.945,
+          "g": 0.953,
+          "b": 0.957,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "v4",
+      "name": "color/neutral/900",
+      "collectionId": "c1",
+      "type": "COLOR",
+      "valuesByMode": {
+        "m0": {
+          "r": 0.122,
+          "g": 0.122,
+          "b": 0.122,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "v5",
+      "name": "space/sm",
+      "collectionId": "c1",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "m0": 8
+      }
+    },
+    {
+      "id": "v6",
+      "name": "space/md",
+      "collectionId": "c1",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "m0": 16
+      }
+    },
+    {
+      "id": "v7",
+      "name": "radius/md",
+      "collectionId": "c1",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "m0": 8
+      }
+    },
+    {
+      "id": "v8",
+      "name": "color/button/primary/bg",
+      "collectionId": "c2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "ml": {
+          "alias": "v1"
+        },
+        "md": {
+          "r": 0.541,
+          "g": 0.706,
+          "b": 0.973,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "v9",
+      "name": "color/button/primary/fg",
+      "collectionId": "c2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "ml": {
+          "alias": "v2"
+        },
+        "md": {
+          "alias": "v4"
+        }
+      }
+    },
+    {
+      "id": "v10",
+      "name": "color/button/secondary/bg",
+      "collectionId": "c2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "ml": {
+          "alias": "v3"
+        },
+        "md": {
+          "r": 0.188,
+          "g": 0.192,
+          "b": 0.204,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "v11",
+      "name": "color/button/secondary/fg",
+      "collectionId": "c2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "ml": {
+          "alias": "v4"
+        },
+        "md": {
+          "alias": "v2"
+        }
+      }
+    }
+  ],
+  "textStyles": [
+    {
+      "id": "t1",
+      "name": "label/md",
+      "fontFamily": "Inter",
+      "fontSize": 14,
+      "fontWeight": 600,
+      "lineHeight": 20
+    }
+  ],
+  "componentSets": [
+    {
+      "id": "12:34",
+      "name": "Button",
+      "props": {
+        "variant": [
+          "primary",
+          "secondary"
+        ],
+        "size": [
+          "md"
+        ]
+      },
+      "components": []
+    }
+  ],
+  "annotations": [
+    {
+      "nodeId": "12:34",
+      "text": "[behavior] Enter/Space로 활성화. disabled면 aria-disabled=true.",
+      "source": "fixture"
+    },
+    {
+      "nodeId": "12:36",
+      "text": "[a11y] 라벨은 시각적으로 숨기지 않는다.",
+      "source": "fixture"
+    }
+  ]
+}

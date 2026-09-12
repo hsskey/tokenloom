@@ -1,0 +1,36 @@
+{
+  "name": "@hsskey/tokenloom",
+  "version": "0.1.0",
+  "type": "module",
+  "license": "MIT",
+  "description": "A CLI that turns a Figma design into design tokens for three platforms (CSS, Swift, Kotlin) and into a design context for LLM prompts, deterministically.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hsskey/tokenloom.git",
+    "directory": "apps/cli"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "files": [
+    "dist/tokenloom.js",
+    "skill/SKILL.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@tokenloom/cache": "workspace:*",
+    "@tokenloom/eval": "workspace:*",
+    "@tokenloom/parser": "workspace:*",
+    "@tokenloom/rest": "workspace:*",
+    "@tokenloom/schema": "workspace:*",
+    "@tokenloom/tokens": "workspace:*"
+  },
+  "bin": {
+    "tokenloom": "dist/tokenloom.js"
+  }
+}

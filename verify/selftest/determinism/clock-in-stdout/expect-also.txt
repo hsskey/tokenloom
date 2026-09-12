@@ -1,0 +1,3 @@
+# Writing a timestamp to stdout also breaks the reference test asserting that two runs produce equal
+# bytes: the determinism invariant is enforced by both a test and a gate.
+tests

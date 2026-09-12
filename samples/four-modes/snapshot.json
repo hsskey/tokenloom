@@ -1,0 +1,3727 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "fixture",
+    "plan": "unknown",
+    "fileKey": "FIXTURE",
+    "fileVersion": "fixture-1",
+    "fetchedAt": "2026-01-01T00:00:00Z"
+  },
+  "collections": [
+    {
+      "id": "c1",
+      "name": "Primitives",
+      "modes": [
+        {
+          "id": "m0",
+          "name": "Value"
+        }
+      ],
+      "defaultModeId": "m0"
+    },
+    {
+      "id": "c2",
+      "name": "Semantic",
+      "modes": [
+        {
+          "id": "ma",
+          "name": "Brand"
+        },
+        {
+          "id": "mb",
+          "name": "Light"
+        },
+        {
+          "id": "mc",
+          "name": "Dark"
+        },
+        {
+          "id": "mdd",
+          "name": "Contrast"
+        }
+      ],
+      "defaultModeId": "ma"
+    }
+  ],
+  "variables": [
+    {
+      "id": "p1",
+      "name": "color/brand/500",
+      "collectionId": "c1",
+      "type": "COLOR",
+      "valuesByMode": {
+        "m0": {
+          "r": 0.102,
+          "g": 0.451,
+          "b": 0.91,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "p2",
+      "name": "color/brand/700",
+      "collectionId": "c1",
+      "type": "COLOR",
+      "valuesByMode": {
+        "m0": {
+          "r": 0.062,
+          "g": 0.322,
+          "b": 0.667,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "p3",
+      "name": "color/neutral/0",
+      "collectionId": "c1",
+      "type": "COLOR",
+      "valuesByMode": {
+        "m0": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "p4",
+      "name": "color/neutral/100",
+      "collectionId": "c1",
+      "type": "COLOR",
+      "valuesByMode": {
+        "m0": {
+          "r": 0.945,
+          "g": 0.953,
+          "b": 0.957,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "p5",
+      "name": "color/neutral/300",
+      "collectionId": "c1",
+      "type": "COLOR",
+      "valuesByMode": {
+        "m0": {
+          "r": 0.855,
+          "g": 0.867,
+          "b": 0.878,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "p6",
+      "name": "color/neutral/600",
+      "collectionId": "c1",
+      "type": "COLOR",
+      "valuesByMode": {
+        "m0": {
+          "r": 0.376,
+          "g": 0.392,
+          "b": 0.404,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "p7",
+      "name": "color/neutral/900",
+      "collectionId": "c1",
+      "type": "COLOR",
+      "valuesByMode": {
+        "m0": {
+          "r": 0.122,
+          "g": 0.122,
+          "b": 0.122,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "p8",
+      "name": "color/danger/500",
+      "collectionId": "c1",
+      "type": "COLOR",
+      "valuesByMode": {
+        "m0": {
+          "r": 0.839,
+          "g": 0.204,
+          "b": 0.204,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "p9",
+      "name": "space/xs",
+      "collectionId": "c1",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "m0": 4
+      }
+    },
+    {
+      "id": "p10",
+      "name": "space/sm",
+      "collectionId": "c1",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "m0": 8
+      }
+    },
+    {
+      "id": "p11",
+      "name": "space/md",
+      "collectionId": "c1",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "m0": 16
+      }
+    },
+    {
+      "id": "p12",
+      "name": "space/lg",
+      "collectionId": "c1",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "m0": 24
+      }
+    },
+    {
+      "id": "p13",
+      "name": "radius/sm",
+      "collectionId": "c1",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "m0": 4
+      }
+    },
+    {
+      "id": "p14",
+      "name": "radius/md",
+      "collectionId": "c1",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "m0": 8
+      }
+    },
+    {
+      "id": "p15",
+      "name": "size/icon",
+      "collectionId": "c1",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "m0": 24
+      }
+    },
+    {
+      "id": "p16",
+      "name": "border/thin",
+      "collectionId": "c1",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "m0": 1
+      }
+    },
+    {
+      "id": "s1",
+      "name": "color/action/bg",
+      "collectionId": "c2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "ma": {
+          "alias": "p1"
+        },
+        "mb": {
+          "alias": "p1"
+        },
+        "mc": {
+          "alias": "p2"
+        },
+        "mdd": {
+          "alias": "p8"
+        }
+      }
+    },
+    {
+      "id": "s2",
+      "name": "color/action/fg",
+      "collectionId": "c2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "ma": {
+          "alias": "p3"
+        },
+        "mb": {
+          "alias": "p3"
+        },
+        "mc": {
+          "alias": "p3"
+        },
+        "mdd": {
+          "alias": "p3"
+        }
+      }
+    },
+    {
+      "id": "s3",
+      "name": "color/action/border",
+      "collectionId": "c2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "ma": {
+          "alias": "p2"
+        },
+        "mb": {
+          "alias": "p2"
+        },
+        "mc": {
+          "alias": "p1"
+        },
+        "mdd": {
+          "alias": "p1"
+        }
+      }
+    },
+    {
+      "id": "s4",
+      "name": "color/surface/bg",
+      "collectionId": "c2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "ma": {
+          "alias": "p3"
+        },
+        "mb": {
+          "alias": "p3"
+        },
+        "mc": {
+          "alias": "p7"
+        },
+        "mdd": {
+          "alias": "p7"
+        }
+      }
+    },
+    {
+      "id": "s5",
+      "name": "color/surface/fg",
+      "collectionId": "c2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "ma": {
+          "alias": "p7"
+        },
+        "mb": {
+          "alias": "p7"
+        },
+        "mc": {
+          "alias": "p3"
+        },
+        "mdd": {
+          "alias": "p3"
+        }
+      }
+    },
+    {
+      "id": "s6",
+      "name": "color/surface/muted",
+      "collectionId": "c2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "ma": {
+          "alias": "p6"
+        },
+        "mb": {
+          "alias": "p6"
+        },
+        "mc": {
+          "alias": "p5"
+        },
+        "mdd": {
+          "alias": "p5"
+        }
+      }
+    }
+  ],
+  "textStyles": [
+    {
+      "id": "t1",
+      "name": "label/md",
+      "fontFamily": "Inter",
+      "fontSize": 14,
+      "fontWeight": 600,
+      "lineHeight": 20
+    },
+    {
+      "id": "t2",
+      "name": "label/sm",
+      "fontFamily": "Inter",
+      "fontSize": 12,
+      "fontWeight": 600,
+      "lineHeight": 16
+    },
+    {
+      "id": "t3",
+      "name": "body/md",
+      "fontFamily": "Inter",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "lineHeight": 20
+    },
+    {
+      "id": "t4",
+      "name": "title/lg",
+      "fontFamily": "Inter",
+      "fontSize": 20,
+      "fontWeight": 700,
+      "lineHeight": 28
+    }
+  ],
+  "componentSets": [
+    {
+      "id": "90:1",
+      "name": "Banner",
+      "props": {
+        "tone": [
+          "info",
+          "success",
+          "warning",
+          "danger"
+        ],
+        "density": [
+          "compact",
+          "cozy"
+        ]
+      },
+      "components": [
+        {
+          "id": "100:1",
+          "props": {
+            "tone": "info",
+            "density": "compact"
+          },
+          "root": {
+            "id": "100:1",
+            "name": "Banner",
+            "type": "COMPONENT",
+            "visible": true,
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "w": 120,
+              "h": 40
+            },
+            "bound": {
+              "fill": "s4",
+              "radius": "p13",
+              "gap": "p10",
+              "padding": [
+                "p10",
+                "p11",
+                "p10",
+                "p11"
+              ]
+            },
+            "children": [
+              {
+                "id": "100:2",
+                "name": "Status Icon",
+                "type": "INSTANCE",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 20,
+                  "h": 20
+                },
+                "bound": {},
+                "children": [
+                  {
+                    "id": "100:3",
+                    "name": "Status Icon Canvas",
+                    "type": "FRAME",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 20,
+                      "h": 20
+                    },
+                    "bound": {},
+                    "children": [
+                      {
+                        "id": "100:4",
+                        "name": "Status Icon Path A",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 20,
+                          "h": 20
+                        },
+                        "bound": {
+                          "fill": "s1"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": "100:5",
+                        "name": "Status Icon Path B",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 16,
+                          "h": 16
+                        },
+                        "bound": {
+                          "fill": "s1"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "layout": {
+                      "mode": "NONE",
+                      "sizingH": "FIXED",
+                      "sizingV": "FIXED"
+                    }
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "mainComponentId": "80:4"
+              },
+              {
+                "id": "100:6",
+                "name": "Focus Ring",
+                "type": "FRAME",
+                "visible": false,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 120,
+                  "h": 44
+                },
+                "bound": {
+                  "stroke": "s3",
+                  "radius": "p14"
+                },
+                "children": [
+                  {
+                    "id": "100:7",
+                    "name": "Ring Outline",
+                    "type": "RECTANGLE",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 120,
+                      "h": 44
+                    },
+                    "bound": {
+                      "fill": "s3"
+                    },
+                    "children": [],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "fills": [
+                      {
+                        "type": "SOLID",
+                        "color": {
+                          "r": 0.062,
+                          "g": 0.322,
+                          "b": 0.667,
+                          "a": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "layout": {
+                  "mode": "NONE",
+                  "sizingH": "FIXED",
+                  "sizingV": "FIXED"
+                },
+                "strokes": [
+                  {
+                    "color": {
+                      "r": 0.062,
+                      "g": 0.322,
+                      "b": 0.667,
+                      "a": 1
+                    },
+                    "weight": 2
+                  }
+                ],
+                "radius": 8
+              },
+              {
+                "id": "100:8",
+                "name": "Headline",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 200,
+                  "h": 20
+                },
+                "bound": {
+                  "fill": "s5",
+                  "textStyle": "t1"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.122,
+                      "g": 0.122,
+                      "b": 0.122,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "Heads up",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 600,
+                  "lineHeight": 20
+                }
+              },
+              {
+                "id": "100:9",
+                "name": "Detail",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 240,
+                  "h": 20
+                },
+                "bound": {
+                  "fill": "s6",
+                  "textStyle": "t3"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.376,
+                      "g": 0.392,
+                      "b": 0.404,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "Something changed in your project.",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 400,
+                  "lineHeight": 20
+                }
+              }
+            ],
+            "extra": {
+              "blendMode": "PASS_THROUGH",
+              "clipsContent": false,
+              "strokeAlign": "INSIDE",
+              "strokeWeight": 1,
+              "constraints": {
+                "vertical": "TOP",
+                "horizontal": "LEFT"
+              },
+              "effects": [],
+              "exportSettings": [],
+              "layoutAlign": "INHERIT",
+              "layoutGrow": 0,
+              "preserveRatio": false
+            },
+            "layout": {
+              "mode": "HORIZONTAL",
+              "gap": 8,
+              "padding": [
+                8,
+                16,
+                8,
+                16
+              ],
+              "primaryAlign": "MIN",
+              "counterAlign": "MIN",
+              "sizingH": "FILL",
+              "sizingV": "HUG"
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                }
+              }
+            ],
+            "radius": 4
+          }
+        },
+        {
+          "id": "100:10",
+          "props": {
+            "tone": "info",
+            "density": "cozy"
+          },
+          "root": {
+            "id": "100:10",
+            "name": "Banner",
+            "type": "COMPONENT",
+            "visible": true,
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "w": 120,
+              "h": 40
+            },
+            "bound": {
+              "fill": "s4",
+              "radius": "p13",
+              "gap": "p11",
+              "padding": [
+                "p10",
+                "p11",
+                "p10",
+                "p11"
+              ]
+            },
+            "children": [
+              {
+                "id": "100:11",
+                "name": "Status Icon",
+                "type": "INSTANCE",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 20,
+                  "h": 20
+                },
+                "bound": {},
+                "children": [
+                  {
+                    "id": "100:12",
+                    "name": "Status Icon Canvas",
+                    "type": "FRAME",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 20,
+                      "h": 20
+                    },
+                    "bound": {},
+                    "children": [
+                      {
+                        "id": "100:13",
+                        "name": "Status Icon Path A",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 20,
+                          "h": 20
+                        },
+                        "bound": {
+                          "fill": "s1"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": "100:14",
+                        "name": "Status Icon Path B",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 16,
+                          "h": 16
+                        },
+                        "bound": {
+                          "fill": "s1"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "layout": {
+                      "mode": "NONE",
+                      "sizingH": "FIXED",
+                      "sizingV": "FIXED"
+                    }
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "mainComponentId": "80:4"
+              },
+              {
+                "id": "100:15",
+                "name": "Focus Ring",
+                "type": "FRAME",
+                "visible": false,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 120,
+                  "h": 44
+                },
+                "bound": {
+                  "stroke": "s3",
+                  "radius": "p14"
+                },
+                "children": [
+                  {
+                    "id": "100:16",
+                    "name": "Ring Outline",
+                    "type": "RECTANGLE",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 120,
+                      "h": 44
+                    },
+                    "bound": {
+                      "fill": "s3"
+                    },
+                    "children": [],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "fills": [
+                      {
+                        "type": "SOLID",
+                        "color": {
+                          "r": 0.062,
+                          "g": 0.322,
+                          "b": 0.667,
+                          "a": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "layout": {
+                  "mode": "NONE",
+                  "sizingH": "FIXED",
+                  "sizingV": "FIXED"
+                },
+                "strokes": [
+                  {
+                    "color": {
+                      "r": 0.062,
+                      "g": 0.322,
+                      "b": 0.667,
+                      "a": 1
+                    },
+                    "weight": 2
+                  }
+                ],
+                "radius": 8
+              },
+              {
+                "id": "100:17",
+                "name": "Headline",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 200,
+                  "h": 20
+                },
+                "bound": {
+                  "fill": "s5",
+                  "textStyle": "t1"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.122,
+                      "g": 0.122,
+                      "b": 0.122,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "Heads up",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 600,
+                  "lineHeight": 20
+                }
+              },
+              {
+                "id": "100:18",
+                "name": "Detail",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 240,
+                  "h": 20
+                },
+                "bound": {
+                  "fill": "s6",
+                  "textStyle": "t3"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.376,
+                      "g": 0.392,
+                      "b": 0.404,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "Something changed in your project.",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 400,
+                  "lineHeight": 20
+                }
+              }
+            ],
+            "extra": {
+              "blendMode": "PASS_THROUGH",
+              "clipsContent": false,
+              "strokeAlign": "INSIDE",
+              "strokeWeight": 1,
+              "constraints": {
+                "vertical": "TOP",
+                "horizontal": "LEFT"
+              },
+              "effects": [],
+              "exportSettings": [],
+              "layoutAlign": "INHERIT",
+              "layoutGrow": 0,
+              "preserveRatio": false
+            },
+            "layout": {
+              "mode": "HORIZONTAL",
+              "gap": 16,
+              "padding": [
+                8,
+                16,
+                8,
+                16
+              ],
+              "primaryAlign": "MIN",
+              "counterAlign": "MIN",
+              "sizingH": "FILL",
+              "sizingV": "HUG"
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                }
+              }
+            ],
+            "radius": 4
+          }
+        },
+        {
+          "id": "100:19",
+          "props": {
+            "tone": "success",
+            "density": "compact"
+          },
+          "root": {
+            "id": "100:19",
+            "name": "Banner",
+            "type": "COMPONENT",
+            "visible": true,
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "w": 120,
+              "h": 40
+            },
+            "bound": {
+              "fill": "s4",
+              "radius": "p13",
+              "gap": "p10",
+              "padding": [
+                "p10",
+                "p11",
+                "p10",
+                "p11"
+              ]
+            },
+            "children": [
+              {
+                "id": "100:20",
+                "name": "Status Icon",
+                "type": "INSTANCE",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 20,
+                  "h": 20
+                },
+                "bound": {},
+                "children": [
+                  {
+                    "id": "100:21",
+                    "name": "Status Icon Canvas",
+                    "type": "FRAME",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 20,
+                      "h": 20
+                    },
+                    "bound": {},
+                    "children": [
+                      {
+                        "id": "100:22",
+                        "name": "Status Icon Path A",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 20,
+                          "h": 20
+                        },
+                        "bound": {
+                          "fill": "s1"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": "100:23",
+                        "name": "Status Icon Path B",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 16,
+                          "h": 16
+                        },
+                        "bound": {
+                          "fill": "s1"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "layout": {
+                      "mode": "NONE",
+                      "sizingH": "FIXED",
+                      "sizingV": "FIXED"
+                    }
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "mainComponentId": "80:4"
+              },
+              {
+                "id": "100:24",
+                "name": "Focus Ring",
+                "type": "FRAME",
+                "visible": false,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 120,
+                  "h": 44
+                },
+                "bound": {
+                  "stroke": "s3",
+                  "radius": "p14"
+                },
+                "children": [
+                  {
+                    "id": "100:25",
+                    "name": "Ring Outline",
+                    "type": "RECTANGLE",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 120,
+                      "h": 44
+                    },
+                    "bound": {
+                      "fill": "s3"
+                    },
+                    "children": [],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "fills": [
+                      {
+                        "type": "SOLID",
+                        "color": {
+                          "r": 0.062,
+                          "g": 0.322,
+                          "b": 0.667,
+                          "a": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "layout": {
+                  "mode": "NONE",
+                  "sizingH": "FIXED",
+                  "sizingV": "FIXED"
+                },
+                "strokes": [
+                  {
+                    "color": {
+                      "r": 0.062,
+                      "g": 0.322,
+                      "b": 0.667,
+                      "a": 1
+                    },
+                    "weight": 2
+                  }
+                ],
+                "radius": 8
+              },
+              {
+                "id": "100:26",
+                "name": "Headline",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 200,
+                  "h": 20
+                },
+                "bound": {
+                  "fill": "s5",
+                  "textStyle": "t1"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.122,
+                      "g": 0.122,
+                      "b": 0.122,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "Heads up",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 600,
+                  "lineHeight": 20
+                }
+              },
+              {
+                "id": "100:27",
+                "name": "Detail",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 240,
+                  "h": 20
+                },
+                "bound": {
+                  "fill": "s6",
+                  "textStyle": "t3"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.376,
+                      "g": 0.392,
+                      "b": 0.404,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "Something changed in your project.",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 400,
+                  "lineHeight": 20
+                }
+              }
+            ],
+            "extra": {
+              "blendMode": "PASS_THROUGH",
+              "clipsContent": false,
+              "strokeAlign": "INSIDE",
+              "strokeWeight": 1,
+              "constraints": {
+                "vertical": "TOP",
+                "horizontal": "LEFT"
+              },
+              "effects": [],
+              "exportSettings": [],
+              "layoutAlign": "INHERIT",
+              "layoutGrow": 0,
+              "preserveRatio": false
+            },
+            "layout": {
+              "mode": "HORIZONTAL",
+              "gap": 8,
+              "padding": [
+                8,
+                16,
+                8,
+                16
+              ],
+              "primaryAlign": "MIN",
+              "counterAlign": "MIN",
+              "sizingH": "FILL",
+              "sizingV": "HUG"
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                }
+              }
+            ],
+            "radius": 4
+          }
+        },
+        {
+          "id": "100:28",
+          "props": {
+            "tone": "success",
+            "density": "cozy"
+          },
+          "root": {
+            "id": "100:28",
+            "name": "Banner",
+            "type": "COMPONENT",
+            "visible": true,
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "w": 120,
+              "h": 40
+            },
+            "bound": {
+              "fill": "s4",
+              "radius": "p13",
+              "gap": "p11",
+              "padding": [
+                "p10",
+                "p11",
+                "p10",
+                "p11"
+              ]
+            },
+            "children": [
+              {
+                "id": "100:29",
+                "name": "Status Icon",
+                "type": "INSTANCE",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 20,
+                  "h": 20
+                },
+                "bound": {},
+                "children": [
+                  {
+                    "id": "100:30",
+                    "name": "Status Icon Canvas",
+                    "type": "FRAME",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 20,
+                      "h": 20
+                    },
+                    "bound": {},
+                    "children": [
+                      {
+                        "id": "100:31",
+                        "name": "Status Icon Path A",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 20,
+                          "h": 20
+                        },
+                        "bound": {
+                          "fill": "s1"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": "100:32",
+                        "name": "Status Icon Path B",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 16,
+                          "h": 16
+                        },
+                        "bound": {
+                          "fill": "s1"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "layout": {
+                      "mode": "NONE",
+                      "sizingH": "FIXED",
+                      "sizingV": "FIXED"
+                    }
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "mainComponentId": "80:4"
+              },
+              {
+                "id": "100:33",
+                "name": "Focus Ring",
+                "type": "FRAME",
+                "visible": false,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 120,
+                  "h": 44
+                },
+                "bound": {
+                  "stroke": "s3",
+                  "radius": "p14"
+                },
+                "children": [
+                  {
+                    "id": "100:34",
+                    "name": "Ring Outline",
+                    "type": "RECTANGLE",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 120,
+                      "h": 44
+                    },
+                    "bound": {
+                      "fill": "s3"
+                    },
+                    "children": [],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "fills": [
+                      {
+                        "type": "SOLID",
+                        "color": {
+                          "r": 0.062,
+                          "g": 0.322,
+                          "b": 0.667,
+                          "a": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "layout": {
+                  "mode": "NONE",
+                  "sizingH": "FIXED",
+                  "sizingV": "FIXED"
+                },
+                "strokes": [
+                  {
+                    "color": {
+                      "r": 0.062,
+                      "g": 0.322,
+                      "b": 0.667,
+                      "a": 1
+                    },
+                    "weight": 2
+                  }
+                ],
+                "radius": 8
+              },
+              {
+                "id": "100:35",
+                "name": "Headline",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 200,
+                  "h": 20
+                },
+                "bound": {
+                  "fill": "s5",
+                  "textStyle": "t1"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.122,
+                      "g": 0.122,
+                      "b": 0.122,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "Heads up",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 600,
+                  "lineHeight": 20
+                }
+              },
+              {
+                "id": "100:36",
+                "name": "Detail",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 240,
+                  "h": 20
+                },
+                "bound": {
+                  "fill": "s6",
+                  "textStyle": "t3"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.376,
+                      "g": 0.392,
+                      "b": 0.404,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "Something changed in your project.",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 400,
+                  "lineHeight": 20
+                }
+              }
+            ],
+            "extra": {
+              "blendMode": "PASS_THROUGH",
+              "clipsContent": false,
+              "strokeAlign": "INSIDE",
+              "strokeWeight": 1,
+              "constraints": {
+                "vertical": "TOP",
+                "horizontal": "LEFT"
+              },
+              "effects": [],
+              "exportSettings": [],
+              "layoutAlign": "INHERIT",
+              "layoutGrow": 0,
+              "preserveRatio": false
+            },
+            "layout": {
+              "mode": "HORIZONTAL",
+              "gap": 16,
+              "padding": [
+                8,
+                16,
+                8,
+                16
+              ],
+              "primaryAlign": "MIN",
+              "counterAlign": "MIN",
+              "sizingH": "FILL",
+              "sizingV": "HUG"
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                }
+              }
+            ],
+            "radius": 4
+          }
+        },
+        {
+          "id": "100:37",
+          "props": {
+            "tone": "warning",
+            "density": "compact"
+          },
+          "root": {
+            "id": "100:37",
+            "name": "Banner",
+            "type": "COMPONENT",
+            "visible": true,
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "w": 120,
+              "h": 40
+            },
+            "bound": {
+              "fill": "s4",
+              "radius": "p13",
+              "gap": "p10",
+              "padding": [
+                "p10",
+                "p11",
+                "p10",
+                "p11"
+              ]
+            },
+            "children": [
+              {
+                "id": "100:38",
+                "name": "Status Icon",
+                "type": "INSTANCE",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 20,
+                  "h": 20
+                },
+                "bound": {},
+                "children": [
+                  {
+                    "id": "100:39",
+                    "name": "Status Icon Canvas",
+                    "type": "FRAME",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 20,
+                      "h": 20
+                    },
+                    "bound": {},
+                    "children": [
+                      {
+                        "id": "100:40",
+                        "name": "Status Icon Path A",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 20,
+                          "h": 20
+                        },
+                        "bound": {
+                          "fill": "p2"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": "100:41",
+                        "name": "Status Icon Path B",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 16,
+                          "h": 16
+                        },
+                        "bound": {
+                          "fill": "p2"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "layout": {
+                      "mode": "NONE",
+                      "sizingH": "FIXED",
+                      "sizingV": "FIXED"
+                    }
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "mainComponentId": "80:4"
+              },
+              {
+                "id": "100:42",
+                "name": "Focus Ring",
+                "type": "FRAME",
+                "visible": false,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 120,
+                  "h": 44
+                },
+                "bound": {
+                  "stroke": "s3",
+                  "radius": "p14"
+                },
+                "children": [
+                  {
+                    "id": "100:43",
+                    "name": "Ring Outline",
+                    "type": "RECTANGLE",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 120,
+                      "h": 44
+                    },
+                    "bound": {
+                      "fill": "s3"
+                    },
+                    "children": [],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "fills": [
+                      {
+                        "type": "SOLID",
+                        "color": {
+                          "r": 0.062,
+                          "g": 0.322,
+                          "b": 0.667,
+                          "a": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "layout": {
+                  "mode": "NONE",
+                  "sizingH": "FIXED",
+                  "sizingV": "FIXED"
+                },
+                "strokes": [
+                  {
+                    "color": {
+                      "r": 0.062,
+                      "g": 0.322,
+                      "b": 0.667,
+                      "a": 1
+                    },
+                    "weight": 2
+                  }
+                ],
+                "radius": 8
+              },
+              {
+                "id": "100:44",
+                "name": "Headline",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 200,
+                  "h": 20
+                },
+                "bound": {
+                  "fill": "s5",
+                  "textStyle": "t1"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.122,
+                      "g": 0.122,
+                      "b": 0.122,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "Heads up",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 600,
+                  "lineHeight": 20
+                }
+              },
+              {
+                "id": "100:45",
+                "name": "Detail",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 240,
+                  "h": 20
+                },
+                "bound": {
+                  "fill": "s6",
+                  "textStyle": "t3"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.376,
+                      "g": 0.392,
+                      "b": 0.404,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "Something changed in your project.",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 400,
+                  "lineHeight": 20
+                }
+              }
+            ],
+            "extra": {
+              "blendMode": "PASS_THROUGH",
+              "clipsContent": false,
+              "strokeAlign": "INSIDE",
+              "strokeWeight": 1,
+              "constraints": {
+                "vertical": "TOP",
+                "horizontal": "LEFT"
+              },
+              "effects": [],
+              "exportSettings": [],
+              "layoutAlign": "INHERIT",
+              "layoutGrow": 0,
+              "preserveRatio": false
+            },
+            "layout": {
+              "mode": "HORIZONTAL",
+              "gap": 8,
+              "padding": [
+                8,
+                16,
+                8,
+                16
+              ],
+              "primaryAlign": "MIN",
+              "counterAlign": "MIN",
+              "sizingH": "FILL",
+              "sizingV": "HUG"
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                }
+              }
+            ],
+            "radius": 4
+          }
+        },
+        {
+          "id": "100:46",
+          "props": {
+            "tone": "warning",
+            "density": "cozy"
+          },
+          "root": {
+            "id": "100:46",
+            "name": "Banner",
+            "type": "COMPONENT",
+            "visible": true,
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "w": 120,
+              "h": 40
+            },
+            "bound": {
+              "fill": "s4",
+              "radius": "p13",
+              "gap": "p11",
+              "padding": [
+                "p10",
+                "p11",
+                "p10",
+                "p11"
+              ]
+            },
+            "children": [
+              {
+                "id": "100:47",
+                "name": "Status Icon",
+                "type": "INSTANCE",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 20,
+                  "h": 20
+                },
+                "bound": {},
+                "children": [
+                  {
+                    "id": "100:48",
+                    "name": "Status Icon Canvas",
+                    "type": "FRAME",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 20,
+                      "h": 20
+                    },
+                    "bound": {},
+                    "children": [
+                      {
+                        "id": "100:49",
+                        "name": "Status Icon Path A",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 20,
+                          "h": 20
+                        },
+                        "bound": {
+                          "fill": "p2"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": "100:50",
+                        "name": "Status Icon Path B",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 16,
+                          "h": 16
+                        },
+                        "bound": {
+                          "fill": "p2"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "layout": {
+                      "mode": "NONE",
+                      "sizingH": "FIXED",
+                      "sizingV": "FIXED"
+                    }
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "mainComponentId": "80:4"
+              },
+              {
+                "id": "100:51",
+                "name": "Focus Ring",
+                "type": "FRAME",
+                "visible": false,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 120,
+                  "h": 44
+                },
+                "bound": {
+                  "stroke": "s3",
+                  "radius": "p14"
+                },
+                "children": [
+                  {
+                    "id": "100:52",
+                    "name": "Ring Outline",
+                    "type": "RECTANGLE",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 120,
+                      "h": 44
+                    },
+                    "bound": {
+                      "fill": "s3"
+                    },
+                    "children": [],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "fills": [
+                      {
+                        "type": "SOLID",
+                        "color": {
+                          "r": 0.062,
+                          "g": 0.322,
+                          "b": 0.667,
+                          "a": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "layout": {
+                  "mode": "NONE",
+                  "sizingH": "FIXED",
+                  "sizingV": "FIXED"
+                },
+                "strokes": [
+                  {
+                    "color": {
+                      "r": 0.062,
+                      "g": 0.322,
+                      "b": 0.667,
+                      "a": 1
+                    },
+                    "weight": 2
+                  }
+                ],
+                "radius": 8
+              },
+              {
+                "id": "100:53",
+                "name": "Headline",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 200,
+                  "h": 20
+                },
+                "bound": {
+                  "fill": "s5",
+                  "textStyle": "t1"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.122,
+                      "g": 0.122,
+                      "b": 0.122,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "Heads up",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 600,
+                  "lineHeight": 20
+                }
+              },
+              {
+                "id": "100:54",
+                "name": "Detail",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 240,
+                  "h": 20
+                },
+                "bound": {
+                  "fill": "s6",
+                  "textStyle": "t3"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.376,
+                      "g": 0.392,
+                      "b": 0.404,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "Something changed in your project.",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 400,
+                  "lineHeight": 20
+                }
+              }
+            ],
+            "extra": {
+              "blendMode": "PASS_THROUGH",
+              "clipsContent": false,
+              "strokeAlign": "INSIDE",
+              "strokeWeight": 1,
+              "constraints": {
+                "vertical": "TOP",
+                "horizontal": "LEFT"
+              },
+              "effects": [],
+              "exportSettings": [],
+              "layoutAlign": "INHERIT",
+              "layoutGrow": 0,
+              "preserveRatio": false
+            },
+            "layout": {
+              "mode": "HORIZONTAL",
+              "gap": 16,
+              "padding": [
+                8,
+                16,
+                8,
+                16
+              ],
+              "primaryAlign": "MIN",
+              "counterAlign": "MIN",
+              "sizingH": "FILL",
+              "sizingV": "HUG"
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                }
+              }
+            ],
+            "radius": 4
+          }
+        },
+        {
+          "id": "100:55",
+          "props": {
+            "tone": "danger",
+            "density": "compact"
+          },
+          "root": {
+            "id": "100:55",
+            "name": "Banner",
+            "type": "COMPONENT",
+            "visible": true,
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "w": 120,
+              "h": 40
+            },
+            "bound": {
+              "fill": "s4",
+              "radius": "p13",
+              "gap": "p10",
+              "padding": [
+                "p10",
+                "p11",
+                "p10",
+                "p11"
+              ]
+            },
+            "children": [
+              {
+                "id": "100:56",
+                "name": "Status Icon",
+                "type": "INSTANCE",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 20,
+                  "h": 20
+                },
+                "bound": {},
+                "children": [
+                  {
+                    "id": "100:57",
+                    "name": "Status Icon Canvas",
+                    "type": "FRAME",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 20,
+                      "h": 20
+                    },
+                    "bound": {},
+                    "children": [
+                      {
+                        "id": "100:58",
+                        "name": "Status Icon Path A",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 20,
+                          "h": 20
+                        },
+                        "bound": {
+                          "fill": "p8"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": "100:59",
+                        "name": "Status Icon Path B",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 16,
+                          "h": 16
+                        },
+                        "bound": {
+                          "fill": "p8"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "layout": {
+                      "mode": "NONE",
+                      "sizingH": "FIXED",
+                      "sizingV": "FIXED"
+                    }
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "mainComponentId": "80:4"
+              },
+              {
+                "id": "100:60",
+                "name": "Focus Ring",
+                "type": "FRAME",
+                "visible": false,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 120,
+                  "h": 44
+                },
+                "bound": {
+                  "stroke": "s3",
+                  "radius": "p14"
+                },
+                "children": [
+                  {
+                    "id": "100:61",
+                    "name": "Ring Outline",
+                    "type": "RECTANGLE",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 120,
+                      "h": 44
+                    },
+                    "bound": {
+                      "fill": "s3"
+                    },
+                    "children": [],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "fills": [
+                      {
+                        "type": "SOLID",
+                        "color": {
+                          "r": 0.062,
+                          "g": 0.322,
+                          "b": 0.667,
+                          "a": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "layout": {
+                  "mode": "NONE",
+                  "sizingH": "FIXED",
+                  "sizingV": "FIXED"
+                },
+                "strokes": [
+                  {
+                    "color": {
+                      "r": 0.062,
+                      "g": 0.322,
+                      "b": 0.667,
+                      "a": 1
+                    },
+                    "weight": 2
+                  }
+                ],
+                "radius": 8
+              },
+              {
+                "id": "100:62",
+                "name": "Headline",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 200,
+                  "h": 20
+                },
+                "bound": {
+                  "fill": "s5",
+                  "textStyle": "t1"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.122,
+                      "g": 0.122,
+                      "b": 0.122,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "Heads up",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 600,
+                  "lineHeight": 20
+                }
+              },
+              {
+                "id": "100:63",
+                "name": "Detail",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 240,
+                  "h": 20
+                },
+                "bound": {
+                  "fill": "s6",
+                  "textStyle": "t3"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.376,
+                      "g": 0.392,
+                      "b": 0.404,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "Something changed in your project.",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 400,
+                  "lineHeight": 20
+                }
+              }
+            ],
+            "extra": {
+              "blendMode": "PASS_THROUGH",
+              "clipsContent": false,
+              "strokeAlign": "INSIDE",
+              "strokeWeight": 1,
+              "constraints": {
+                "vertical": "TOP",
+                "horizontal": "LEFT"
+              },
+              "effects": [],
+              "exportSettings": [],
+              "layoutAlign": "INHERIT",
+              "layoutGrow": 0,
+              "preserveRatio": false
+            },
+            "layout": {
+              "mode": "HORIZONTAL",
+              "gap": 8,
+              "padding": [
+                8,
+                16,
+                8,
+                16
+              ],
+              "primaryAlign": "MIN",
+              "counterAlign": "MIN",
+              "sizingH": "FILL",
+              "sizingV": "HUG"
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                }
+              }
+            ],
+            "radius": 4
+          }
+        },
+        {
+          "id": "100:64",
+          "props": {
+            "tone": "danger",
+            "density": "cozy"
+          },
+          "root": {
+            "id": "100:64",
+            "name": "Banner",
+            "type": "COMPONENT",
+            "visible": true,
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "w": 120,
+              "h": 40
+            },
+            "bound": {
+              "fill": "s4",
+              "radius": "p13",
+              "gap": "p11",
+              "padding": [
+                "p10",
+                "p11",
+                "p10",
+                "p11"
+              ]
+            },
+            "children": [
+              {
+                "id": "100:65",
+                "name": "Status Icon",
+                "type": "INSTANCE",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 20,
+                  "h": 20
+                },
+                "bound": {},
+                "children": [
+                  {
+                    "id": "100:66",
+                    "name": "Status Icon Canvas",
+                    "type": "FRAME",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 20,
+                      "h": 20
+                    },
+                    "bound": {},
+                    "children": [
+                      {
+                        "id": "100:67",
+                        "name": "Status Icon Path A",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 20,
+                          "h": 20
+                        },
+                        "bound": {
+                          "fill": "p8"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": "100:68",
+                        "name": "Status Icon Path B",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 16,
+                          "h": 16
+                        },
+                        "bound": {
+                          "fill": "p8"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "layout": {
+                      "mode": "NONE",
+                      "sizingH": "FIXED",
+                      "sizingV": "FIXED"
+                    }
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "mainComponentId": "80:4"
+              },
+              {
+                "id": "100:69",
+                "name": "Focus Ring",
+                "type": "FRAME",
+                "visible": false,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 120,
+                  "h": 44
+                },
+                "bound": {
+                  "stroke": "s3",
+                  "radius": "p14"
+                },
+                "children": [
+                  {
+                    "id": "100:70",
+                    "name": "Ring Outline",
+                    "type": "RECTANGLE",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 120,
+                      "h": 44
+                    },
+                    "bound": {
+                      "fill": "s3"
+                    },
+                    "children": [],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "fills": [
+                      {
+                        "type": "SOLID",
+                        "color": {
+                          "r": 0.062,
+                          "g": 0.322,
+                          "b": 0.667,
+                          "a": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "layout": {
+                  "mode": "NONE",
+                  "sizingH": "FIXED",
+                  "sizingV": "FIXED"
+                },
+                "strokes": [
+                  {
+                    "color": {
+                      "r": 0.062,
+                      "g": 0.322,
+                      "b": 0.667,
+                      "a": 1
+                    },
+                    "weight": 2
+                  }
+                ],
+                "radius": 8
+              },
+              {
+                "id": "100:71",
+                "name": "Headline",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 200,
+                  "h": 20
+                },
+                "bound": {
+                  "fill": "s5",
+                  "textStyle": "t1"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.122,
+                      "g": 0.122,
+                      "b": 0.122,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "Heads up",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 600,
+                  "lineHeight": 20
+                }
+              },
+              {
+                "id": "100:72",
+                "name": "Detail",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 240,
+                  "h": 20
+                },
+                "bound": {
+                  "fill": "s6",
+                  "textStyle": "t3"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.376,
+                      "g": 0.392,
+                      "b": 0.404,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "Something changed in your project.",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 400,
+                  "lineHeight": 20
+                }
+              }
+            ],
+            "extra": {
+              "blendMode": "PASS_THROUGH",
+              "clipsContent": false,
+              "strokeAlign": "INSIDE",
+              "strokeWeight": 1,
+              "constraints": {
+                "vertical": "TOP",
+                "horizontal": "LEFT"
+              },
+              "effects": [],
+              "exportSettings": [],
+              "layoutAlign": "INHERIT",
+              "layoutGrow": 0,
+              "preserveRatio": false
+            },
+            "layout": {
+              "mode": "HORIZONTAL",
+              "gap": 16,
+              "padding": [
+                8,
+                16,
+                8,
+                16
+              ],
+              "primaryAlign": "MIN",
+              "counterAlign": "MIN",
+              "sizingH": "FILL",
+              "sizingV": "HUG"
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "color": {
+                  "r": 1,
+                  "g": 1,
+                  "b": 1,
+                  "a": 1
+                }
+              }
+            ],
+            "radius": 4
+          }
+        }
+      ]
+    }
+  ],
+  "annotations": []
+}

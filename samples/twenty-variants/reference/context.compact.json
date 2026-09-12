@@ -1,0 +1,377 @@
+{
+  "annotations": [],
+  "component": {
+    "base": {
+      "props": {
+        "size": "xs",
+        "state": "default"
+      },
+      "root": {
+        "children": [
+          {
+            "children": [],
+            "id": "100:2",
+            "instanceOf": "80-7",
+            "layout": {
+              "dir": "none",
+              "sizing": {
+                "h": "hug",
+                "w": "hug"
+              }
+            },
+            "name": "icon",
+            "role": "instance",
+            "style": {}
+          },
+          {
+            "children": [],
+            "id": "100:6",
+            "layout": {
+              "dir": "none",
+              "sizing": {
+                "h": "hug",
+                "w": "hug"
+              }
+            },
+            "name": "label",
+            "role": "text",
+            "style": {
+              "fg": "color.surface.fg"
+            },
+            "text": {
+              "content": "Filter",
+              "typo": "typo.label.md"
+            }
+          },
+          {
+            "children": [],
+            "id": "100:9",
+            "layout": {
+              "dir": "none",
+              "sizing": {
+                "h": "hug",
+                "w": "hug"
+              }
+            },
+            "name": "count",
+            "role": "text",
+            "style": {
+              "fg": "color.surface.muted"
+            },
+            "text": {
+              "content": "12",
+              "typo": "typo.label.sm"
+            }
+          }
+        ],
+        "id": "100:1",
+        "layout": {
+          "align": "center",
+          "crossAlign": "center",
+          "dir": "row",
+          "gap": "space.xs",
+          "pad": [
+            "space.sm",
+            "space.md",
+            "space.sm",
+            "space.md"
+          ],
+          "sizing": {
+            "h": "hug",
+            "w": "hug"
+          }
+        },
+        "name": "chip",
+        "role": "container",
+        "style": {
+          "bg": "color.action.bg",
+          "radius": "radius.md"
+        }
+      }
+    },
+    "block": "chip",
+    "name": "Chip",
+    "props": {
+      "size": [
+        "xs",
+        "sm",
+        "md",
+        "lg"
+      ],
+      "state": [
+        "default",
+        "hover",
+        "pressed",
+        "selected",
+        "disabled"
+      ]
+    },
+    "variants": [
+      {
+        "delta": [
+          {
+            "path": "/style/bg",
+            "value": "color.action.border"
+          }
+        ],
+        "props": {
+          "size": "xs",
+          "state": "hover"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/style/bg",
+            "value": "color.brand.700"
+          }
+        ],
+        "props": {
+          "size": "xs",
+          "state": "pressed"
+        }
+      },
+      {
+        "delta": [],
+        "props": {
+          "size": "xs",
+          "state": "selected"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/style/bg",
+            "value": "color.surface.muted"
+          }
+        ],
+        "props": {
+          "size": "xs",
+          "state": "disabled"
+        }
+      },
+      {
+        "delta": [],
+        "props": {
+          "size": "sm",
+          "state": "default"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/style/bg",
+            "value": "color.action.border"
+          }
+        ],
+        "props": {
+          "size": "sm",
+          "state": "hover"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/style/bg",
+            "value": "color.brand.700"
+          }
+        ],
+        "props": {
+          "size": "sm",
+          "state": "pressed"
+        }
+      },
+      {
+        "delta": [],
+        "props": {
+          "size": "sm",
+          "state": "selected"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/style/bg",
+            "value": "color.surface.muted"
+          }
+        ],
+        "props": {
+          "size": "sm",
+          "state": "disabled"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.sm"
+          }
+        ],
+        "props": {
+          "size": "md",
+          "state": "default"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.sm"
+          },
+          {
+            "path": "/style/bg",
+            "value": "color.action.border"
+          }
+        ],
+        "props": {
+          "size": "md",
+          "state": "hover"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.sm"
+          },
+          {
+            "path": "/style/bg",
+            "value": "color.brand.700"
+          }
+        ],
+        "props": {
+          "size": "md",
+          "state": "pressed"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.sm"
+          }
+        ],
+        "props": {
+          "size": "md",
+          "state": "selected"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.sm"
+          },
+          {
+            "path": "/style/bg",
+            "value": "color.surface.muted"
+          }
+        ],
+        "props": {
+          "size": "md",
+          "state": "disabled"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.md"
+          }
+        ],
+        "props": {
+          "size": "lg",
+          "state": "default"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.md"
+          },
+          {
+            "path": "/style/bg",
+            "value": "color.action.border"
+          }
+        ],
+        "props": {
+          "size": "lg",
+          "state": "hover"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.md"
+          },
+          {
+            "path": "/style/bg",
+            "value": "color.brand.700"
+          }
+        ],
+        "props": {
+          "size": "lg",
+          "state": "pressed"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.md"
+          }
+        ],
+        "props": {
+          "size": "lg",
+          "state": "selected"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.md"
+          },
+          {
+            "path": "/style/bg",
+            "value": "color.surface.muted"
+          }
+        ],
+        "props": {
+          "size": "lg",
+          "state": "disabled"
+        }
+      }
+    ]
+  },
+  "source": {
+    "contentHash": "sha256:da6457f215facee9b832520fc5732cb81be595b85334ccf3e02be937877d1b26",
+    "fetchedAt": "2026-01-01T00:00:00Z",
+    "fileKey": "FIXTURE",
+    "fileVersion": "fixture-1",
+    "nodeId": "90:1"
+  },
+  "tokensUsed": [
+    "color.action.bg",
+    "color.action.border",
+    "color.brand.700",
+    "color.surface.fg",
+    "color.surface.muted",
+    "radius.md",
+    "space.md",
+    "space.sm",
+    "space.xs",
+    "typo.label.md.fontFamily",
+    "typo.label.md.fontSize",
+    "typo.label.md.fontWeight",
+    "typo.label.md.lineHeight",
+    "typo.label.sm.fontFamily",
+    "typo.label.sm.fontSize",
+    "typo.label.sm.fontWeight",
+    "typo.label.sm.lineHeight"
+  ],
+  "version": 1,
+  "warnings": []
+}

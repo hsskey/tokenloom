@@ -1,0 +1,30 @@
+<!doctype html>
+<meta charset="utf-8" />
+<style>
+  body { font: 12px -apple-system, system-ui, sans-serif; margin: 12px; }
+  button { width: 100%; padding: 8px; font-size: 13px; }
+  a { display: block; margin-top: 10px; }
+  p { margin: 6px 0 0; color: #555; }
+</style>
+<button id="run">Export this page</button>
+<a id="download" hidden>Download snapshot</a>
+<p id="annotations" hidden></p>
+<script>
+  // The intentionally small UI contains one button, one download link, and one annotation summary.
+  document.getElementById("run").onclick = function () {
+    parent.postMessage({ pluginMessage: { type: "export" } }, "*");
+  };
+  onmessage = function (event) {
+    var msg = event.data.pluginMessage;
+    if (!msg || msg.type !== "result") return;
+    var link = document.getElementById("download");
+    link.href = URL.createObjectURL(new Blob([msg.json], { type: "application/json" }));
+    link.download = "tokenloom-" + msg.page.replace(/[^A-Za-z0-9]+/g, "-") + ".json";
+    link.textContent = "Download " + link.download;
+    link.hidden = false;
+    var note = document.getElementById("annotations");
+    var a = msg.annotations;
+    note.textContent = "annotations: " + (a.support === "read" ? "read (" + a.count + ")" : a.support);
+    note.hidden = false;
+  };
+</script>

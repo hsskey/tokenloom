@@ -1,0 +1,12 @@
+# eval/matrix.mvp-large.yaml re-sends only the two combinations that matrix.mvp.yaml recorded as
+# skipped: MAX_INPUT_TOKENS. Its larger maxInputTokens clears the estimated twenty-variants/raw
+# size without paying again for the seven calls matrix.mvp.yaml already accepted. The model and
+# prompt template match matrix.mvp.yaml so all rows stay comparable under
+# docs/reference/spec.md section 9.6.
+samples: [icon-button, twenty-variants]
+inputs: [snapshot]
+inputVariants: [raw]
+platforms: [css]
+repeats: 1
+maxInputTokens: 90000
+model: opus

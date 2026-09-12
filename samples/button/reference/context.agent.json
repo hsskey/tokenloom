@@ -1,0 +1,112 @@
+{
+  "annotations": [
+    {
+      "kind": "behavior",
+      "nodeId": "12:34",
+      "text": "Enter/Space로 활성화. disabled면 aria-disabled=true."
+    },
+    {
+      "kind": "a11y",
+      "nodeId": "12:36",
+      "text": "라벨은 시각적으로 숨기지 않는다."
+    }
+  ],
+  "component": {
+    "base": {
+      "props": {
+        "size": "md",
+        "variant": "primary"
+      },
+      "root": {
+        "children": [
+          {
+            "children": [],
+            "id": "12:36",
+            "layout": {
+              "dir": "none",
+              "sizing": {
+                "h": "hug",
+                "w": "hug"
+              }
+            },
+            "name": "label",
+            "role": "text",
+            "style": {
+              "fg": "color.button.primary.fg"
+            },
+            "text": {
+              "content": "Button",
+              "typo": "typo.label.md"
+            }
+          }
+        ],
+        "id": "12:35",
+        "layout": {
+          "align": "center",
+          "crossAlign": "center",
+          "dir": "row",
+          "gap": "space.sm",
+          "pad": [
+            "space.sm",
+            "space.md",
+            "space.sm",
+            "space.md"
+          ],
+          "sizing": {
+            "h": "hug",
+            "w": "hug"
+          }
+        },
+        "name": "button",
+        "role": "container",
+        "style": {
+          "bg": "color.button.primary.bg",
+          "radius": "radius.md"
+        }
+      }
+    },
+    "block": "button",
+    "name": "Button",
+    "props": {
+      "size": [
+        "md"
+      ],
+      "variant": [
+        "primary",
+        "secondary"
+      ]
+    },
+    "variants": [
+      {
+        "delta": [
+          {
+            "path": "/children/0/style/fg",
+            "value": "color.button.secondary.fg"
+          },
+          {
+            "path": "/style/bg",
+            "value": "color.button.secondary.bg"
+          }
+        ],
+        "props": {
+          "size": "md",
+          "variant": "secondary"
+        }
+      }
+    ]
+  },
+  "tokensUsed": [
+    "color.button.primary.bg",
+    "color.button.primary.fg",
+    "color.button.secondary.bg",
+    "color.button.secondary.fg",
+    "radius.md",
+    "space.md",
+    "space.sm",
+    "typo.label.md.fontFamily",
+    "typo.label.md.fontSize",
+    "typo.label.md.fontWeight",
+    "typo.label.md.lineHeight"
+  ],
+  "warnings": []
+}

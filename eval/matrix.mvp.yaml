@@ -1,0 +1,11 @@
+# eval/matrix.mvp.yaml follows docs/reference/spec.md section 9.1.
+# `model` is required by the matrix schema beyond section 9.1. Pinning it stops the claude CLI
+# default from changing between runs, because section 9.6 forbids comparing runs recorded with
+# different model IDs.
+samples: [button, icon-button, twenty-variants]
+inputs: [snapshot]
+inputVariants: [raw, compact, compact+annotations]
+platforms: [css]
+repeats: 1
+maxInputTokens: 20000
+model: opus

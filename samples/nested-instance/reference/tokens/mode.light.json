@@ -1,0 +1,32 @@
+{
+  "color": {
+    "action": {
+      "bg": {
+        "$type": "color",
+        "$value": "{color.brand.500}"
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{color.brand.700}"
+      },
+      "fg": {
+        "$type": "color",
+        "$value": "{color.neutral.0}"
+      }
+    },
+    "surface": {
+      "bg": {
+        "$type": "color",
+        "$value": "{color.neutral.0}"
+      },
+      "fg": {
+        "$type": "color",
+        "$value": "{color.neutral.900}"
+      },
+      "muted": {
+        "$type": "color",
+        "$value": "{color.neutral.600}"
+      }
+    }
+  }
+}

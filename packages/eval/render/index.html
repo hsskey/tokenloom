@@ -1,0 +1,14 @@
+<!doctype html>
+<meta charset="utf-8" />
+<title>tokenloom render</title>
+<!--
+  Render target for S3 visual scoring (SPEC 9.5): applies tokens.css plus the generated CSS and HTML
+  so Playwright can screenshot each [data-variant]. Comparison happens in visual.ts, not here.
+-->
+<style id="tokens"></style>
+<style id="generated"></style>
+<style>
+  body { margin: 0; background: #ffffff; }
+  #root { display: inline-block; padding: 0; }
+</style>
+<div id="root"></div>

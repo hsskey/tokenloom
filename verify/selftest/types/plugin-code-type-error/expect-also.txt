@@ -1,0 +1,3 @@
+# A type error in the plugin source also breaks packages/adapters/plugin/test/bundle-stamp.test.ts,
+# which runs the package build script whose first step is the plugin typecheck.
+tests

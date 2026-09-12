@@ -1,0 +1,155 @@
+{
+  "nodeId": "4185:3779",
+  "serverVersion": null,
+  "toolResults": [
+    {
+      "content": [
+        {
+          "tool_name": "mcp__figma__get_design_context",
+          "type": "tool_reference"
+        },
+        {
+          "tool_name": "mcp__figma__get_metadata",
+          "type": "tool_reference"
+        },
+        {
+          "tool_name": "mcp__figma__get_variable_defs",
+          "type": "tool_reference"
+        }
+      ],
+      "name": "ToolSearch",
+      "toolUseId": "toolu_01Ur8CsRbHsBLvovwZTUAu7H"
+    },
+    {
+      "content": [
+        {
+          "text": "<symbol id=\"4185:3779\" name=\"Variant=Primary, State=Default, Size=Medium\" x=\"20\" y=\"20\" width=\"75\" height=\"40\">\n  <instance id=\"4185:3780\" name=\"Star\" x=\"12\" y=\"12\" width=\"16\" height=\"16\" hidden=\"true\" />\n  <text id=\"4185:3781\" name=\"Button\" x=\"12\" y=\"12\" width=\"51\" height=\"16\" />\n  <instance id=\"4185:3782\" name=\"X\" x=\"71\" y=\"12\" width=\"16\" height=\"16\" hidden=\"true\" />\n</symbol>",
+          "type": "text"
+        },
+        {
+          "text": "IMPORTANT: After you call this tool, you MUST call get_design_context if trying to implement the design, since this tool only returns metadata. If you do not call get_design_context, the agent will not be able to implement the design.",
+          "type": "text"
+        }
+      ],
+      "name": "mcp__figma__get_metadata",
+      "toolUseId": "toolu_01HP6mgan1Aossu6miEXpu1e"
+    },
+    {
+      "content": [
+        {
+          "text": "{\"var(--sds-color-text-brand-on-brand)\":\"#f5f5f5\",\"var(--sds-typography-body-size-medium)\":\"16\",\"var(--sds-typography-body-font-family)\":\"Inter\",\"var(--sds-typography-body-font-weight-regular)\":\"400\",\"Single Line/Body Base\":\"Font(family: \\\"var(--sds-typography-body-font-family)\\\", style: Regular, size: var(--sds-typography-body-size-medium), weight: var(--sds-typography-body-font-weight-regular), lineHeight: 1, letterSpacing: 0)\",\"var(--sds-size-space-200)\":\"8\",\"var(--sds-size-space-300)\":\"12\",\"var(--sds-size-radius-200)\":\"8\",\"var(--sds-size-stroke-border)\":\"1\",\"var(--sds-color-background-brand-default)\":\"#2c2c2c\",\"var(--sds-color-border-brand-default)\":\"#2c2c2c\"}",
+          "type": "text"
+        }
+      ],
+      "name": "mcp__figma__get_variable_defs",
+      "toolUseId": "toolu_0147ZYRqMQVmfiQe229iVkyt"
+    },
+    {
+      "content": [
+        {
+          "text": "const imgStar = \"https://www.figma.com/api/mcp/asset/fc954b6a-9da5-4844-b6a0-7214cbb0032e.svg\";\nconst imgX = \"https://www.figma.com/api/mcp/asset/4077e3fa-5fce-4cf3-b80e-49179ca9d1f4.svg\";\n\ntype ButtonProps = {\n  className?: string;\n  hasIconEnd?: boolean;\n  hasIconStart?: boolean;\n  iconEnd?: React.ReactNode | null;\n  iconStart?: React.ReactNode | null;\n  label?: string;\n  size?: \"Medium\";\n  state?: \"Default\";\n  variant?: \"Primary\";\n};\n\nfunction Button({ className, hasIconEnd = false, hasIconStart = false, iconEnd = null, iconStart = null, label = \"Button\", size = \"Medium\", state = \"Default\", variant = \"Primary\" }: ButtonProps) {\n  return (\n    <div className={className || \"bg-[var(--sds-color-background-brand-default,#2c2c2c)] border-[length:var(--sds-size-stroke-border,1px)] border-[var(--sds-color-border-brand-default,#2c2c2c)] border-solid content-stretch flex gap-[var(--sds-size-space-200,8px)] items-center justify-center overflow-clip p-[var(--sds-size-space-300,12px)] relative rounded-[var(--sds-size-radius-200,8px)]\"} data-node-id=\"4185:3779\">\n      {hasIconStart &&\n        (iconStart || (\n          <div className=\"relative shrink-0 size-[16px]\" data-node-id=\"4185:3780\" data-name=\"Star\">\n            <img alt=\"\" className=\"absolute block inset-0 max-w-none size-full\" src={imgStar} />\n          </div>\n        ))}\n      <p className=\"[word-break:break-word] font-[family-name:var(--sds-typography-body-font-family,'Inter:Regular')] font-[var(--sds-typography-body-font-weight-regular,400)] leading-none not-italic relative shrink-0 text-[color:var(--sds-color-text-brand-on-brand,#f5f5f5)] text-[length:var(--sds-typography-body-size-medium,16px)] whitespace-nowrap\" data-node-id=\"4185:3781\">\n        {label}\n      </p>\n      {hasIconEnd &&\n        (iconEnd || (\n          <div className=\"relative shrink-0 size-[16px]\" data-node-id=\"4185:3782\" data-name=\"X\">\n            <img alt=\"\" className=\"absolute block inset-0 max-w-none size-full\" src={imgX} />\n          </div>\n        ))}\n    </div>\n  );\n}",
+          "type": "text"
+        },
+        {
+          "text": "SUPER CRITICAL: The generated React+Tailwind code MUST be converted to match the target project's technology stack and styling system.\n1. Analyze the target codebase to identify: technology stack, styling approach, component patterns, and design tokens\n2. Convert React syntax to the target framework/library\n3. Transform all Tailwind classes to the target styling system while preserving exact visual design\n4. Follow the project's existing patterns and conventions\nDO NOT install any Tailwind as a dependency unless the user instructs you to do so.\n",
+          "type": "text"
+        },
+        {
+          "text": "Node ids have been added to the code as data attributes, e.g. `data-node-id=\"1:2\"`.",
+          "type": "text"
+        },
+        {
+          "text": "These styles are contained in the design: Single Line/Body Base: Font(family: \"var(--sds-typography-body-font-family)\", style: Regular, size: var(--sds-typography-body-size-medium), weight: var(--sds-typography-body-font-weight-regular), lineHeight: 1, letterSpacing: 0).",
+          "type": "text"
+        },
+        {
+          "text": "Images and SVGs will be stored as constants, e.g. const image = 'https://www.figma.com/api/mcp/asset/550e8400-e29b-41d4-a716-446655440000.png'. These constants will be used in the code as the source for the image, ex: <img src={image} />. Image assets are stored on a remote server for 7 days and can be fetched using the provided URLs until they expire.",
+          "type": "text"
+        },
+        {
+          "source": {
+            "data": "iVBORw0KGgoAAAANSUhEUgAAAEsAAAAoCAYAAAC2LgceAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAOdEVYdFNvZnR3YXJlAEZpZ21hnrGWYwAAA2dJREFUeAHtmj1P40AQhse+a5DgB0DNR0MFPVADEnSARMeHgAqQKJFOokSCig8JOhqoQEKkTtInPyBR2iR9kjp3z54msh0fyToJ4mAfKdJ6st5438zOesb2Go1GUwLk83lJp9OSzWalUqnId2NyclLGx8dld3dXRkdHQ995Kla9Xpe7uzt5fHwUx1/W1tZkZ2dHRkZGzLERC6H29/elUCiIIwyedn19bQTzMeBRTqh40AV9wCuVSs2VlRVxvA/e9WNoaOhXsVgUx/sMDw+L75Zfd3B34E1PTzfF0RW+OLrGiWWBE8sCJ5YFTiwLnFgW/JQELC4uyuzsbMhGfkkS/pUrFYk8C6EWFhZCtomJCXl5eZH19XWxheyedCLK4eGhHB0dyWchkWdBrVaTs7OzkI2JUdKwLfOQ0Y+NjcXaPxN9jVm5XM7kUMrMzEysx5yensrS0pJpI/Dy8rIRhr7qSbTn5+eNF9PW/kDf7e1teXh4MB/GixbqOAdvD/ZL4vVBEntWHCzNarXaOmYC0dgGiKixLZPJtPq9vb2Z2Ae0wfM809ZkHw+8urqSP3U4eX19NbaNjQ1z/ubmZut8jhGe38HT9RiSFjgTi6X/roIATGxvb09soIzNuRTZVCCgjV3bCr/p+76cnJy0BE+lUvL8/GxE09oT8L2GCh0D70oqVuJlyHJjMvpBPDyEJTVIqI/zjCC46xI/ESO4VIE/IghhohcSexYXe3BwELLxrxPguajohfaLqakpeXp6arNTauo1JnWirwH+/v5eyuWyWVKDgvHjdkk8XePVoOj7Hfy/JqIQoONuE7qFQD83N9dmZ+fsdZl1oqfdUAMwIBI3lwR5djigukg8ubm5kcvLS9Nna2vL2IJwTLxDBMTQeISnEAOJR9h0Z2O84P0cy5/dbnV1VQZJYrGYHBetMDHiBo/UdLKIgEhMjL70ubi4CO2iwG5GLDo/PzfeobGQ2ITHcC7CMBaxkJ3w+Pi4NQ7jBnfHQfFhZWXE7TQZXcJRz+NcBImzw0flo64Gb4Er0VjgxLLAiWWBE8sCJ5YFfrQO5IiHFM7nps/RGaodflye5WiHLMQnpxp0aeN/h5yX5N8EeFSjXu1oh1iFPmDEooRye3vrPCyCPqILvYAb7EBSqu+Yfsc3ArVUpE+WgvwG+jOez1GdA+kAAAAASUVORK5CYII=",
+            "media_type": "image/png",
+            "type": "base64"
+          },
+          "type": "image"
+        }
+      ],
+      "name": "mcp__figma__get_design_context",
+      "toolUseId": "toolu_0157AdwpNwcyy4m1etPVkQkR"
+    }
+  ],
+  "toolsList": [
+    "Task",
+    "Bash",
+    "CronCreate",
+    "CronDelete",
+    "CronList",
+    "DesignSync",
+    "Edit",
+    "EnterWorktree",
+    "ExitWorktree",
+    "ListAgents",
+    "ListMcpResourcesTool",
+    "LSP",
+    "Monitor",
+    "NotebookEdit",
+    "PushNotification",
+    "Read",
+    "ReadMcpResourceDirTool",
+    "ReadMcpResourceTool",
+    "RemoteTrigger",
+    "ReportFindings",
+    "ScheduleWakeup",
+    "SendMessage",
+    "Skill",
+    "TaskOutput",
+    "TaskStop",
+    "ToolSearch",
+    "WebFetch",
+    "WebSearch",
+    "Workflow",
+    "Write",
+    "mcp__figma__add_code_connect_map",
+    "mcp__figma__create_generative_plugin",
+    "mcp__figma__create_new_file",
+    "mcp__figma__create_shader",
+    "mcp__figma__download_assets",
+    "mcp__figma__export_video",
+    "mcp__figma__generate_diagram",
+    "mcp__figma__generate_figma_design",
+    "mcp__figma__get_code_connect_map",
+    "mcp__figma__get_code_connect_suggestions",
+    "mcp__figma__get_context_for_code_connect",
+    "mcp__figma__get_design_context",
+    "mcp__figma__get_figjam",
+    "mcp__figma__get_generative_plugin",
+    "mcp__figma__get_libraries",
+    "mcp__figma__get_metadata",
+    "mcp__figma__get_motion_context",
+    "mcp__figma__get_screenshot",
+    "mcp__figma__get_shader",
+    "mcp__figma__get_shader_effect",
+    "mcp__figma__get_shader_fill",
+    "mcp__figma__get_variable_defs",
+    "mcp__figma__list_file_components_for_code_connect",
+    "mcp__figma__list_file_shaders",
+    "mcp__figma__list_generative_plugins",
+    "mcp__figma__list_shader_effects",
+    "mcp__figma__list_shader_fills",
+    "mcp__figma__list_shaders",
+    "mcp__figma__search_design_system",
+    "mcp__figma__send_code_connect_mappings",
+    "mcp__figma__update_generative_plugin",
+    "mcp__figma__update_shader",
+    "mcp__figma__upload_assets",
+    "mcp__figma__use_figma",
+    "mcp__figma__weave_cancel_tool_run",
+    "mcp__figma__weave_get_tool_inputs",
+    "mcp__figma__weave_get_tool_run_output",
+    "mcp__figma__weave_list_tools",
+    "mcp__figma__weave_run_tool",
+    "mcp__figma__weave_upload_asset",
+    "mcp__figma__whoami"
+  ]
+}

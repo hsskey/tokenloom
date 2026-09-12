@@ -1,0 +1,5 @@
+* text=auto eol=lf
+*.png binary
+
+# selftest 샘플은 일부러 규칙을 어긴다. 줄 끝 정규화 대상이 아니다.
+verify/selftest/** -text

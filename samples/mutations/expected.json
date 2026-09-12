@@ -1,0 +1,114 @@
+{
+  "M01": {
+    "warnings": [
+      "UNBOUND_COLOR"
+    ],
+    "exit": 0,
+    "exitStrict": 2
+  },
+  "M02": {
+    "warnings": [
+      "UNBOUND_DIMENSION"
+    ],
+    "exit": 0,
+    "exitStrict": 2
+  },
+  "M03": {
+    "warnings": [
+      "UNBOUND_TYPO"
+    ],
+    "exit": 0,
+    "exitStrict": 2
+  },
+  "M04": {
+    "warnings": [
+      "ABSOLUTE_POSITION"
+    ],
+    "exit": 0,
+    "exitStrict": 2
+  },
+  "M05": {
+    "warnings": [
+      "UNKNOWN_NODE_TYPE"
+    ],
+    "exit": 0,
+    "exitStrict": 2
+  },
+  "M06": {
+    "cmd": "context Button",
+    "exit": 1,
+    "stderrIncludes": [
+      "NAME_COLLISION",
+      "12:34",
+      "12:99"
+    ]
+  },
+  "M07": {
+    "cmd": "tokens build",
+    "warnings": [
+      "NON_ASCII_TOKEN_NAME"
+    ],
+    "exit": 0,
+    "exitStrict": 2
+  },
+  "M08": {
+    "warnings": [
+      "VARIANT_STRUCTURE_DIFF"
+    ],
+    "exit": 0,
+    "variantHasRoot": true
+  },
+  "M09": {
+    "cmd": "tokens build",
+    "warnings": [
+      "ALIAS_CYCLE"
+    ],
+    "exit": 1
+  },
+  "M10": {
+    "warnings": [],
+    "exit": 0,
+    "childrenCount": 0
+  },
+  "M11": {
+    "cmd": "context Button",
+    "exit": 1,
+    "stderrIncludes": [
+      "no components"
+    ]
+  },
+  "M12": {
+    "cmd": "tokens build",
+    "warnings": [],
+    "exit": 0,
+    "files": [
+      "mode.a.json",
+      "mode.b.json",
+      "mode.c.json",
+      "mode.d.json"
+    ]
+  },
+  "M13": {
+    "cmd": "context Button --variant size=does-not-exist --view agent",
+    "exit": 1,
+    "jsonError": "VARIANT_NOT_FOUND",
+    "includes": [
+      "available"
+    ]
+  },
+  "M14": {
+    "cmd": "context --match definitely-no-match --view agent",
+    "exit": 0,
+    "count": 0,
+    "returned": 0
+  },
+  "M15": {
+    "cmd": "context Button --view agent",
+    "exit": 0,
+    "preserves": [
+      "annotations",
+      "warnings",
+      "nodeId"
+    ]
+  }
+}

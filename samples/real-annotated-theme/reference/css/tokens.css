@@ -1,0 +1,20 @@
+:root {
+  --color-button-primary-bg: #2563eb;
+  --color-button-primary-fg: #ffffff;
+  --color-button-secondary-bg: #e2e8f0;
+  --color-button-secondary-fg: #1e293b;
+  --space-md: 16px;
+  --space-sm: 8px;
+  --typo-label-md-font-family: Inter;
+  --typo-label-md-font-size: 14px;
+  --typo-label-md-font-weight: 600;
+  --typo-label-md-letter-spacing: 0px;
+  --typo-label-md-line-height: 20px;
+}
+
+[data-theme="dark"] {
+  --color-button-primary-bg: #60a5fa;
+  --color-button-primary-fg: #0f172a;
+  --color-button-secondary-bg: #334155;
+  --color-button-secondary-fg: #f8fafc;
+}

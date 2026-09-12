@@ -1,0 +1,7 @@
+{
+  "budget": {
+    "factor": 1.2,
+    "reason": "maximum observed session billing increase of 1.13x plus headroom"
+  },
+  "decidedAt": "2026-09-06"
+}

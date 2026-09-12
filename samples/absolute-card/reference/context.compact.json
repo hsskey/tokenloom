@@ -1,0 +1,255 @@
+{
+  "annotations": [],
+  "component": {
+    "base": {
+      "props": {
+        "elevation": "flat",
+        "tone": "neutral"
+      },
+      "root": {
+        "children": [
+          {
+            "children": [],
+            "id": "100:2",
+            "layout": {
+              "dir": "none",
+              "sizing": {
+                "h": "hug",
+                "w": "hug"
+              }
+            },
+            "name": "media",
+            "role": "image",
+            "style": {}
+          },
+          {
+            "children": [],
+            "id": "100:3",
+            "instanceOf": "80-3",
+            "layout": {
+              "dir": "none",
+              "sizing": {
+                "h": "hug",
+                "w": "hug"
+              }
+            },
+            "name": "badge-icon",
+            "role": "instance",
+            "style": {}
+          },
+          {
+            "children": [],
+            "id": "100:9",
+            "layout": {
+              "dir": "none",
+              "sizing": {
+                "h": "hug",
+                "w": "hug"
+              }
+            },
+            "name": "title",
+            "role": "text",
+            "style": {
+              "fg": "color.surface.fg"
+            },
+            "text": {
+              "content": "Card title",
+              "typo": "typo.title.lg"
+            }
+          },
+          {
+            "children": [],
+            "id": "100:10",
+            "layout": {
+              "dir": "none",
+              "sizing": {
+                "h": "hug",
+                "w": "hug"
+              }
+            },
+            "name": "description",
+            "role": "text",
+            "style": {
+              "fg": "color.surface.muted"
+            },
+            "text": {
+              "content": "Supporting text for the card.",
+              "typo": "typo.body.md"
+            }
+          }
+        ],
+        "id": "100:1",
+        "layout": {
+          "dir": "none",
+          "size": {
+            "h": 220,
+            "w": 320
+          },
+          "sizing": {
+            "h": "fixed",
+            "w": "fixed"
+          }
+        },
+        "name": "absolutecard",
+        "role": "container",
+        "style": {
+          "bg": "color.surface.bg",
+          "radius": "radius.md"
+        }
+      }
+    },
+    "block": "absolutecard",
+    "name": "AbsoluteCard",
+    "props": {
+      "elevation": [
+        "flat",
+        "raised"
+      ],
+      "tone": [
+        "neutral",
+        "brand",
+        "danger"
+      ]
+    },
+    "variants": [
+      {
+        "delta": [
+          {
+            "path": "/children/2/style/fg",
+            "value": "color.action.bg"
+          }
+        ],
+        "props": {
+          "elevation": "flat",
+          "tone": "brand"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/children/2/style/fg",
+            "value": "color.danger.500"
+          }
+        ],
+        "props": {
+          "elevation": "flat",
+          "tone": "danger"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/style/border",
+            "value": "color.action.border"
+          },
+          {
+            "path": "/style/borderWidth",
+            "value": "border.width.sm"
+          }
+        ],
+        "props": {
+          "elevation": "raised",
+          "tone": "neutral"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/children/2/style/fg",
+            "value": "color.action.bg"
+          },
+          {
+            "path": "/style/border",
+            "value": "color.action.border"
+          },
+          {
+            "path": "/style/borderWidth",
+            "value": "border.width.sm"
+          }
+        ],
+        "props": {
+          "elevation": "raised",
+          "tone": "brand"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/children/2/style/fg",
+            "value": "color.danger.500"
+          },
+          {
+            "path": "/style/border",
+            "value": "color.action.border"
+          },
+          {
+            "path": "/style/borderWidth",
+            "value": "border.width.sm"
+          }
+        ],
+        "props": {
+          "elevation": "raised",
+          "tone": "danger"
+        }
+      }
+    ]
+  },
+  "source": {
+    "contentHash": "sha256:cc1eab47930d258934b69ffab570e0f2d7467f0ed860e421f632cae0693359f0",
+    "fetchedAt": "2026-01-01T00:00:00Z",
+    "fileKey": "FIXTURE",
+    "fileVersion": "fixture-1",
+    "nodeId": "90:1"
+  },
+  "tokensUsed": [
+    "border.width.sm",
+    "color.action.bg",
+    "color.action.border",
+    "color.danger.500",
+    "color.surface.bg",
+    "color.surface.fg",
+    "color.surface.muted",
+    "radius.md",
+    "typo.body.md.fontFamily",
+    "typo.body.md.fontSize",
+    "typo.body.md.fontWeight",
+    "typo.body.md.lineHeight",
+    "typo.title.lg.fontFamily",
+    "typo.title.lg.fontSize",
+    "typo.title.lg.fontWeight",
+    "typo.title.lg.lineHeight"
+  ],
+  "version": 1,
+  "warnings": [
+    {
+      "code": "ABSOLUTE_POSITION",
+      "detail": "4 children without auto layout",
+      "nodeId": "100:1"
+    },
+    {
+      "code": "ABSOLUTE_POSITION",
+      "detail": "4 children without auto layout",
+      "nodeId": "100:11"
+    },
+    {
+      "code": "ABSOLUTE_POSITION",
+      "detail": "4 children without auto layout",
+      "nodeId": "100:21"
+    },
+    {
+      "code": "ABSOLUTE_POSITION",
+      "detail": "4 children without auto layout",
+      "nodeId": "100:31"
+    },
+    {
+      "code": "ABSOLUTE_POSITION",
+      "detail": "4 children without auto layout",
+      "nodeId": "100:41"
+    },
+    {
+      "code": "ABSOLUTE_POSITION",
+      "detail": "4 children without auto layout",
+      "nodeId": "100:51"
+    }
+  ]
+}

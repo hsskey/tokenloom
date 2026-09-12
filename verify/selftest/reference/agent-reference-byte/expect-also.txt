@@ -1,0 +1,2 @@
+# Changing the Agent reference also breaks apps/cli/test/context.reference.test.ts, which byte-compares it.
+tests

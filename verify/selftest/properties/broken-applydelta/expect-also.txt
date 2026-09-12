@@ -1,0 +1,3 @@
+# Breaking applyDelta also breaks the D05 rule test, because the property test and the rule test hold
+# the same invariant.
+tests

@@ -1,0 +1,203 @@
+{
+  "annotations": [],
+  "component": {
+    "base": {
+      "props": {
+        "density": "compact",
+        "tone": "info"
+      },
+      "root": {
+        "children": [
+          {
+            "children": [],
+            "id": "100:2",
+            "instanceOf": "80-4",
+            "layout": {
+              "dir": "none",
+              "sizing": {
+                "h": "hug",
+                "w": "hug"
+              }
+            },
+            "name": "status-icon",
+            "role": "instance",
+            "style": {}
+          },
+          {
+            "children": [],
+            "id": "100:8",
+            "layout": {
+              "dir": "none",
+              "sizing": {
+                "h": "hug",
+                "w": "hug"
+              }
+            },
+            "name": "headline",
+            "role": "text",
+            "style": {
+              "fg": "color.surface.fg"
+            },
+            "text": {
+              "content": "Heads up",
+              "typo": "typo.label.md"
+            }
+          },
+          {
+            "children": [],
+            "id": "100:9",
+            "layout": {
+              "dir": "none",
+              "sizing": {
+                "h": "hug",
+                "w": "hug"
+              }
+            },
+            "name": "detail",
+            "role": "text",
+            "style": {
+              "fg": "color.surface.muted"
+            },
+            "text": {
+              "content": "Something changed in your project.",
+              "typo": "typo.body.md"
+            }
+          }
+        ],
+        "id": "100:1",
+        "layout": {
+          "align": "start",
+          "crossAlign": "start",
+          "dir": "row",
+          "gap": "space.sm",
+          "pad": [
+            "space.sm",
+            "space.md",
+            "space.sm",
+            "space.md"
+          ],
+          "sizing": {
+            "h": "hug",
+            "w": "fill"
+          }
+        },
+        "name": "banner",
+        "role": "container",
+        "style": {
+          "bg": "color.surface.bg",
+          "radius": "radius.sm"
+        }
+      }
+    },
+    "block": "banner",
+    "name": "Banner",
+    "props": {
+      "density": [
+        "compact",
+        "cozy"
+      ],
+      "tone": [
+        "info",
+        "success",
+        "warning",
+        "danger"
+      ]
+    },
+    "variants": [
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.md"
+          }
+        ],
+        "props": {
+          "density": "cozy",
+          "tone": "info"
+        }
+      },
+      {
+        "delta": [],
+        "props": {
+          "density": "compact",
+          "tone": "success"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.md"
+          }
+        ],
+        "props": {
+          "density": "cozy",
+          "tone": "success"
+        }
+      },
+      {
+        "delta": [],
+        "props": {
+          "density": "compact",
+          "tone": "warning"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.md"
+          }
+        ],
+        "props": {
+          "density": "cozy",
+          "tone": "warning"
+        }
+      },
+      {
+        "delta": [],
+        "props": {
+          "density": "compact",
+          "tone": "danger"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.md"
+          }
+        ],
+        "props": {
+          "density": "cozy",
+          "tone": "danger"
+        }
+      }
+    ]
+  },
+  "source": {
+    "contentHash": "sha256:cb5a3dda532e1aaebd292998f289ea369b5ae16ccc166556ef8f0312b31a9155",
+    "fetchedAt": "2026-01-01T00:00:00Z",
+    "fileKey": "FIXTURE",
+    "fileVersion": "fixture-1",
+    "nodeId": "90:1"
+  },
+  "tokensUsed": [
+    "color.surface.bg",
+    "color.surface.fg",
+    "color.surface.muted",
+    "radius.sm",
+    "space.md",
+    "space.sm",
+    "typo.body.md.fontFamily",
+    "typo.body.md.fontSize",
+    "typo.body.md.fontWeight",
+    "typo.body.md.lineHeight",
+    "typo.label.md.fontFamily",
+    "typo.label.md.fontSize",
+    "typo.label.md.fontWeight",
+    "typo.label.md.lineHeight"
+  ],
+  "version": 1,
+  "warnings": []
+}

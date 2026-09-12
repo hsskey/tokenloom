@@ -1,0 +1,29 @@
+# eval/matrix.full.yaml follows docs/reference/spec.md section 9.1.
+# The `samples` key lists every sample-data directory under `samples/` that contains
+# snapshot.json, in readdirSync sort order. mcpSets contains only real-file component sets with
+# captured MCP responses. Synthetic sample designs cannot produce MCP rows because those node IDs
+# do not exist in Figma. Snapshot rows remain paired for every listed set. The model and prompt
+# template match matrix.mvp.yaml so rows remain comparable under section 9.6.
+samples:
+  - absolute-card
+  - button
+  - four-modes
+  - icon-button
+  - korean-names
+  - nested-instance
+  - real-annotated-theme
+  - real-design-system
+  - single-mode
+  - twenty-variants
+inputs: [snapshot, mcp]
+mcpSets:
+  - { sampleName: real-design-system, node: "4185:3778" }   # Button
+  - { sampleName: real-design-system, node: "11:11508" }    # Icon Button
+  - { sampleName: real-design-system, node: "2072:9432" }   # Button Group
+  - { sampleName: real-design-system, node: "185:852" }     # Button Danger
+  - { sampleName: real-annotated-theme, node: "1:13" }      # Button
+inputVariants: [raw, compact, compact+annotations]
+platforms: [css]
+repeats: 2
+maxInputTokens: 150000
+model: opus

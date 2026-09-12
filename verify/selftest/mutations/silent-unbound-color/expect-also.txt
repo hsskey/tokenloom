@@ -1,0 +1,4 @@
+# Swallowing the warning also breaks the R09 rule test (tests) and the recorded warnings.json reference
+# output (reference). Three gates catch this one defect from different angles, and the overlap is intended.
+tests
+reference

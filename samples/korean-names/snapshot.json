@@ -1,0 +1,3689 @@
+{
+  "version": 1,
+  "source": {
+    "kind": "fixture",
+    "plan": "unknown",
+    "fileKey": "FIXTURE",
+    "fileVersion": "fixture-1",
+    "fetchedAt": "2026-01-01T00:00:00Z"
+  },
+  "collections": [
+    {
+      "id": "c1",
+      "name": "Primitives",
+      "modes": [
+        {
+          "id": "m0",
+          "name": "Value"
+        }
+      ],
+      "defaultModeId": "m0"
+    },
+    {
+      "id": "c2",
+      "name": "Semantic",
+      "modes": [
+        {
+          "id": "ml",
+          "name": "Light"
+        },
+        {
+          "id": "md",
+          "name": "Dark"
+        }
+      ],
+      "defaultModeId": "ml"
+    }
+  ],
+  "variables": [
+    {
+      "id": "p1",
+      "name": "color/brand/500",
+      "collectionId": "c1",
+      "type": "COLOR",
+      "valuesByMode": {
+        "m0": {
+          "r": 0.102,
+          "g": 0.451,
+          "b": 0.91,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "p2",
+      "name": "color/brand/700",
+      "collectionId": "c1",
+      "type": "COLOR",
+      "valuesByMode": {
+        "m0": {
+          "r": 0.062,
+          "g": 0.322,
+          "b": 0.667,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "p3",
+      "name": "color/neutral/0",
+      "collectionId": "c1",
+      "type": "COLOR",
+      "valuesByMode": {
+        "m0": {
+          "r": 1,
+          "g": 1,
+          "b": 1,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "p4",
+      "name": "color/neutral/100",
+      "collectionId": "c1",
+      "type": "COLOR",
+      "valuesByMode": {
+        "m0": {
+          "r": 0.945,
+          "g": 0.953,
+          "b": 0.957,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "p5",
+      "name": "color/neutral/300",
+      "collectionId": "c1",
+      "type": "COLOR",
+      "valuesByMode": {
+        "m0": {
+          "r": 0.855,
+          "g": 0.867,
+          "b": 0.878,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "p6",
+      "name": "color/neutral/600",
+      "collectionId": "c1",
+      "type": "COLOR",
+      "valuesByMode": {
+        "m0": {
+          "r": 0.376,
+          "g": 0.392,
+          "b": 0.404,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "p7",
+      "name": "color/neutral/900",
+      "collectionId": "c1",
+      "type": "COLOR",
+      "valuesByMode": {
+        "m0": {
+          "r": 0.122,
+          "g": 0.122,
+          "b": 0.122,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "p8",
+      "name": "color/danger/500",
+      "collectionId": "c1",
+      "type": "COLOR",
+      "valuesByMode": {
+        "m0": {
+          "r": 0.839,
+          "g": 0.204,
+          "b": 0.204,
+          "a": 1
+        }
+      }
+    },
+    {
+      "id": "p9",
+      "name": "space/xs",
+      "collectionId": "c1",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "m0": 4
+      }
+    },
+    {
+      "id": "p10",
+      "name": "space/sm",
+      "collectionId": "c1",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "m0": 8
+      }
+    },
+    {
+      "id": "p11",
+      "name": "space/md",
+      "collectionId": "c1",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "m0": 16
+      }
+    },
+    {
+      "id": "p12",
+      "name": "space/lg",
+      "collectionId": "c1",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "m0": 24
+      }
+    },
+    {
+      "id": "p13",
+      "name": "radius/sm",
+      "collectionId": "c1",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "m0": 4
+      }
+    },
+    {
+      "id": "p14",
+      "name": "radius/md",
+      "collectionId": "c1",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "m0": 8
+      }
+    },
+    {
+      "id": "p15",
+      "name": "size/icon",
+      "collectionId": "c1",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "m0": 24
+      }
+    },
+    {
+      "id": "p16",
+      "name": "border/thin",
+      "collectionId": "c1",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "m0": 1
+      }
+    },
+    {
+      "id": "s1",
+      "name": "color/action/bg",
+      "collectionId": "c2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "ml": {
+          "alias": "p1"
+        },
+        "md": {
+          "alias": "p2"
+        }
+      }
+    },
+    {
+      "id": "s2",
+      "name": "color/action/fg",
+      "collectionId": "c2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "ml": {
+          "alias": "p3"
+        },
+        "md": {
+          "alias": "p3"
+        }
+      }
+    },
+    {
+      "id": "s3",
+      "name": "color/action/border",
+      "collectionId": "c2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "ml": {
+          "alias": "p2"
+        },
+        "md": {
+          "alias": "p1"
+        }
+      }
+    },
+    {
+      "id": "s4",
+      "name": "color/surface/bg",
+      "collectionId": "c2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "ml": {
+          "alias": "p3"
+        },
+        "md": {
+          "alias": "p7"
+        }
+      }
+    },
+    {
+      "id": "s5",
+      "name": "color/surface/fg",
+      "collectionId": "c2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "ml": {
+          "alias": "p7"
+        },
+        "md": {
+          "alias": "p3"
+        }
+      }
+    },
+    {
+      "id": "s6",
+      "name": "color/surface/muted",
+      "collectionId": "c2",
+      "type": "COLOR",
+      "valuesByMode": {
+        "ml": {
+          "alias": "p6"
+        },
+        "md": {
+          "alias": "p5"
+        }
+      }
+    }
+  ],
+  "textStyles": [
+    {
+      "id": "t1",
+      "name": "label/md",
+      "fontFamily": "Inter",
+      "fontSize": 14,
+      "fontWeight": 600,
+      "lineHeight": 20
+    },
+    {
+      "id": "t2",
+      "name": "label/sm",
+      "fontFamily": "Inter",
+      "fontSize": 12,
+      "fontWeight": 600,
+      "lineHeight": 16
+    },
+    {
+      "id": "t3",
+      "name": "body/md",
+      "fontFamily": "Inter",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "lineHeight": 20
+    },
+    {
+      "id": "t4",
+      "name": "title/lg",
+      "fontFamily": "Inter",
+      "fontSize": 20,
+      "fontWeight": 700,
+      "lineHeight": 28
+    }
+  ],
+  "componentSets": [
+    {
+      "id": "90:1",
+      "name": "확인 버튼",
+      "props": {
+        "size": [
+          "sm",
+          "md",
+          "lg",
+          "xl"
+        ],
+        "state": [
+          "default",
+          "disabled"
+        ]
+      },
+      "components": [
+        {
+          "id": "100:1",
+          "props": {
+            "size": "sm",
+            "state": "default"
+          },
+          "root": {
+            "id": "100:1",
+            "name": "확인 버튼",
+            "type": "COMPONENT",
+            "visible": true,
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "w": 120,
+              "h": 40
+            },
+            "bound": {
+              "fill": "s1",
+              "radius": "p14",
+              "gap": "p9",
+              "padding": [
+                "p10",
+                "p11",
+                "p10",
+                "p11"
+              ]
+            },
+            "children": [
+              {
+                "id": "100:2",
+                "name": "앞 아이콘",
+                "type": "INSTANCE",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 20,
+                  "h": 20
+                },
+                "bound": {},
+                "children": [
+                  {
+                    "id": "100:3",
+                    "name": "앞 아이콘 Canvas",
+                    "type": "FRAME",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 20,
+                      "h": 20
+                    },
+                    "bound": {},
+                    "children": [
+                      {
+                        "id": "100:4",
+                        "name": "앞 아이콘 Path A",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 20,
+                          "h": 20
+                        },
+                        "bound": {
+                          "fill": "s2"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": "100:5",
+                        "name": "앞 아이콘 Path B",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 16,
+                          "h": 16
+                        },
+                        "bound": {
+                          "fill": "s2"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "layout": {
+                      "mode": "NONE",
+                      "sizingH": "FIXED",
+                      "sizingV": "FIXED"
+                    }
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "mainComponentId": "80:5"
+              },
+              {
+                "id": "100:6",
+                "name": "Focus Ring",
+                "type": "FRAME",
+                "visible": false,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 120,
+                  "h": 44
+                },
+                "bound": {
+                  "stroke": "s3",
+                  "radius": "p14"
+                },
+                "children": [
+                  {
+                    "id": "100:7",
+                    "name": "Ring Outline",
+                    "type": "RECTANGLE",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 120,
+                      "h": 44
+                    },
+                    "bound": {
+                      "fill": "s3"
+                    },
+                    "children": [],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "fills": [
+                      {
+                        "type": "SOLID",
+                        "color": {
+                          "r": 0.062,
+                          "g": 0.322,
+                          "b": 0.667,
+                          "a": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "layout": {
+                  "mode": "NONE",
+                  "sizingH": "FIXED",
+                  "sizingV": "FIXED"
+                },
+                "strokes": [
+                  {
+                    "color": {
+                      "r": 0.062,
+                      "g": 0.322,
+                      "b": 0.667,
+                      "a": 1
+                    },
+                    "weight": 2
+                  }
+                ],
+                "radius": 8
+              },
+              {
+                "id": "100:8",
+                "name": "라벨",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 80,
+                  "h": 20
+                },
+                "bound": {
+                  "fill": "s2",
+                  "textStyle": "t1"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 1,
+                      "g": 1,
+                      "b": 1,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "확인",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 600,
+                  "lineHeight": 20
+                }
+              },
+              {
+                "id": "100:9",
+                "name": "보조 라벨",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 60,
+                  "h": 16
+                },
+                "bound": {
+                  "fill": "s6",
+                  "textStyle": "t2"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.376,
+                      "g": 0.392,
+                      "b": 0.404,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "선택 사항",
+                  "fontFamily": "Inter",
+                  "fontSize": 12,
+                  "fontWeight": 600,
+                  "lineHeight": 16
+                }
+              }
+            ],
+            "extra": {
+              "blendMode": "PASS_THROUGH",
+              "clipsContent": false,
+              "strokeAlign": "INSIDE",
+              "strokeWeight": 1,
+              "constraints": {
+                "vertical": "TOP",
+                "horizontal": "LEFT"
+              },
+              "effects": [],
+              "exportSettings": [],
+              "layoutAlign": "INHERIT",
+              "layoutGrow": 0,
+              "preserveRatio": false
+            },
+            "layout": {
+              "mode": "HORIZONTAL",
+              "gap": 4,
+              "padding": [
+                8,
+                16,
+                8,
+                16
+              ],
+              "primaryAlign": "CENTER",
+              "counterAlign": "CENTER",
+              "sizingH": "HUG",
+              "sizingV": "HUG"
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "color": {
+                  "r": 0.102,
+                  "g": 0.451,
+                  "b": 0.91,
+                  "a": 1
+                }
+              }
+            ],
+            "radius": 8
+          }
+        },
+        {
+          "id": "100:10",
+          "props": {
+            "size": "sm",
+            "state": "disabled"
+          },
+          "root": {
+            "id": "100:10",
+            "name": "확인 버튼",
+            "type": "COMPONENT",
+            "visible": true,
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "w": 120,
+              "h": 40
+            },
+            "bound": {
+              "fill": "s6",
+              "radius": "p14",
+              "gap": "p9",
+              "padding": [
+                "p10",
+                "p11",
+                "p10",
+                "p11"
+              ]
+            },
+            "children": [
+              {
+                "id": "100:11",
+                "name": "앞 아이콘",
+                "type": "INSTANCE",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 20,
+                  "h": 20
+                },
+                "bound": {},
+                "children": [
+                  {
+                    "id": "100:12",
+                    "name": "앞 아이콘 Canvas",
+                    "type": "FRAME",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 20,
+                      "h": 20
+                    },
+                    "bound": {},
+                    "children": [
+                      {
+                        "id": "100:13",
+                        "name": "앞 아이콘 Path A",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 20,
+                          "h": 20
+                        },
+                        "bound": {
+                          "fill": "s2"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": "100:14",
+                        "name": "앞 아이콘 Path B",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 16,
+                          "h": 16
+                        },
+                        "bound": {
+                          "fill": "s2"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "layout": {
+                      "mode": "NONE",
+                      "sizingH": "FIXED",
+                      "sizingV": "FIXED"
+                    }
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "mainComponentId": "80:5"
+              },
+              {
+                "id": "100:15",
+                "name": "Focus Ring",
+                "type": "FRAME",
+                "visible": false,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 120,
+                  "h": 44
+                },
+                "bound": {
+                  "stroke": "s3",
+                  "radius": "p14"
+                },
+                "children": [
+                  {
+                    "id": "100:16",
+                    "name": "Ring Outline",
+                    "type": "RECTANGLE",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 120,
+                      "h": 44
+                    },
+                    "bound": {
+                      "fill": "s3"
+                    },
+                    "children": [],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "fills": [
+                      {
+                        "type": "SOLID",
+                        "color": {
+                          "r": 0.062,
+                          "g": 0.322,
+                          "b": 0.667,
+                          "a": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "layout": {
+                  "mode": "NONE",
+                  "sizingH": "FIXED",
+                  "sizingV": "FIXED"
+                },
+                "strokes": [
+                  {
+                    "color": {
+                      "r": 0.062,
+                      "g": 0.322,
+                      "b": 0.667,
+                      "a": 1
+                    },
+                    "weight": 2
+                  }
+                ],
+                "radius": 8
+              },
+              {
+                "id": "100:17",
+                "name": "라벨",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 80,
+                  "h": 20
+                },
+                "bound": {
+                  "fill": "s2",
+                  "textStyle": "t1"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 1,
+                      "g": 1,
+                      "b": 1,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "확인",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 600,
+                  "lineHeight": 20
+                }
+              },
+              {
+                "id": "100:18",
+                "name": "보조 라벨",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 60,
+                  "h": 16
+                },
+                "bound": {
+                  "fill": "s6",
+                  "textStyle": "t2"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.376,
+                      "g": 0.392,
+                      "b": 0.404,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "선택 사항",
+                  "fontFamily": "Inter",
+                  "fontSize": 12,
+                  "fontWeight": 600,
+                  "lineHeight": 16
+                }
+              }
+            ],
+            "extra": {
+              "blendMode": "PASS_THROUGH",
+              "clipsContent": false,
+              "strokeAlign": "INSIDE",
+              "strokeWeight": 1,
+              "constraints": {
+                "vertical": "TOP",
+                "horizontal": "LEFT"
+              },
+              "effects": [],
+              "exportSettings": [],
+              "layoutAlign": "INHERIT",
+              "layoutGrow": 0,
+              "preserveRatio": false
+            },
+            "layout": {
+              "mode": "HORIZONTAL",
+              "gap": 4,
+              "padding": [
+                8,
+                16,
+                8,
+                16
+              ],
+              "primaryAlign": "CENTER",
+              "counterAlign": "CENTER",
+              "sizingH": "HUG",
+              "sizingV": "HUG"
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "color": {
+                  "r": 0.102,
+                  "g": 0.451,
+                  "b": 0.91,
+                  "a": 1
+                }
+              }
+            ],
+            "radius": 8
+          }
+        },
+        {
+          "id": "100:19",
+          "props": {
+            "size": "md",
+            "state": "default"
+          },
+          "root": {
+            "id": "100:19",
+            "name": "확인 버튼",
+            "type": "COMPONENT",
+            "visible": true,
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "w": 120,
+              "h": 40
+            },
+            "bound": {
+              "fill": "s1",
+              "radius": "p14",
+              "gap": "p10",
+              "padding": [
+                "p10",
+                "p11",
+                "p10",
+                "p11"
+              ]
+            },
+            "children": [
+              {
+                "id": "100:20",
+                "name": "앞 아이콘",
+                "type": "INSTANCE",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 20,
+                  "h": 20
+                },
+                "bound": {},
+                "children": [
+                  {
+                    "id": "100:21",
+                    "name": "앞 아이콘 Canvas",
+                    "type": "FRAME",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 20,
+                      "h": 20
+                    },
+                    "bound": {},
+                    "children": [
+                      {
+                        "id": "100:22",
+                        "name": "앞 아이콘 Path A",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 20,
+                          "h": 20
+                        },
+                        "bound": {
+                          "fill": "s2"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": "100:23",
+                        "name": "앞 아이콘 Path B",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 16,
+                          "h": 16
+                        },
+                        "bound": {
+                          "fill": "s2"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "layout": {
+                      "mode": "NONE",
+                      "sizingH": "FIXED",
+                      "sizingV": "FIXED"
+                    }
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "mainComponentId": "80:5"
+              },
+              {
+                "id": "100:24",
+                "name": "Focus Ring",
+                "type": "FRAME",
+                "visible": false,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 120,
+                  "h": 44
+                },
+                "bound": {
+                  "stroke": "s3",
+                  "radius": "p14"
+                },
+                "children": [
+                  {
+                    "id": "100:25",
+                    "name": "Ring Outline",
+                    "type": "RECTANGLE",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 120,
+                      "h": 44
+                    },
+                    "bound": {
+                      "fill": "s3"
+                    },
+                    "children": [],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "fills": [
+                      {
+                        "type": "SOLID",
+                        "color": {
+                          "r": 0.062,
+                          "g": 0.322,
+                          "b": 0.667,
+                          "a": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "layout": {
+                  "mode": "NONE",
+                  "sizingH": "FIXED",
+                  "sizingV": "FIXED"
+                },
+                "strokes": [
+                  {
+                    "color": {
+                      "r": 0.062,
+                      "g": 0.322,
+                      "b": 0.667,
+                      "a": 1
+                    },
+                    "weight": 2
+                  }
+                ],
+                "radius": 8
+              },
+              {
+                "id": "100:26",
+                "name": "라벨",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 80,
+                  "h": 20
+                },
+                "bound": {
+                  "fill": "s2",
+                  "textStyle": "t1"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 1,
+                      "g": 1,
+                      "b": 1,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "확인",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 600,
+                  "lineHeight": 20
+                }
+              },
+              {
+                "id": "100:27",
+                "name": "보조 라벨",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 60,
+                  "h": 16
+                },
+                "bound": {
+                  "fill": "s6",
+                  "textStyle": "t2"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.376,
+                      "g": 0.392,
+                      "b": 0.404,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "선택 사항",
+                  "fontFamily": "Inter",
+                  "fontSize": 12,
+                  "fontWeight": 600,
+                  "lineHeight": 16
+                }
+              }
+            ],
+            "extra": {
+              "blendMode": "PASS_THROUGH",
+              "clipsContent": false,
+              "strokeAlign": "INSIDE",
+              "strokeWeight": 1,
+              "constraints": {
+                "vertical": "TOP",
+                "horizontal": "LEFT"
+              },
+              "effects": [],
+              "exportSettings": [],
+              "layoutAlign": "INHERIT",
+              "layoutGrow": 0,
+              "preserveRatio": false
+            },
+            "layout": {
+              "mode": "HORIZONTAL",
+              "gap": 8,
+              "padding": [
+                8,
+                16,
+                8,
+                16
+              ],
+              "primaryAlign": "CENTER",
+              "counterAlign": "CENTER",
+              "sizingH": "HUG",
+              "sizingV": "HUG"
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "color": {
+                  "r": 0.102,
+                  "g": 0.451,
+                  "b": 0.91,
+                  "a": 1
+                }
+              }
+            ],
+            "radius": 8
+          }
+        },
+        {
+          "id": "100:28",
+          "props": {
+            "size": "md",
+            "state": "disabled"
+          },
+          "root": {
+            "id": "100:28",
+            "name": "확인 버튼",
+            "type": "COMPONENT",
+            "visible": true,
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "w": 120,
+              "h": 40
+            },
+            "bound": {
+              "fill": "s6",
+              "radius": "p14",
+              "gap": "p10",
+              "padding": [
+                "p10",
+                "p11",
+                "p10",
+                "p11"
+              ]
+            },
+            "children": [
+              {
+                "id": "100:29",
+                "name": "앞 아이콘",
+                "type": "INSTANCE",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 20,
+                  "h": 20
+                },
+                "bound": {},
+                "children": [
+                  {
+                    "id": "100:30",
+                    "name": "앞 아이콘 Canvas",
+                    "type": "FRAME",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 20,
+                      "h": 20
+                    },
+                    "bound": {},
+                    "children": [
+                      {
+                        "id": "100:31",
+                        "name": "앞 아이콘 Path A",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 20,
+                          "h": 20
+                        },
+                        "bound": {
+                          "fill": "s2"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": "100:32",
+                        "name": "앞 아이콘 Path B",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 16,
+                          "h": 16
+                        },
+                        "bound": {
+                          "fill": "s2"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "layout": {
+                      "mode": "NONE",
+                      "sizingH": "FIXED",
+                      "sizingV": "FIXED"
+                    }
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "mainComponentId": "80:5"
+              },
+              {
+                "id": "100:33",
+                "name": "Focus Ring",
+                "type": "FRAME",
+                "visible": false,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 120,
+                  "h": 44
+                },
+                "bound": {
+                  "stroke": "s3",
+                  "radius": "p14"
+                },
+                "children": [
+                  {
+                    "id": "100:34",
+                    "name": "Ring Outline",
+                    "type": "RECTANGLE",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 120,
+                      "h": 44
+                    },
+                    "bound": {
+                      "fill": "s3"
+                    },
+                    "children": [],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "fills": [
+                      {
+                        "type": "SOLID",
+                        "color": {
+                          "r": 0.062,
+                          "g": 0.322,
+                          "b": 0.667,
+                          "a": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "layout": {
+                  "mode": "NONE",
+                  "sizingH": "FIXED",
+                  "sizingV": "FIXED"
+                },
+                "strokes": [
+                  {
+                    "color": {
+                      "r": 0.062,
+                      "g": 0.322,
+                      "b": 0.667,
+                      "a": 1
+                    },
+                    "weight": 2
+                  }
+                ],
+                "radius": 8
+              },
+              {
+                "id": "100:35",
+                "name": "라벨",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 80,
+                  "h": 20
+                },
+                "bound": {
+                  "fill": "s2",
+                  "textStyle": "t1"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 1,
+                      "g": 1,
+                      "b": 1,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "확인",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 600,
+                  "lineHeight": 20
+                }
+              },
+              {
+                "id": "100:36",
+                "name": "보조 라벨",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 60,
+                  "h": 16
+                },
+                "bound": {
+                  "fill": "s6",
+                  "textStyle": "t2"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.376,
+                      "g": 0.392,
+                      "b": 0.404,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "선택 사항",
+                  "fontFamily": "Inter",
+                  "fontSize": 12,
+                  "fontWeight": 600,
+                  "lineHeight": 16
+                }
+              }
+            ],
+            "extra": {
+              "blendMode": "PASS_THROUGH",
+              "clipsContent": false,
+              "strokeAlign": "INSIDE",
+              "strokeWeight": 1,
+              "constraints": {
+                "vertical": "TOP",
+                "horizontal": "LEFT"
+              },
+              "effects": [],
+              "exportSettings": [],
+              "layoutAlign": "INHERIT",
+              "layoutGrow": 0,
+              "preserveRatio": false
+            },
+            "layout": {
+              "mode": "HORIZONTAL",
+              "gap": 8,
+              "padding": [
+                8,
+                16,
+                8,
+                16
+              ],
+              "primaryAlign": "CENTER",
+              "counterAlign": "CENTER",
+              "sizingH": "HUG",
+              "sizingV": "HUG"
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "color": {
+                  "r": 0.102,
+                  "g": 0.451,
+                  "b": 0.91,
+                  "a": 1
+                }
+              }
+            ],
+            "radius": 8
+          }
+        },
+        {
+          "id": "100:37",
+          "props": {
+            "size": "lg",
+            "state": "default"
+          },
+          "root": {
+            "id": "100:37",
+            "name": "확인 버튼",
+            "type": "COMPONENT",
+            "visible": true,
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "w": 120,
+              "h": 40
+            },
+            "bound": {
+              "fill": "s1",
+              "radius": "p14",
+              "gap": "p11",
+              "padding": [
+                "p10",
+                "p11",
+                "p10",
+                "p11"
+              ]
+            },
+            "children": [
+              {
+                "id": "100:38",
+                "name": "앞 아이콘",
+                "type": "INSTANCE",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 20,
+                  "h": 20
+                },
+                "bound": {},
+                "children": [
+                  {
+                    "id": "100:39",
+                    "name": "앞 아이콘 Canvas",
+                    "type": "FRAME",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 20,
+                      "h": 20
+                    },
+                    "bound": {},
+                    "children": [
+                      {
+                        "id": "100:40",
+                        "name": "앞 아이콘 Path A",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 20,
+                          "h": 20
+                        },
+                        "bound": {
+                          "fill": "s2"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": "100:41",
+                        "name": "앞 아이콘 Path B",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 16,
+                          "h": 16
+                        },
+                        "bound": {
+                          "fill": "s2"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "layout": {
+                      "mode": "NONE",
+                      "sizingH": "FIXED",
+                      "sizingV": "FIXED"
+                    }
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "mainComponentId": "80:5"
+              },
+              {
+                "id": "100:42",
+                "name": "Focus Ring",
+                "type": "FRAME",
+                "visible": false,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 120,
+                  "h": 44
+                },
+                "bound": {
+                  "stroke": "s3",
+                  "radius": "p14"
+                },
+                "children": [
+                  {
+                    "id": "100:43",
+                    "name": "Ring Outline",
+                    "type": "RECTANGLE",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 120,
+                      "h": 44
+                    },
+                    "bound": {
+                      "fill": "s3"
+                    },
+                    "children": [],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "fills": [
+                      {
+                        "type": "SOLID",
+                        "color": {
+                          "r": 0.062,
+                          "g": 0.322,
+                          "b": 0.667,
+                          "a": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "layout": {
+                  "mode": "NONE",
+                  "sizingH": "FIXED",
+                  "sizingV": "FIXED"
+                },
+                "strokes": [
+                  {
+                    "color": {
+                      "r": 0.062,
+                      "g": 0.322,
+                      "b": 0.667,
+                      "a": 1
+                    },
+                    "weight": 2
+                  }
+                ],
+                "radius": 8
+              },
+              {
+                "id": "100:44",
+                "name": "라벨",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 80,
+                  "h": 20
+                },
+                "bound": {
+                  "fill": "s2",
+                  "textStyle": "t1"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 1,
+                      "g": 1,
+                      "b": 1,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "확인",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 600,
+                  "lineHeight": 20
+                }
+              },
+              {
+                "id": "100:45",
+                "name": "보조 라벨",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 60,
+                  "h": 16
+                },
+                "bound": {
+                  "fill": "s6",
+                  "textStyle": "t2"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.376,
+                      "g": 0.392,
+                      "b": 0.404,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "선택 사항",
+                  "fontFamily": "Inter",
+                  "fontSize": 12,
+                  "fontWeight": 600,
+                  "lineHeight": 16
+                }
+              }
+            ],
+            "extra": {
+              "blendMode": "PASS_THROUGH",
+              "clipsContent": false,
+              "strokeAlign": "INSIDE",
+              "strokeWeight": 1,
+              "constraints": {
+                "vertical": "TOP",
+                "horizontal": "LEFT"
+              },
+              "effects": [],
+              "exportSettings": [],
+              "layoutAlign": "INHERIT",
+              "layoutGrow": 0,
+              "preserveRatio": false
+            },
+            "layout": {
+              "mode": "HORIZONTAL",
+              "gap": 16,
+              "padding": [
+                8,
+                16,
+                8,
+                16
+              ],
+              "primaryAlign": "CENTER",
+              "counterAlign": "CENTER",
+              "sizingH": "HUG",
+              "sizingV": "HUG"
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "color": {
+                  "r": 0.102,
+                  "g": 0.451,
+                  "b": 0.91,
+                  "a": 1
+                }
+              }
+            ],
+            "radius": 8
+          }
+        },
+        {
+          "id": "100:46",
+          "props": {
+            "size": "lg",
+            "state": "disabled"
+          },
+          "root": {
+            "id": "100:46",
+            "name": "확인 버튼",
+            "type": "COMPONENT",
+            "visible": true,
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "w": 120,
+              "h": 40
+            },
+            "bound": {
+              "fill": "s6",
+              "radius": "p14",
+              "gap": "p11",
+              "padding": [
+                "p10",
+                "p11",
+                "p10",
+                "p11"
+              ]
+            },
+            "children": [
+              {
+                "id": "100:47",
+                "name": "앞 아이콘",
+                "type": "INSTANCE",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 20,
+                  "h": 20
+                },
+                "bound": {},
+                "children": [
+                  {
+                    "id": "100:48",
+                    "name": "앞 아이콘 Canvas",
+                    "type": "FRAME",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 20,
+                      "h": 20
+                    },
+                    "bound": {},
+                    "children": [
+                      {
+                        "id": "100:49",
+                        "name": "앞 아이콘 Path A",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 20,
+                          "h": 20
+                        },
+                        "bound": {
+                          "fill": "s2"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": "100:50",
+                        "name": "앞 아이콘 Path B",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 16,
+                          "h": 16
+                        },
+                        "bound": {
+                          "fill": "s2"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "layout": {
+                      "mode": "NONE",
+                      "sizingH": "FIXED",
+                      "sizingV": "FIXED"
+                    }
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "mainComponentId": "80:5"
+              },
+              {
+                "id": "100:51",
+                "name": "Focus Ring",
+                "type": "FRAME",
+                "visible": false,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 120,
+                  "h": 44
+                },
+                "bound": {
+                  "stroke": "s3",
+                  "radius": "p14"
+                },
+                "children": [
+                  {
+                    "id": "100:52",
+                    "name": "Ring Outline",
+                    "type": "RECTANGLE",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 120,
+                      "h": 44
+                    },
+                    "bound": {
+                      "fill": "s3"
+                    },
+                    "children": [],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "fills": [
+                      {
+                        "type": "SOLID",
+                        "color": {
+                          "r": 0.062,
+                          "g": 0.322,
+                          "b": 0.667,
+                          "a": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "layout": {
+                  "mode": "NONE",
+                  "sizingH": "FIXED",
+                  "sizingV": "FIXED"
+                },
+                "strokes": [
+                  {
+                    "color": {
+                      "r": 0.062,
+                      "g": 0.322,
+                      "b": 0.667,
+                      "a": 1
+                    },
+                    "weight": 2
+                  }
+                ],
+                "radius": 8
+              },
+              {
+                "id": "100:53",
+                "name": "라벨",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 80,
+                  "h": 20
+                },
+                "bound": {
+                  "fill": "s2",
+                  "textStyle": "t1"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 1,
+                      "g": 1,
+                      "b": 1,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "확인",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 600,
+                  "lineHeight": 20
+                }
+              },
+              {
+                "id": "100:54",
+                "name": "보조 라벨",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 60,
+                  "h": 16
+                },
+                "bound": {
+                  "fill": "s6",
+                  "textStyle": "t2"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.376,
+                      "g": 0.392,
+                      "b": 0.404,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "선택 사항",
+                  "fontFamily": "Inter",
+                  "fontSize": 12,
+                  "fontWeight": 600,
+                  "lineHeight": 16
+                }
+              }
+            ],
+            "extra": {
+              "blendMode": "PASS_THROUGH",
+              "clipsContent": false,
+              "strokeAlign": "INSIDE",
+              "strokeWeight": 1,
+              "constraints": {
+                "vertical": "TOP",
+                "horizontal": "LEFT"
+              },
+              "effects": [],
+              "exportSettings": [],
+              "layoutAlign": "INHERIT",
+              "layoutGrow": 0,
+              "preserveRatio": false
+            },
+            "layout": {
+              "mode": "HORIZONTAL",
+              "gap": 16,
+              "padding": [
+                8,
+                16,
+                8,
+                16
+              ],
+              "primaryAlign": "CENTER",
+              "counterAlign": "CENTER",
+              "sizingH": "HUG",
+              "sizingV": "HUG"
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "color": {
+                  "r": 0.102,
+                  "g": 0.451,
+                  "b": 0.91,
+                  "a": 1
+                }
+              }
+            ],
+            "radius": 8
+          }
+        },
+        {
+          "id": "100:55",
+          "props": {
+            "size": "xl",
+            "state": "default"
+          },
+          "root": {
+            "id": "100:55",
+            "name": "확인 버튼",
+            "type": "COMPONENT",
+            "visible": true,
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "w": 120,
+              "h": 40
+            },
+            "bound": {
+              "fill": "s1",
+              "radius": "p14",
+              "gap": "p12",
+              "padding": [
+                "p10",
+                "p11",
+                "p10",
+                "p11"
+              ]
+            },
+            "children": [
+              {
+                "id": "100:56",
+                "name": "앞 아이콘",
+                "type": "INSTANCE",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 20,
+                  "h": 20
+                },
+                "bound": {},
+                "children": [
+                  {
+                    "id": "100:57",
+                    "name": "앞 아이콘 Canvas",
+                    "type": "FRAME",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 20,
+                      "h": 20
+                    },
+                    "bound": {},
+                    "children": [
+                      {
+                        "id": "100:58",
+                        "name": "앞 아이콘 Path A",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 20,
+                          "h": 20
+                        },
+                        "bound": {
+                          "fill": "s2"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": "100:59",
+                        "name": "앞 아이콘 Path B",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 16,
+                          "h": 16
+                        },
+                        "bound": {
+                          "fill": "s2"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "layout": {
+                      "mode": "NONE",
+                      "sizingH": "FIXED",
+                      "sizingV": "FIXED"
+                    }
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "mainComponentId": "80:5"
+              },
+              {
+                "id": "100:60",
+                "name": "Focus Ring",
+                "type": "FRAME",
+                "visible": false,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 120,
+                  "h": 44
+                },
+                "bound": {
+                  "stroke": "s3",
+                  "radius": "p14"
+                },
+                "children": [
+                  {
+                    "id": "100:61",
+                    "name": "Ring Outline",
+                    "type": "RECTANGLE",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 120,
+                      "h": 44
+                    },
+                    "bound": {
+                      "fill": "s3"
+                    },
+                    "children": [],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "fills": [
+                      {
+                        "type": "SOLID",
+                        "color": {
+                          "r": 0.062,
+                          "g": 0.322,
+                          "b": 0.667,
+                          "a": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "layout": {
+                  "mode": "NONE",
+                  "sizingH": "FIXED",
+                  "sizingV": "FIXED"
+                },
+                "strokes": [
+                  {
+                    "color": {
+                      "r": 0.062,
+                      "g": 0.322,
+                      "b": 0.667,
+                      "a": 1
+                    },
+                    "weight": 2
+                  }
+                ],
+                "radius": 8
+              },
+              {
+                "id": "100:62",
+                "name": "라벨",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 80,
+                  "h": 20
+                },
+                "bound": {
+                  "fill": "s2",
+                  "textStyle": "t1"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 1,
+                      "g": 1,
+                      "b": 1,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "확인",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 600,
+                  "lineHeight": 20
+                }
+              },
+              {
+                "id": "100:63",
+                "name": "보조 라벨",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 60,
+                  "h": 16
+                },
+                "bound": {
+                  "fill": "s6",
+                  "textStyle": "t2"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.376,
+                      "g": 0.392,
+                      "b": 0.404,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "선택 사항",
+                  "fontFamily": "Inter",
+                  "fontSize": 12,
+                  "fontWeight": 600,
+                  "lineHeight": 16
+                }
+              }
+            ],
+            "extra": {
+              "blendMode": "PASS_THROUGH",
+              "clipsContent": false,
+              "strokeAlign": "INSIDE",
+              "strokeWeight": 1,
+              "constraints": {
+                "vertical": "TOP",
+                "horizontal": "LEFT"
+              },
+              "effects": [],
+              "exportSettings": [],
+              "layoutAlign": "INHERIT",
+              "layoutGrow": 0,
+              "preserveRatio": false
+            },
+            "layout": {
+              "mode": "HORIZONTAL",
+              "gap": 24,
+              "padding": [
+                8,
+                16,
+                8,
+                16
+              ],
+              "primaryAlign": "CENTER",
+              "counterAlign": "CENTER",
+              "sizingH": "HUG",
+              "sizingV": "HUG"
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "color": {
+                  "r": 0.102,
+                  "g": 0.451,
+                  "b": 0.91,
+                  "a": 1
+                }
+              }
+            ],
+            "radius": 8
+          }
+        },
+        {
+          "id": "100:64",
+          "props": {
+            "size": "xl",
+            "state": "disabled"
+          },
+          "root": {
+            "id": "100:64",
+            "name": "확인 버튼",
+            "type": "COMPONENT",
+            "visible": true,
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "w": 120,
+              "h": 40
+            },
+            "bound": {
+              "fill": "s6",
+              "radius": "p14",
+              "gap": "p12",
+              "padding": [
+                "p10",
+                "p11",
+                "p10",
+                "p11"
+              ]
+            },
+            "children": [
+              {
+                "id": "100:65",
+                "name": "앞 아이콘",
+                "type": "INSTANCE",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 20,
+                  "h": 20
+                },
+                "bound": {},
+                "children": [
+                  {
+                    "id": "100:66",
+                    "name": "앞 아이콘 Canvas",
+                    "type": "FRAME",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 20,
+                      "h": 20
+                    },
+                    "bound": {},
+                    "children": [
+                      {
+                        "id": "100:67",
+                        "name": "앞 아이콘 Path A",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 20,
+                          "h": 20
+                        },
+                        "bound": {
+                          "fill": "s2"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "id": "100:68",
+                        "name": "앞 아이콘 Path B",
+                        "type": "VECTOR",
+                        "visible": true,
+                        "bbox": {
+                          "x": 0,
+                          "y": 0,
+                          "w": 16,
+                          "h": 16
+                        },
+                        "bound": {
+                          "fill": "s2"
+                        },
+                        "children": [],
+                        "extra": {
+                          "blendMode": "PASS_THROUGH",
+                          "clipsContent": false,
+                          "strokeAlign": "INSIDE",
+                          "strokeWeight": 1,
+                          "constraints": {
+                            "vertical": "TOP",
+                            "horizontal": "LEFT"
+                          },
+                          "effects": [],
+                          "exportSettings": [],
+                          "layoutAlign": "INHERIT",
+                          "layoutGrow": 0,
+                          "preserveRatio": false
+                        },
+                        "fills": [
+                          {
+                            "type": "SOLID",
+                            "color": {
+                              "r": 1,
+                              "g": 1,
+                              "b": 1,
+                              "a": 1
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "layout": {
+                      "mode": "NONE",
+                      "sizingH": "FIXED",
+                      "sizingV": "FIXED"
+                    }
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "mainComponentId": "80:5"
+              },
+              {
+                "id": "100:69",
+                "name": "Focus Ring",
+                "type": "FRAME",
+                "visible": false,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 120,
+                  "h": 44
+                },
+                "bound": {
+                  "stroke": "s3",
+                  "radius": "p14"
+                },
+                "children": [
+                  {
+                    "id": "100:70",
+                    "name": "Ring Outline",
+                    "type": "RECTANGLE",
+                    "visible": true,
+                    "bbox": {
+                      "x": 0,
+                      "y": 0,
+                      "w": 120,
+                      "h": 44
+                    },
+                    "bound": {
+                      "fill": "s3"
+                    },
+                    "children": [],
+                    "extra": {
+                      "blendMode": "PASS_THROUGH",
+                      "clipsContent": false,
+                      "strokeAlign": "INSIDE",
+                      "strokeWeight": 1,
+                      "constraints": {
+                        "vertical": "TOP",
+                        "horizontal": "LEFT"
+                      },
+                      "effects": [],
+                      "exportSettings": [],
+                      "layoutAlign": "INHERIT",
+                      "layoutGrow": 0,
+                      "preserveRatio": false
+                    },
+                    "fills": [
+                      {
+                        "type": "SOLID",
+                        "color": {
+                          "r": 0.062,
+                          "g": 0.322,
+                          "b": 0.667,
+                          "a": 1
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "layout": {
+                  "mode": "NONE",
+                  "sizingH": "FIXED",
+                  "sizingV": "FIXED"
+                },
+                "strokes": [
+                  {
+                    "color": {
+                      "r": 0.062,
+                      "g": 0.322,
+                      "b": 0.667,
+                      "a": 1
+                    },
+                    "weight": 2
+                  }
+                ],
+                "radius": 8
+              },
+              {
+                "id": "100:71",
+                "name": "라벨",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 80,
+                  "h": 20
+                },
+                "bound": {
+                  "fill": "s2",
+                  "textStyle": "t1"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 1,
+                      "g": 1,
+                      "b": 1,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "확인",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": 600,
+                  "lineHeight": 20
+                }
+              },
+              {
+                "id": "100:72",
+                "name": "보조 라벨",
+                "type": "TEXT",
+                "visible": true,
+                "bbox": {
+                  "x": 0,
+                  "y": 0,
+                  "w": 60,
+                  "h": 16
+                },
+                "bound": {
+                  "fill": "s6",
+                  "textStyle": "t2"
+                },
+                "children": [],
+                "extra": {
+                  "blendMode": "PASS_THROUGH",
+                  "clipsContent": false,
+                  "strokeAlign": "INSIDE",
+                  "strokeWeight": 1,
+                  "constraints": {
+                    "vertical": "TOP",
+                    "horizontal": "LEFT"
+                  },
+                  "effects": [],
+                  "exportSettings": [],
+                  "layoutAlign": "INHERIT",
+                  "layoutGrow": 0,
+                  "preserveRatio": false
+                },
+                "fills": [
+                  {
+                    "type": "SOLID",
+                    "color": {
+                      "r": 0.376,
+                      "g": 0.392,
+                      "b": 0.404,
+                      "a": 1
+                    }
+                  }
+                ],
+                "text": {
+                  "characters": "선택 사항",
+                  "fontFamily": "Inter",
+                  "fontSize": 12,
+                  "fontWeight": 600,
+                  "lineHeight": 16
+                }
+              }
+            ],
+            "extra": {
+              "blendMode": "PASS_THROUGH",
+              "clipsContent": false,
+              "strokeAlign": "INSIDE",
+              "strokeWeight": 1,
+              "constraints": {
+                "vertical": "TOP",
+                "horizontal": "LEFT"
+              },
+              "effects": [],
+              "exportSettings": [],
+              "layoutAlign": "INHERIT",
+              "layoutGrow": 0,
+              "preserveRatio": false
+            },
+            "layout": {
+              "mode": "HORIZONTAL",
+              "gap": 24,
+              "padding": [
+                8,
+                16,
+                8,
+                16
+              ],
+              "primaryAlign": "CENTER",
+              "counterAlign": "CENTER",
+              "sizingH": "HUG",
+              "sizingV": "HUG"
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "color": {
+                  "r": 0.102,
+                  "g": 0.451,
+                  "b": 0.91,
+                  "a": 1
+                }
+              }
+            ],
+            "radius": 8
+          }
+        }
+      ]
+    }
+  ],
+  "annotations": [
+    {
+      "nodeId": "90:1",
+      "text": "[a11y] 레이어 이름이 한글이어도 토큰 경로는 ASCII를 유지한다.",
+      "source": "fixture"
+    }
+  ]
+}

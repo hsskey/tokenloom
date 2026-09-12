@@ -1,0 +1,3 @@
+# A clock in the Agent view also breaks the byte comparison in reference and the CLI test suite in tests.
+tests
+reference

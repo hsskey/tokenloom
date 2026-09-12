@@ -1,0 +1,50 @@
+# Whole-task trajectory matrix: how much a code-generation agent spends per tokenloom interface condition.
+# 4 tasks x 3 conditions x 2 repeats = 24 runs, all from committed snapshots.
+model: opus
+repeats: 2
+# Longest designed path is the 4-turn canonical run; the cap leaves one unplanned retry.
+maxTurns: 6
+# Hard output cap per call. It sets both the pre-call bound and the provider --max-budget-usd value.
+maxOutputTokens: 6000
+budgetUsd: 5
+# Measured `cache_read` prefix per `claude -p --restricted` call, p50 over runs/*.jsonl.
+sessionPrefixTokens: 10844
+# Measured per-call instruction block the provider bills as a cache write, from the P8 note baseline.
+sessionWriteTokens: 3598
+conditions: [cli-canonical, cli-agent, mcp-agent]
+# Prompt text is experiment input, so it lives here rather than in source, like packages/eval/prompts/css.md.
+# Its sha256 is the promptHash that partitions a comparison; editing it starts a new comparison set.
+prompt:
+  views:
+    cli-canonical: A query returns the canonical design context view of the tokenloom CLI.
+    cli-agent: A query returns the agent design context view of the tokenloom CLI.
+    mcp-agent: A query returns the agent design context view of the tokenloom MCP design_context tool.
+  instructions: |-
+    You write the CSS and the demo markup for one UI component of a design system.
+    You cannot see the design, so query tokenloom for its design context first.
+
+    To query, emit one line and nothing else:
+    TOOL <key>=<value> ...
+    Keys: component (component set name), match (filter the listed sets), variant (a selector such as size=md).
+    Omit component to list the component sets of the snapshot.
+    The harness runs the query and gives you its output. The snapshot path and the view are already fixed.
+
+    When you have the design context, output exactly two fenced blocks, ```css then ```html, and nothing else.
+    Every colour, spacing, radius, and typography value is a var(--...) derived from tokensUsed. No literals.
+tasks:
+  - task: known-component
+    sampleName: button
+    snapshot: samples/button/snapshot.json
+    instruction: Generate the component set named Button.
+  - task: unknown-component
+    sampleName: icon-button
+    snapshot: samples/icon-button/snapshot.json
+    instruction: Generate the component set of this snapshot that renders an icon-only button. Its name is unknown to you.
+  - task: variant-only
+    sampleName: twenty-variants
+    snapshot: samples/twenty-variants/snapshot.json
+    instruction: Generate only the size=md variant of the component set named Chip.
+  - task: recovery
+    sampleName: button
+    snapshot: samples/button/snapshot.json
+    instruction: Generate the component set named Buttons. If that name does not exist, find the right one and continue.

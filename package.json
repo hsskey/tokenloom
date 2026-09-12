@@ -1,0 +1,30 @@
+{
+  "name": "tokenloom",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.20.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsx scripts/build.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p packages/adapters/plugin/tsconfig.json",
+    "lint": "eslint .",
+    "verify": "tsx packages/verify/src/cli.ts",
+    "bench": "node --expose-gc node_modules/tsx/dist/cli.mjs bench/run.ts",
+    "tokenloom": "node apps/cli/dist/tokenloom.js"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "archunit": "2.4.0",
+    "esbuild": "^0.24.2",
+    "eslint": "^9.17.0",
+    "playwright": "^1.49.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.18.1",
+    "vitest": "^2.1.8"
+  }
+}

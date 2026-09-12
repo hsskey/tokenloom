@@ -1,0 +1,245 @@
+{
+  "annotations": [
+    {
+      "kind": "behavior",
+      "nodeId": "90:1",
+      "text": "아이콘만 있을 때도 접근 가능한 이름을 유지한다."
+    }
+  ],
+  "component": {
+    "base": {
+      "props": {
+        "size": "sm",
+        "state": "default"
+      },
+      "root": {
+        "children": [
+          {
+            "children": [],
+            "id": "100:2",
+            "instanceOf": "80-1",
+            "layout": {
+              "dir": "none",
+              "sizing": {
+                "h": "hug",
+                "w": "hug"
+              }
+            },
+            "name": "icon",
+            "role": "instance",
+            "style": {}
+          },
+          {
+            "children": [],
+            "id": "100:6",
+            "layout": {
+              "dir": "none",
+              "sizing": {
+                "h": "hug",
+                "w": "hug"
+              }
+            },
+            "name": "label",
+            "role": "text",
+            "style": {
+              "fg": "color.action.fg"
+            },
+            "text": {
+              "content": "Save",
+              "typo": "typo.label.md"
+            }
+          },
+          {
+            "children": [],
+            "id": "100:7",
+            "instanceOf": "80-2",
+            "layout": {
+              "dir": "none",
+              "sizing": {
+                "h": "hug",
+                "w": "hug"
+              }
+            },
+            "name": "chevron",
+            "role": "instance",
+            "style": {}
+          }
+        ],
+        "id": "100:1",
+        "layout": {
+          "align": "center",
+          "crossAlign": "center",
+          "dir": "row",
+          "gap": "space.xs",
+          "pad": [
+            "space.sm",
+            "space.md",
+            "space.sm",
+            "space.md"
+          ],
+          "sizing": {
+            "h": "hug",
+            "w": "hug"
+          }
+        },
+        "name": "iconbutton",
+        "role": "container",
+        "style": {
+          "bg": "color.action.bg",
+          "radius": "radius.md"
+        }
+      }
+    },
+    "block": "iconbutton",
+    "name": "IconButton",
+    "props": {
+      "size": [
+        "sm",
+        "md",
+        "lg"
+      ],
+      "state": [
+        "default",
+        "hover",
+        "disabled"
+      ]
+    },
+    "variants": [
+      {
+        "delta": [
+          {
+            "path": "/style/bg",
+            "value": "color.action.border"
+          }
+        ],
+        "props": {
+          "size": "sm",
+          "state": "hover"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/style/bg",
+            "value": "color.surface.muted"
+          }
+        ],
+        "props": {
+          "size": "sm",
+          "state": "disabled"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.sm"
+          }
+        ],
+        "props": {
+          "size": "md",
+          "state": "default"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.sm"
+          },
+          {
+            "path": "/style/bg",
+            "value": "color.action.border"
+          }
+        ],
+        "props": {
+          "size": "md",
+          "state": "hover"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.sm"
+          },
+          {
+            "path": "/style/bg",
+            "value": "color.surface.muted"
+          }
+        ],
+        "props": {
+          "size": "md",
+          "state": "disabled"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.md"
+          }
+        ],
+        "props": {
+          "size": "lg",
+          "state": "default"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.md"
+          },
+          {
+            "path": "/style/bg",
+            "value": "color.action.border"
+          }
+        ],
+        "props": {
+          "size": "lg",
+          "state": "hover"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.md"
+          },
+          {
+            "path": "/style/bg",
+            "value": "color.surface.muted"
+          }
+        ],
+        "props": {
+          "size": "lg",
+          "state": "disabled"
+        }
+      }
+    ]
+  },
+  "source": {
+    "contentHash": "sha256:327b8c86aaf77493521c7e7ea04444c13d06dc6de8b7e8e39d60d438b98b9e34",
+    "fetchedAt": "2026-01-01T00:00:00Z",
+    "fileKey": "FIXTURE",
+    "fileVersion": "fixture-1",
+    "nodeId": "90:1"
+  },
+  "tokensUsed": [
+    "color.action.bg",
+    "color.action.border",
+    "color.action.fg",
+    "color.surface.muted",
+    "radius.md",
+    "space.md",
+    "space.sm",
+    "space.xs",
+    "typo.label.md.fontFamily",
+    "typo.label.md.fontSize",
+    "typo.label.md.fontWeight",
+    "typo.label.md.lineHeight"
+  ],
+  "version": 1,
+  "warnings": []
+}

@@ -1,0 +1,159 @@
+{
+  "nodeId": "2072:9432",
+  "serverVersion": null,
+  "toolResults": [
+    {
+      "content": [
+        {
+          "tool_name": "mcp__figma__get_design_context",
+          "type": "tool_reference"
+        },
+        {
+          "tool_name": "mcp__figma__get_metadata",
+          "type": "tool_reference"
+        },
+        {
+          "tool_name": "mcp__figma__get_variable_defs",
+          "type": "tool_reference"
+        }
+      ],
+      "name": "ToolSearch",
+      "toolUseId": "toolu_01GfJ5dYM3ctEeNuBDRzdbNM"
+    },
+    {
+      "content": [
+        {
+          "text": "<frame id=\"2072:9432\" name=\"Button Group\" x=\"2462\" y=\"100\" width=\"280\" height=\"552\">\n  <symbol id=\"108:12663\" name=\"Align=Start\" x=\"20\" y=\"124\" width=\"240\" height=\"40\" />\n  <symbol id=\"2072:9433\" name=\"Align=End\" x=\"20\" y=\"228\" width=\"240\" height=\"40\" />\n  <symbol id=\"2072:9446\" name=\"Align=Center\" x=\"20\" y=\"332\" width=\"240\" height=\"40\" />\n  <symbol id=\"2072:9459\" name=\"Align=Justify\" x=\"20\" y=\"20\" width=\"240\" height=\"40\" />\n  <symbol id=\"280:19104\" name=\"Align=Stack\" x=\"20\" y=\"436\" width=\"240\" height=\"96\" />\n</frame>",
+          "type": "text"
+        },
+        {
+          "text": "IMPORTANT: After you call this tool, you MUST call get_design_context if trying to implement the design, since this tool only returns metadata. If you do not call get_design_context, the agent will not be able to implement the design.",
+          "type": "text"
+        }
+      ],
+      "name": "mcp__figma__get_metadata",
+      "toolUseId": "toolu_01Gfgq2zFGbeyFyF6dbattqK"
+    },
+    {
+      "content": [
+        {
+          "text": "{\"var(--sds-color-text-neutral-default)\":\"#303030\",\"var(--sds-typography-body-size-medium)\":\"16\",\"var(--sds-typography-body-font-family)\":\"Inter\",\"var(--sds-typography-body-font-weight-regular)\":\"400\",\"Single Line/Body Base\":\"Font(family: \\\"var(--sds-typography-body-font-family)\\\", style: Regular, size: var(--sds-typography-body-size-medium), weight: var(--sds-typography-body-font-weight-regular), lineHeight: 1, letterSpacing: 0)\",\"var(--sds-size-space-200)\":\"8\",\"var(--sds-size-space-300)\":\"12\",\"var(--sds-size-radius-200)\":\"8\",\"var(--sds-size-stroke-border)\":\"1\",\"var(--sds-color-text-brand-on-brand)\":\"#f5f5f5\",\"var(--sds-color-background-brand-default)\":\"#2c2c2c\",\"var(--sds-color-border-brand-default)\":\"#2c2c2c\",\"var(--sds-size-space-400)\":\"16\",\"var(--sds-color-border-neutral-default)\":\"#303030\"}",
+          "type": "text"
+        }
+      ],
+      "name": "mcp__figma__get_variable_defs",
+      "toolUseId": "toolu_01DgzoF8yQXZ8EgKFfsCMy2Z"
+    },
+    {
+      "content": [
+        {
+          "text": "type ButtonGroupProps = {\n  className?: string;\n  align?: \"Justify\" | \"Start\" | \"End\" | \"Center\" | \"Stack\";\n  buttonEnd?: boolean;\n  buttonStart?: boolean;\n};\n\nexport default function ButtonGroup({ className, align = \"Justify\", buttonEnd = true, buttonStart = true }: ButtonGroupProps) {\n  const isCenter = align === \"Center\";\n  const isEnd = align === \"End\";\n  const isJustify = align === \"Justify\";\n  const isStack = align === \"Stack\";\n  const isStartOrEndOrCenter = [\"Start\", \"End\", \"Center\"].includes(align);\n  return (\n    <div className={className || `content-stretch flex gap-[var(--sds-size-space-400,16px)] relative w-[240px] ${isStack ? \"flex-col items-start justify-center\" : isCenter ? \"items-center justify-center\" : isEnd ? \"items-center justify-end\" : \"items-center\"}`} id={isStack ? \"node-280_19104\" : isJustify ? \"node-2072_9459\" : isCenter ? \"node-2072_9446\" : isEnd ? \"node-2072_9433\" : \"node-108_12663\"}>\n      {isStartOrEndOrCenter && buttonStart && (\n        <div className=\"content-stretch flex gap-[var(--sds-size-space-200,8px)] items-center justify-center overflow-clip p-[var(--sds-size-space-300,12px)] relative rounded-[var(--sds-size-radius-200,8px)] shrink-0\" data-node-id=\"108:12613\" data-name=\"Button\">\n          <p className=\"[word-break:break-word] font-[family-name:var(--sds-typography-body-font-family,'Inter:Regular')] font-[var(--sds-typography-body-font-weight-regular,400)] leading-none not-italic relative shrink-0 text-[color:var(--sds-color-text-neutral-default,#303030)] text-[length:var(--sds-typography-body-size-medium,16px)] whitespace-nowrap\" data-node-id=\"I108:12613;4185:3805\">\n            Button\n          </p>\n        </div>\n      )}\n      {isStartOrEndOrCenter && buttonEnd && (\n        <div className=\"bg-[var(--sds-color-background-brand-default,#2c2c2c)] border-[length:var(--sds-size-stroke-border,1px)] border-[var(--sds-color-border-brand-default,#2c2c2c)] border-solid content-stretch flex gap-[var(--sds-size-space-200,8px)] items-center justify-center overflow-clip p-[var(--sds-size-space-300,12px)] relative rounded-[var(--sds-size-radius-200,8px)] shrink-0\" data-node-id=\"108:12612\" data-name=\"Button\">\n          <p className=\"[word-break:break-word] font-[family-name:var(--sds-typography-body-font-family,'Inter:Regular')] font-[var(--sds-typography-body-font-weight-regular,400)] leading-none not-italic relative shrink-0 text-[color:var(--sds-color-text-brand-on-brand,#f5f5f5)] text-[length:var(--sds-typography-body-size-medium,16px)] whitespace-nowrap\" data-node-id=\"I108:12612;4185:3781\">\n            Button\n          </p>\n        </div>\n      )}\n      {isJustify && buttonStart && (\n        <div className=\"content-stretch flex flex-[1_0_0] gap-[var(--sds-size-space-200,8px)] items-center justify-center min-w-px overflow-clip p-[var(--sds-size-space-300,12px)] relative rounded-[var(--sds-size-radius-200,8px)]\" data-node-id=\"2072:9460\" data-name=\"Button\">\n          <p className=\"[word-break:break-word] font-[family-name:var(--sds-typography-body-font-family,'Inter:Regular')] font-[var(--sds-typography-body-font-weight-regular,400)] leading-none not-italic relative shrink-0 text-[color:var(--sds-color-text-neutral-default,#303030)] text-[length:var(--sds-typography-body-size-medium,16px)] whitespace-nowrap\" data-node-id=\"I2072:9460;4185:3805\">\n            Button\n          </p>\n        </div>\n      )}\n      {isJustify && buttonEnd && (\n        <div className=\"bg-[var(--sds-color-background-brand-default,#2c2c2c)] border-[length:var(--sds-size-stroke-border,1px)] border-[var(--sds-color-border-brand-default,#2c2c2c)] border-solid content-stretch flex flex-[1_0_0] gap-[var(--sds-size-space-200,8px)] items-center justify-center min-w-px overflow-clip p-[var(--sds-size-space-300,12px)] relative rounded-[var(--sds-size-radius-200,8px)]\" data-node-id=\"2072:9461\" data-name=\"Button\">\n          <p className=\"[word-break:break-word] font-[family-name:var(--sds-typography-body-font-family,'Inter:Regular')] font-[var(--sds-typography-body-font-weight-regular,400)] leading-none not-italic relative shrink-0 text-[color:var(--sds-color-text-brand-on-brand,#f5f5f5)] text-[length:var(--sds-typography-body-size-medium,16px)] whitespace-nowrap\" data-node-id=\"I2072:9461;4185:3781\">\n            Button\n          </p>\n        </div>\n      )}\n      {isStack && buttonStart && (\n        <div className=\"content-stretch flex gap-[var(--sds-size-space-200,8px)] items-center justify-center overflow-clip p-[var(--sds-size-space-300,12px)] relative rounded-[var(--sds-size-radius-200,8px)] shrink-0 w-full\" data-node-id=\"280:19105\" data-name=\"Button\">\n          <p className=\"[word-break:break-word] font-[family-name:var(--sds-typography-body-font-family,'Inter:Regular')] font-[var(--sds-typography-body-font-weight-regular,400)] leading-none not-italic relative shrink-0 text-[color:var(--sds-color-text-neutral-default,#303030)] text-[length:var(--sds-typography-body-size-medium,16px)] whitespace-nowrap\" data-node-id=\"I280:19105;4185:3805\">\n            Button\n          </p>\n        </div>\n      )}\n      {isStack && buttonEnd && (\n        <div className=\"bg-[var(--sds-color-background-brand-default,#2c2c2c)] border-[length:var(--sds-size-stroke-border,1px)] border-[var(--sds-color-border-brand-default,#2c2c2c)] border-solid content-stretch flex gap-[var(--sds-size-space-200,8px)] items-center justify-center overflow-clip p-[var(--sds-size-space-300,12px)] relative rounded-[var(--sds-size-radius-200,8px)] shrink-0 w-full\" data-node-id=\"280:19106\" data-name=\"Button\">\n          <p className=\"[word-break:break-word] font-[family-name:var(--sds-typography-body-font-family,'Inter:Regular')] font-[var(--sds-typography-body-font-weight-regular,400)] leading-none not-italic relative shrink-0 text-[color:var(--sds-color-text-brand-on-brand,#f5f5f5)] text-[length:var(--sds-typography-body-size-medium,16px)] whitespace-nowrap\" data-node-id=\"I280:19106;4185:3781\">\n            Button\n          </p>\n        </div>\n      )}\n    </div>\n  );\n}",
+          "type": "text"
+        },
+        {
+          "text": "SUPER CRITICAL: The generated React+Tailwind code MUST be converted to match the target project's technology stack and styling system.\n1. Analyze the target codebase to identify: technology stack, styling approach, component patterns, and design tokens\n2. Convert React syntax to the target framework/library\n3. Transform all Tailwind classes to the target styling system while preserving exact visual design\n4. Follow the project's existing patterns and conventions\nDO NOT install any Tailwind as a dependency unless the user instructs you to do so.\n",
+          "type": "text"
+        },
+        {
+          "text": "Node ids have been added to the code as data attributes, e.g. `data-node-id=\"1:2\"`.",
+          "type": "text"
+        },
+        {
+          "text": "These styles are contained in the design: Single Line/Body Base: Font(family: \"var(--sds-typography-body-font-family)\", style: Regular, size: var(--sds-typography-body-size-medium), weight: var(--sds-typography-body-font-weight-regular), lineHeight: 1, letterSpacing: 0).",
+          "type": "text"
+        },
+        {
+          "text": "Component descriptions: The following components have usage descriptions or documentation links defined in Figma. These descriptions provide important context about the intended usage, best practices, and any constraints for each component. Follow these guidelines when implementing or using these components.\n\n## Button Group\n**Node ID:** 2072:9432\n\nKeywords: actions",
+          "type": "text"
+        },
+        {
+          "text": "Images and SVGs will be stored as constants, e.g. const image = 'https://www.figma.com/api/mcp/asset/550e8400-e29b-41d4-a716-446655440000.png'. These constants will be used in the code as the source for the image, ex: <img src={image} />. Image assets are stored on a remote server for 7 days and can be fetched using the provided URLs until they expire.",
+          "type": "text"
+        },
+        {
+          "source": {
+            "data": "iVBORw0KGgoAAAANSUhEUgAAARgAAAIoCAYAAACyHPS8AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAOdEVYdFNvZnR3YXJlAEZpZ21hnrGWYwAAJ1NJREFUeAHt3TtsFFf7x/Fn+bvDpI2hxtDapqBwAkhpYoP0FhhDpEghNiAgNjcJJREiepWIixQpGMxNYEBKIgUwEkgJJiVgXFBgpwanBXp7i7fyP78TndXseH1Zex7Yy/cjrbx7PLPry+xvnnNmzmwun8/PWMLExIQ9ffrURkdH7c2bN1aOsbEx89De3m4e+Hn/xc/7L37ef5X78zY3N4dbT0+PrV69uuh7DfHO9PS0DQ0N2fDwsAHAYr169SrcRkZGrLu7OwTNqlWrwvdyqmAULn19fWGhxsbGsFBra6u1tbUZAMxHuXHnzh179OhReKxqZnBwMIRMCJiBgYFQuTQ1NdnFixdnlTkAsJC3b9/aV199Fb6qSDl8+LDl/v7775nt27eHBe7du0e4AFgyhcsXX3wRhlxUxfzfypUr/zs5OWmdnZ3hBgBLpSGW//3vf/bXX3+FLtIKhYuopAGA5dqwYUP4qiPRKzRAIxqYAYDl0gEi0WkuKwwAnBAwANwQMADcEDAA3BAwANwQMADcEDAA3BAwANwQMADcEDAA3BAwANwQMADc5CYnJ8M1ebkODDyMj4/b48ePw3Wey73GM3ysW7fO1q5da/v27XN738f/dS590W8gC7rg0PXr1+327duGyrVz507bu3dv4Rq6WSNgkDmFy4EDB+zly5eGyqeK5vLlyy4hwxgMMqfKhXCpHvpf6X/mgYBBpnRNVrpF1UefCvDixQvLGgGDTF27ds1QnZ48eWJZI2CQKbpG1UtH+rJGwCBT8RrPqD4epxEQMADcEDAA3BAwANwQMADcEDAA3BAwANw0WA3RHJjz58/PatdHWXZ2dhpqm+bSHDlyZFa7ZnQ/fPjQ8O7VVAWjgBkZGSk6nj81NWU3btywrq6ucL9cWi99ApJOh1c7lx+oLI2NjbZt2zZbs2ZNoU2ho9nCDx48CN8v1/37923Tpk1FbbrEgdq5xMnCaqqCiTo6Omzr1q2FxwqEL774IoSPpqeXQyFSKpgIl8r1xx9/FFUsCpyff/45hE+586S0bqlZxskQw9xqMmDSmpqawt5GFU506tSpWV2niYkJu3nzpg0ODtrk5GShu3Xv3j37888/7dChQ+FM1bt374b206dPh69aPvkc+r6W02sq7JKvoZDT99Sm19L95ubm8NzsEX28fv063JIVzMmTJ2d1ndra2mzPnj128ODBcAmD2N3atWtX2GGdO3cutOtxfA7R8snn0E5My2knpOdPvoaeR99TW29vb7iv6RUDAwM1udOqi0FeVTB6IytoIgVB+h+qx9roRMsqHERX/9J9baAKg9j+0UcfFe7L0NCQ9fX1hXV7enrsww8/DEGmmarJ11CXS+HV0tJiO3bsCBtYf3//krpwWJiqjfXr1xf9vxUE6UDX4w0bNoT7MRxE/x/d1w5K21Fs1/8xGR4KpytXroTtTduCvn733XeFQIqvsWXLlhBe2tZUUeln03pL6cJVupqsYJ49exb+uaKNYnR0NFQIyW7TQvTPVpWhgFAQJKsQlcwXLlwIffO4ker1bt26FYJFeybROgobVSq6H0ttLXvx4sXCups3b7bt27eHDbacnxGlJf8v+pvrsaqPcgZ6FfZaXgGRrHRil/no0aNh9nEMLYWYxnoULPHaKlpHlZPa1W2LFbS2if379xfW1fapMR1tB7U2GF2TFYz2OKpQdNMeRxuEQsezBI2T/Lq7u4vatffShpUcKNbGn9x7xi4csqGKQBWKbqo4P/jgg6LQ8aAqV3777beidlWv2lkpPCJth8ltMXbhalFNVjCqItKDvF999VUYM0mOl2RJoaYNOD0gqI1L7bGigj9VEOlBXl0SUmMmyfGSLMUxl+Q4n2jnpvCo1x1IXYzBqEJQt8XzWiXagOYaQ1F7Lfavq4Xe4AodVTZeFC5zXdNW7engqRd1cyZvqTd/+p8eB3iXQnswPV/6Of7666/QrnId70+pgE8HQhzgXQp1kfUa6f+zHut1PC5HWQ0adBKaxIHJWqDuiMZfIr3ph4eHiwZqP/300zAoq+pG4aABu+Q6kTYajd9oGS2rjSVurDocrb69DnerD66v6oadOXMm9P31fBok1uvqMd4NVZPJN7ruayxMA62RulAafFXlocpWYySldgLaMel/rGViFyjumPSc2m60fen7ChENCh8/fjwEjp5P3TK9br1diCvmSoOOcEgtBYx+p/h7iTY4HQ5O/o7aOHSui44GicJB5y+kpxqcOHEitO3evTuM32ijUcB8+eWXIaAUMjpHRsFz9uzZcD6Dlo0+/vhjO3z4sOHdUXAkKRh0OFhHeCINvmqnoaNBEg8Zx8fR999/b8eOHbNff/01fBSLllPoqMul19F29Mknn4TQ+frrr8P6WjZSAGmbqDfx/Zf75xBs+FyksbExq0dxb7TQGIk20vRAndbVxjZXe7LaqRcbN260ahK7SQudg6T/cfooZPz/ztUet4Nq8vz5c8tCe3t7+FoXZ/LOZ7EBUOoogNYttf5c7ag8iw2AUqc4aN1S68/VXo+4XAMANwQMADcEDAA3BAwANwQMADcEDDLFpM3qpfOCskbAIFPJWcOoLnFGeJYIGGQqff1aVI/0GdBZIGCQKU0YTF7BDdVB02Q8rjNMwCBz2hMyubN6aOzFo3oRAgaZ0zSJq1evUslUAVUuuhjXXNeyWa66n+wIX5rDo5nHupxBvV2yoFLpSJ/GyjQgv5xr4MyHyY54J7Qx6xopqE90kQC4IWAAuCFgALghYAC4IWAAuCFgALghYAC4aWB6PYCsxVzJ5fP5GQMAB3SRALghYAC4IWAAuCFgALghYAC4IWAAuCFgALghYAC4IWAAuCFgALghYAC4IWAAuCFgALghYAC4IWAAuCFgALghYAC4IWAAuCFgALghYAC4IWAAuCFgALghYAC4yfX09ITPRRocHDQAyEJ/f3/42jA+Pm4AkKWYK3SRALghYAC4IWAAuCFgALghYAC4IWAAuCFgALghYAC4IWAAuCFgALghYAC4IWAAuCFgALghYAC4IWAAuCFgALghYAC4IWAAuCFgALghYAC4IWAAuCFgALhp6OzsNADIUsyVXD6fnzEAcEAXCYAbAgaAGwIGgBsCBoAbAgaAmwZDzRgfH7fHjx/b06dP7c2bN1Zv1q1bZ2vXrrV9+/bZ6tWrDe8fh6lrwPT0tF2/ft1u375t+NfOnTtt7969tmrVKsP7Q8BUOYXLgQMH7OXLl4ZiqmguX75MyLxHjMFUOVUuhEtp+rvo74P3h4CpYm/fvqVbtIA7d+7YixcvDO8HAVPFrl27ZljYkydPDO8HAVPF6Botjo6q4f0gYKrYq1evDAurx0P2lYKAAeCGgAHghoAB4IaAAeCGgAHghoAB4KYiZlOPjIzYxMREUVtjY6N1d3czKzZjuhjzhg0bito0n0lnBHM4F1mriApGlxlInwylczy6urrCqd7lunv3rvX3989qP3/+fLjVM4XLli1bitqam5vtwYMHtmvXLiuXZi1rQmHakSNH7OjRo4b6VjHXg9GM1xMnThS1DQwM2M2bN8NGXI6pqamSe2O153I5q3f6O/zwww9FbQoDXd6g3LlN+r+tWbOmZDtQ0WMw2tuqfI/UjSpVmZw6dSp0s0QVyqNHj8KbSMvGikX3nz17VniOuLzoNW7cuGG7d+8ONz1fOqC0jqqq5HJLqa4qlSYEqlsatbW1laxMTp48aVu3bg33FUrbtm0LYaJlY8Wi+5s3bw7/P92Py4uW3bNnj/3yyy/hpudLd4O1jqqq5HJLqa7w/jW0t7eHO2NjY1ZpNEmtqamp8FhvenWn0hQacblNmzaF5dTW0dFReNPo/szMTOG+NmDRjOS+vj5buXJl4cOi1MXS+rdu3SrsifW6Ciu9GTQ2pMcXLlwI3yu3wqpE6jbpbxHp90yP1YiCJ4av/j9xuYcPHxZ2BrovqhZ1P05pUKVz6dIly+fz9vvvv4e2zz77LKz/+eefF9bXY4WVXkcVVXwszB6vDjFXKqaLpIpD1UEUB30vXrxo5WhtbQ1v/snJSUt+aqXuq10bfbJ9aGgoBM/Zs2cLe1Ltcbdv3x6Cpre3t7Csvh+7cfE5hoeHqy5gYhURKTT0d9m/f7+VQ39PrasLO8VQEd1Xe7wf6TVXrFhhx48fL4SUKsn79++HoEleu0Xfj924+ByqYgiY6lIxXSTtvRQq8abH2qMmuzIeFESqepJluqoeVTnqaiW1tLQUPY5vomqj308/e7wpcPT7q7vjSdfL1TWDk91P7VgUIMlulKQrVa7pUp0qpoLRBp6uVlRdaJBXVYnXm1nl+44dO2a1a6+s6qQW6Q1+8ODBojZVFxrk1Ru5VDc0C+vXry85bqXLTjDGUpsqepBXG72Cx/OyBHr+5EBypD1rctCz1inMX79+HYLVi56/1NEl/Z1L/Q9Q/Sr+TF690edrUzdqOSeIqWzX0aW00dHRqu0CLdVcb/5Ig7SlDkkvlnYU6o6m6YgTXaDaVFEBkxyD0RtcR3ckbpT6qg1eh4zjMt98882sSkOPFTrpzwdSu9q0bmzXAK26BBpg1l5UN51/o2UOHTpktSo5BqM3uA4Na6A3Xl5SfycF+ZUrVwrLaCA8Hfh6rCowPY6lv6OOTGnd2B6PCMWPE9FNR4fUdu7cOUPtqZgxGL3hY6CIwkCHkjUuEzdQtelNr3EZLRsf63BykgYMtbf89ttvwwY+ODgY2tXPj8GlQ82HDx8O4ztnzpwJh6D1vPF1Tp8+XbPTFPR7KTgihYHGQfTxJzF4FRx60ysMtKyW+emnn4qOPokG4TW28uOPP4YqJI7taKxFoaR1FSx6LgW5jiAdO3as8Dx63uRRJdSW3D9HRsLJIZV4Hsx8tEEuFACxX5+ucLSu9p6l2qVagmXjxo32LujvsVAAxO5VusKJY1yl2uVdBcvz588N707FnQdTrsWEwFyDtHOty8TK0hYTAqXGyuZbl4qlPnC5BgBuCBgAbggYAG4IGABuCBgAbgiYKsZRr8XxnP6A+REwVUwnsmFhmg6C94OAqWKl5vVgNp2NjPeDgKlimsPDZQ7mp7lmy5mgieUhYKqc9s7x8p8oprEXqpf3i4CpcpoOcfXqVSqZlPhxKny6wftVtZMdMZvm9+i6tpoZ7XmRrkoVLxsRP9EA70/VT3bEbHqDfffddwZUCrpIANzkhoeHQxcp+VEeALAc8dNAcvl8fsYAwAFdJABuCBgAbggYAG4IGABuCBgAbggYAG4IGABuCBgAbggYAG4IGABuCBgAbggYAG4IGABuCBgAbggYAG4IGABuCBgAbggYAG4IGABuCBgAbggYAG4IGABuGiYmJsKd1tZWA4AsxFzhs6kBZC5+NjVdJABuCBgAbggYAG4IGABuCBgAbggYAG4IGABuCBgAbggYAG4IGABuCBgAbggYAG4IGABuCBgAbggYAG4IGABuCBgAbggYAG4IGABuCBgAbggYAG4IGABuCBgAbnKTk5Phc5FWr15tAJCFN2/ehK+5fD4/YwDggC4SADcEDAA3BAwANwQMADcEDAA3BAwANwQMADcEDAA3BAwANwQMADcEDAA3DQbUmfHxcXv8+LE9ffq0MCmvnqxbt87Wrl1r+/btc5/kzGRH1I3p6Wm7fv263b592/CvnTt32t69e23VqlXmgYBBXVC4HDhwwF6+fGkoporm8uXLLiHDGAzqgioXwqU0/V309/FAwKDmvX37lm7RAu7cuWMvXrywrBEwqHnXrl0zLOzJkyeWNQIGNY+u0eLoqFrWCBjUvFevXhkW5nHInoAB4IaAAeCGgAHgpuHGjRvhTm9vrwFAFmKu5FpaWsKZvGNjYwbUoo0bNxoW5/nz55aF9vb28JUuEgA3zKauIiMjIzYxMVHU1tjYaN3d3Xz0b8Y6Ozttw4YNRW2az6QzgutxBvZSUcFUEV1mIH0ylM7x6OrqCqd6l+vu3bvW398/q/38+fPhVs8ULlu2bClqa25utgcPHtiuXbusXJq1rAmFaUeOHLGjR49araKCqTKa8XrixImitoGBAbt582bYiMsxNTVVcm+s9lwuZ/VOf4cffvihqE1hoMsblDu3Sf+3NWvWlGyvZVQwNUB7W5XvkbpRpSqTU6dOhW6WqEJ59OhReBNp2Vix6P6zZ88KzxGXF72Gjg7s3r073PR86YDSOqqqksstpbqqVJoQqG5p1NbWVrIyOXnypG3dujXcVyht27YthImWjRWL7m/evDn8/3Q/Li9ads+ePfbLL7+Em54v3Q3WOqqqksstpbryRAVTAzRJrampqfBYb3p1p9IUGnG5TZs2heXU1tHRUXjT6P7MzEzhvjZg0Yzkvr4+W7lyZRifEHWxtP6tW7cKe2K9rsJKbwaNDenxhQsXwvfKrbAqkbpN+ltE+j3TYzWi4Inhq/9PXO7hw4eFnYHui6pF3Y9TGlTpXLp0yfL5vP3++++h7bPPPgvrf/7554X19VhhpddRRRUfS6XMHidgqowqjniOgcRB34sXL1o5Wltbw5t/cnKyEBii+2rXRp9sHxoaCsFz9uzZwp5Ue9zt27eHoEmeR6Xvx25cfI7h4eGqC5hYRUQKDf1d9u/fb+XQ31Pr6sJOMVRE99Ue70d6zRUrVtjx48cLIaVK8v79+yFoktdu0fdjNy4+h6qYSgkYukhVRnsvhUq86bH2qMmujAcFkaqeZJmuqkdVjrpaSS0tLUWP45uo2uj3088ebwoc/f7q7njS9XJ1zeBk91M7FgVIshsl6UrV45ouy0EFU2W0gaerFVUXGuRVVeL1Zlb5vmPHjlnt2iurOqlFeoMfPHiwqE3VhQZ59UYu1Q3Nwvr160uOW+myE5U2xrIQKpgaoI1eweN5WQI9f3IgOdKeNTnoWesU5q9fvw7B6kXPX+rokv7Opf4HlYyAqRF6o8/Xpm7Uck4QU9muo0tpo6OjVdsFWqq53vyRBmlLHZJeLO0o1B1N0xGnSusCLYSAqULJMRi9wXV0R+JGqa/a4HXIOC7zzTffzKo09Fihk/58ILWrTevGdg3QqkugAWbtRXXT+Tda5tChQ1arkmMweoPr0LAGeuPlJfV3UpBfuXKlsIwGwtOBr8eqAtPjWPo76siU1o3t8YhQ/DgR3XR0SG3nzp2zasIYTJXRGz4GiigMdChZ4zJxA1Wb3vQal9Gy8bEOJydpwFB7y2+//TZs4IODg6Fd/fwYXDrUfPjw4TC+c+bMmXAIWs8bX+f06dM1O01Bv5eCI1IYaBxEH38Sg1fBoTe9wkDLapmffvqp6OiTaBBeYys//vhjqELi2I7GWhRKWlfBoudSkOsI0rFjxwrPo+dNHlWqFsymrnHaIBcKgNivT1c4Wld7z1LtUi3B8q5mU+vvsVAAxO5VusKJY1yl2uVdBUvWs6mpYGrcYkJgrkHaudZlYmVpiwmBUmNl861b7RMrGYMB4IaAAeCGgAHghoAB4IaAAeCGgEHN46jX4nhMfyBgUPN0IhsWpukgWVuhdCfhUctKzevBbDobOSsxV3L5fH7GgBqnU/Ar5SJMlUhzzTQ1IWt0kVAXtHeOl/9EMY29ZFm9JBEwqAuaDnH16tWqu2CTt/hxKl6fbkAXCXVH83t0XVvNjPa8SFelipeNiJ9o4ImAAeCGLhIANwQMADcEDAA3BAwANwQMADcEDAA3BAwANwQMADcEDAA3BAwANwQMADcEDAA3BAwANwQMADcEDAA3BAwANwQMADcEDAA3BAwAN7mOjo5wTd579+4ZAGShq6srfG3QFdYBIEsxV+giAXBDwABwQ8AAcEPAAHBDwABwQ8AAcEPAAHBDwABwQ8AAcEPAAHBDwABwQ8AAcEPAAHBDwABwQ8AAcEPAAHBDwABwQ8AAcEPAAHBDwABwQ8AAcEPAAHDT0NPTYwCQpZgruXw+P2MA4IAuEgA3BAwANwQMADcEDAA3BAwANwQMADcEDAA3BAwANwQMADcEDAA3BAwANwQMADcEDAA3BAwANwQMADcEDAA3BAwANwQMADcNBjgaHx+3x48f29OnT+3NmzdWb9atW2dr1661ffv22erVq63ecE1euJienrbr16/b7du3Df/auXOn7d2711atWmX1goBB5hQuBw4csJcvXxqKqaK5fPly3YQMYzDInCoXwqU0/V3096kXub///jtUME1NTQYs19u3b+0///mPYX6qYjZs2GC1StuBNGzfvj3cGRsbM2C5rl27ZljYkydPajpgYq7QRUKm6Botjo6q1QMCBpl69eqVYWH1csiegAHghoAB4IaAAeCGgAHghoAB4IaAAeCG2dRzGBkZsYmJiaK2xsZG6+7urstZsZ46OztnnXSm+UyaKFmPM7BrCRXMHHSZgfTJUDrHo6ury+7cuWPlunv3rvX3989qP3/+fLjVM4XLli1bitqam5vtwYMHtmvXLiuXZi3rVPy0I0eO2NGjRw3vDhXMPDTj9cSJE0VtAwMDdvPmzbARl2Nqaqrk3ljtuVzO6p3+Dj/88ENRm8JAlzco95IP+r+tWbOmZDveLSqYMmlvq/I9UjeqVGVy6tSp0M0SVSiPHj0KbyItGysW3X/27FnhOeLyote4ceOG7d69O9z0fOmA0jqqqpLLLaW6qlQvXrwI3dKora2tZGVy8uRJ27p1a7ivUNq2bVsIEy0bKxbd37x5c/j/6X5cXrTsnj177Jdffgk3PV+6G6x1VFUll1tKdVVvqGDKpElqyZnnetOrO5Wm0IjLbdq0KSynto6OjsKbRvdnZmYK97UBi2ai9vX12cqVK8P4hKiLpfVv3bpV2BPrdRVWejNobEiPL1y4EL5XboVVidRtirNyRb9nqQmCCp4Yvvr/xOUePnxY2Bnovqha1P04pUGVzqVLlyyfz9vvv/8e2j777LOw/ueff15YX48VVnodVVTxsXBRrbkRMPNQxaHqIIqDvhcvXrRytLa2hjf/5ORkITBE99WujT7ZPjQ0FILn7NmzhT2p9riaoaqg6e3tLSyr78duXHyO4eHhqguYWEVECg39Xfbv32/l0N9T6+rCTjFURPfVHu9Hes0VK1bY8ePHCyGlSvL+/fshaJLXbtH3YzcuPoeqGAJmbnSR5qG9l0Il3vRYe9RkV8aDgkhVT7JMV9WjKkddraSWlpaix/FNVG30++lnjzcFjn5/dXc86Xq5umZwsvupHYsCJNmNknSlqi4c5kcFMw9t4OlqRdWFBnlVlXi9mVW+79ixY1a79sqqTmqR3uAHDx4salN1oUFevZFLdUOzsH79+pLjVrrsBGMsy0cFUyZt9Aoez8sS6PmTA8mR9qzJQc9apzB//fp1CFYvev5SR5f0dy71P0B5CJgl0Bt9vjZ1o5ZzgpjKdh1dShsdHa3aLtBSzfXmjzRIW+qQ9GJpR6HuaJqOONEFWj4CZgHJMRi9wXV0R+JGqa/a4HXIOC7zzTffzKo09Fihk/58ILWrTevGdg3QqkugAWbtRXXT+Tda5tChQ1arkmMweoPr0LAGenVkSPR3UpBfuXKlsIwGwtOBr8eqAtPjWPo76siU1o3t8YhQ/DgR3XR0SG3nzp0zLA9jMPPQGz4GiigMdChZ4zJxA1Wb3vQal9Gy8bEOJydpwFB7y2+//TZs4IODg6Fd/fwYXDrUfPjw4TC+c+bMmXAIWs8bX+f06dM1O01Bv5eCI1IYaBxEH38Sg1fBoTe9wkDLapmffvqp6OiTaBBeYys//vhjqELi2I7GWhRKWlfBoudSkOsI0rFjxwrPo+dNHlXC0uX+OQoRTsTgot/Lpw1yoQCI/fp0haN1tfcs1S7VEiwbN260d0F/j4UCIHav0hVOHOMq1S7vKlieP39utaq9vT18pYLJ0GJCYK5B2rnWZWJlaYsJgVJjZfOtS8WSPcZgALhpKPesVABYSMyVBg0oAkCWYq7QRQLghoAB4IaAQaY46rU4ntMfKgkBg0zpRDYsTNNB6gEBg0yVmteD2XQ2cj0gYJApzeHhMgfz01yz5UzQrCYEDDKnvXO8/CeKaeylXqoXIWCQOU2HuHr1KpVMSvw4lXr6dINcPp+fMcCJ5vfouraaGe15ka5KFS8bET/RoN4QMADc0EUC4IaAAeCGgAHghoAB4IaAAeCGgAHghoAB4IaAAeCGgAHghoAB4IaAAeCGgAHgpuHRo0fhTkdHhwFAFmKu8NnUADIXP5uaLhIANwQMADcEDAA3BAwANwQMADcEDAA3BAwANwQMADcEDAA3BAwANwQMADcEDAA3BAwANwQMADcEDAA3BAwANwQMADcEDAA3BAwANwQMADcEDAA3BAwANwQMADe5fD4/YwDggAoGgBsCBoAbAgaAGwIGgBsCBoAbAgaAGwIGgBsCBoAbAgaAGwIGgBsCBoAbAgaAGwIGgBsCBoAbAgaAGwIGgBsCBoAbAgaAGwIGgBsCBoAbAgaAGwIGgBsCBoCb//vn9t/R0VHbtGmTAUAWTp06ZcqVXEtLS/jgtbGxMQOALLS3t4evdJEAuCFgALghYAC4IWAAuCFgALghYAC4IWAAuCFgALghYAC4IWAAuCFgALghYAC4IWAAuCFgALhpMNSM6elpO3/+/Kz21tZW6+zsNOBdo4KpIQqYkZERe/PmTaFtamrKbty4YV1dXeF+ubTe06dPi9revn0b2pOvA5RCBVODOjo6bOvWrYXHCoQvvvgihM/OnTutHAqRUsFEuGAxCJg60NTUZKtXrw4VTqRLGqa7ThMTE3bz5k0bHBy0ycnJQnfr3r179ueff9qhQ4fs1atXdvfu3dB++vTp8FXLJ59D39dyek2FXfI1FHL6ntr0Wrrf3NwcnlvLo7bQRaoDqmD0RlbQRAqCdBWix+Pj4+G+llU4yNq1a8P9xsbGEAax/aOPPircl6GhIevr6wvr9vT02IcffhiC7M6dO0WvoS6XwqulpcV27NhhL1++tP7+/iV14VDZqGBq0LNnz0KoiKoWXXxZFUKy27QQhYmqDAWEgiBZhaxatcouXLgQLhQfqw693q1bt0Kw9Pb2hjato7BRpaL7Wi8ue/HixcK6mzdvtu3bt4fgKednROWjgqlBqghUoeimykWVgULHc9xEryPd3d1F7bt27QohlxwoVrAku0OxC4faQwVTg1RFpAd5v/rqqzBmkhwvyZJCTSERq5RIlZDaY0WF+tKggT7UNlUI6raUOkcmKwqRucZQ1K6gQf2IudKgvjBqX6k3f/KoksQB3qVYt25deD49R1tbW6H9r7/+Cu3JNtS+mCt0kWqQuiMaf4n0ph8eHi4aqP3000/DoKyqG4XDkydPitaJVHlo/EbLaFl1gWI1osPRGujV3kpHmvRV3bAzZ86Eo016Pg0S63X1GPWHgKlBOmqjW6Tuiw4Hx6M7osFXneuio0GicNBJeOlu1IkTJ0Lb7t27w/iNKhEFzJdffhkCSiGjc2QUPGfPnrWBgYGwbPTxxx/b4cOHDfUpl8/nZwx1K3aTFhoj0RGo9JEerauu11ztyWoH9YmAAeCG82AAuCFgALghYAC4IWAAuCFgALghYAC4IWAAuCFgALghYAC4IWAAuCFgALghYAC4IWAAuCFgALghYAC4IWAAuCFgALghYAC4IWAAuMl1dHSEa/Leu3fPACALXV1d4WuD5+cVA6hPMVfoIgFwQ8AAcEPAAHBDwABwQ8AAcEPAAHBDwABw02DOxsfH7fHjx/b06VPjnBvg/Vu3bp2tXbvW9u3bZ6tXrzZPbgEzPT1t169ft9u3bxuAyvHy5ctwGxkZsZ07d9revXtt1apV5sElYBQuBw4cCL8EgMp1584dm5iYsMuXL7uEjMsYjCoXwgWoDnqv6j3rIfOAefv2Ld0ioMqoknnx4kVZ6yxG5gFz7do1A1B9njx5YlnLPGDoGgHVSUd6s5Z5wLx69coAVB+P00g40Q6AGwIGgBsCBoAbAgaAGwIGgBsCBoAb99nUeHc0l+TIkSOz2jWj/eHDhwa8ayt6enpMN1S/xsZG27Ztm61Zs6bQptDRbNkHDx6E75fr/v37tmnTpqI2TfFXu/dUf1SvmCsNvb29htryxx9/FFUsCpyff/45hE+588S0bqlZtskQA9JirtBFqgOvX78Ot2QFc/LkyVldp7a2NtuzZ48dPHgwXJQodrd27dplW7dutXPnzoV2PY7PIVo++Ry6xoiW05mhev7ka+h59D21aSPUfU0vGRgY4IJkNYhB3jqgamP9+vVFb2AFQbqLo8cbNmwI92M4iAJA93WdH00Fie2au5IMD4XTlStXwoz6oaGh8PW7774rBFJ8jS1btoTwUsCpotLPpvWW0oVDZaOCqUEaM4nhoe6NHqv6KGegd2pqKiyvgEhWOgoefe/o0aNh9m0MLYWYxnoULPHaIlpHlZPa1W1TQElTU5Pt37+/sO7o6GgY09m8eTOD0TWGCqYGqSJQhaJbc3OzffDBB0Wh40HXeJXffvutqF3XGVFlovCIFCzJaip24VB7qGBqkCqI9CCvLomoMZPkeEmW4phLrFIiVTsKD4441ScqmDqgN7hCR5WNF4XLXNd0VXs6eFAfCJg6UWoANR0IcYB3KTT4q9dQtyxJj/U6HpdjROWji1SD1B1JvtF1X0dyNNAaqQulwVdVHjpKpDGSdDiIujgav9EysQsUqxE9pwZ6NQis7ytENCh8/PjxEDh6PnXL9LpciKw+ETA1SMGRpGDQ4WAd4Yk0+KpxEx0NknjIOD6Ovv/+ezt27Jj9+uuv4aNotJxCR10uvY5C5pNPPgmh8/XXX4f1tWykANI5LqhPuXw+P2MZ2rhxo6F6xG6SQmM+qorSJ8JpXXWL5mpX6Cz0vKgsz58/tyxRwdS5xQZAqbNstW6p9edqR/1hkBeAGwIGgBsCBoAbAgaAGwIGgJvMA4Y5J0B10nlRWcs8YJKzZgFUjzgjPkuZB0z6+q0AqkP6DPAsZB4wmjCXvIIZgMqny5x6XGfZZZBXSagLHQGofBp78ahexCVgNA/l6tWrVDJAhVPloouRzXUtn+XK/f3332Gyo66T6kFzWDTzVtP5mbIPvH860quxUh2QWc41gOajC75LrqWlJQTM2NiYAUAW2tvbw1dOtAPghoAB4IaAAeCGgAHghoAB4IaAAeCGgAHghoAB4IaAAeCGgAHghoAB4IaAAeBmRbyGrj5zGACWa3JyMnzVNaFWfPTRR+HBxMSEAcBy3b59O3wNARMv0n337t2Snz8MAIul68A8evQo3O/p6bEVra2ttmPHDpuenrb+/n5CBsCSKFz6+vrC/e7u7nBhq1w+n59RuOgb8YpznZ2dYQGuqwtgIRpe0Rju8PCwTU1NhY8/uXTpUrh0bggYLaSQGRoaCgstlddV8eLVsbLGz/svft5/8fP+azk/rwqT3t7eEC7SEL+hhiNHjoQLdStoNBLMNXQBLERdoY8//jjc2trair73/4BW+9XjNwmKAAAAAElFTkSuQmCC",
+            "media_type": "image/png",
+            "type": "base64"
+          },
+          "type": "image"
+        }
+      ],
+      "name": "mcp__figma__get_design_context",
+      "toolUseId": "toolu_01U5goSkgtCKS1iNcfDdEBuB"
+    }
+  ],
+  "toolsList": [
+    "Task",
+    "Bash",
+    "CronCreate",
+    "CronDelete",
+    "CronList",
+    "DesignSync",
+    "Edit",
+    "EnterWorktree",
+    "ExitWorktree",
+    "ListAgents",
+    "ListMcpResourcesTool",
+    "LSP",
+    "Monitor",
+    "NotebookEdit",
+    "PushNotification",
+    "Read",
+    "ReadMcpResourceDirTool",
+    "ReadMcpResourceTool",
+    "RemoteTrigger",
+    "ReportFindings",
+    "ScheduleWakeup",
+    "SendMessage",
+    "Skill",
+    "TaskOutput",
+    "TaskStop",
+    "ToolSearch",
+    "WebFetch",
+    "WebSearch",
+    "Workflow",
+    "Write",
+    "mcp__figma__add_code_connect_map",
+    "mcp__figma__create_generative_plugin",
+    "mcp__figma__create_new_file",
+    "mcp__figma__create_shader",
+    "mcp__figma__download_assets",
+    "mcp__figma__export_video",
+    "mcp__figma__generate_diagram",
+    "mcp__figma__generate_figma_design",
+    "mcp__figma__get_code_connect_map",
+    "mcp__figma__get_code_connect_suggestions",
+    "mcp__figma__get_context_for_code_connect",
+    "mcp__figma__get_design_context",
+    "mcp__figma__get_figjam",
+    "mcp__figma__get_generative_plugin",
+    "mcp__figma__get_libraries",
+    "mcp__figma__get_metadata",
+    "mcp__figma__get_motion_context",
+    "mcp__figma__get_screenshot",
+    "mcp__figma__get_shader",
+    "mcp__figma__get_shader_effect",
+    "mcp__figma__get_shader_fill",
+    "mcp__figma__get_variable_defs",
+    "mcp__figma__list_file_components_for_code_connect",
+    "mcp__figma__list_file_shaders",
+    "mcp__figma__list_generative_plugins",
+    "mcp__figma__list_shader_effects",
+    "mcp__figma__list_shader_fills",
+    "mcp__figma__list_shaders",
+    "mcp__figma__search_design_system",
+    "mcp__figma__send_code_connect_mappings",
+    "mcp__figma__update_generative_plugin",
+    "mcp__figma__update_shader",
+    "mcp__figma__upload_assets",
+    "mcp__figma__use_figma",
+    "mcp__figma__weave_cancel_tool_run",
+    "mcp__figma__weave_get_tool_inputs",
+    "mcp__figma__weave_get_tool_run_output",
+    "mcp__figma__weave_list_tools",
+    "mcp__figma__weave_run_tool",
+    "mcp__figma__weave_upload_asset",
+    "mcp__figma__whoami"
+  ]
+}

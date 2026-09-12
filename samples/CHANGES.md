@@ -1,0 +1,608 @@
+# Reference output change log
+
+`scripts/reference-lock.ts --reason "<text>"` appends to this file. Do not edit it by hand.
+
+Reference output has two kinds.
+
+- **Reviewed reference output**: everything under `samples/button/` and the mutation expectations
+  under `samples/mutations/`.
+  A maintainer defined these in `docs/reference/spec.md` section 5, and the implementation matches them.
+- **Regression reference output**: the reference output of every other sample. It locks current CLI
+  output to detect change; it is not a reviewed answer. Its lock reason reads `regression baseline <name>`.
+
+Entries below record the path at the time of locking, so earlier lines use the pre-migration
+`fixtures/` and `golden/` names.
+
+## Record
+
+- 2026-09-02T13:26:20Z fixtures/button/golden/css/tokens.css initial golden set (fixtures/button 정답 골든, SPEC 5.1~5.4)
+- 2026-09-02T13:26:20Z fixtures/button/golden/ir.compact.json initial golden set (fixtures/button 정답 골든, SPEC 5.1~5.4)
+- 2026-09-02T13:26:20Z fixtures/button/golden/tokens/base.json initial golden set (fixtures/button 정답 골든, SPEC 5.1~5.4)
+- 2026-09-02T13:26:20Z fixtures/button/golden/tokens/mode.dark.json initial golden set (fixtures/button 정답 골든, SPEC 5.1~5.4)
+- 2026-09-02T13:26:20Z fixtures/button/golden/tokens/mode.light.json initial golden set (fixtures/button 정답 골든, SPEC 5.1~5.4)
+- 2026-09-02T13:26:20Z fixtures/button/golden/warnings.json initial golden set (fixtures/button 정답 골든, SPEC 5.1~5.4)
+- 2026-09-02T13:26:20Z fixtures/button/snapshot.json initial golden set (fixtures/button 정답 골든, SPEC 5.1~5.4)
+- 2026-09-02T13:58:36Z fixtures/button/golden/ir.compact.json initial lock
+- 2026-09-02T14:11:58Z fixtures/absolute-card/golden/css/tokens.css regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/absolute-card/golden/ir.compact.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/absolute-card/golden/tokens/base.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/absolute-card/golden/tokens/mode.dark.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/absolute-card/golden/tokens/mode.light.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/absolute-card/golden/warnings.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/absolute-card/snapshot.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/four-modes/golden/css/tokens.css regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/four-modes/golden/ir.compact.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/four-modes/golden/tokens/base.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/four-modes/golden/tokens/mode.brand.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/four-modes/golden/tokens/mode.contrast.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/four-modes/golden/tokens/mode.dark.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/four-modes/golden/tokens/mode.light.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/four-modes/golden/warnings.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/four-modes/snapshot.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/icon-button/golden/css/tokens.css regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/icon-button/golden/ir.compact.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/icon-button/golden/tokens/base.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/icon-button/golden/tokens/mode.dark.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/icon-button/golden/tokens/mode.light.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/icon-button/golden/warnings.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/icon-button/snapshot.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/korean-names/golden/css/tokens.css regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/korean-names/golden/ir.compact.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/korean-names/golden/tokens/base.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/korean-names/golden/tokens/mode.dark.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/korean-names/golden/tokens/mode.light.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/korean-names/golden/warnings.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/korean-names/snapshot.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/nested-instance/golden/css/tokens.css regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/nested-instance/golden/ir.compact.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/nested-instance/golden/tokens/base.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/nested-instance/golden/tokens/mode.dark.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/nested-instance/golden/tokens/mode.light.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/nested-instance/golden/warnings.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/nested-instance/snapshot.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/single-mode/golden/css/tokens.css regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/single-mode/golden/ir.compact.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/single-mode/golden/tokens/base.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/single-mode/golden/warnings.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/single-mode/snapshot.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/twenty-variants/golden/css/tokens.css regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/twenty-variants/golden/ir.compact.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/twenty-variants/golden/tokens/base.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/twenty-variants/golden/tokens/mode.dark.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/twenty-variants/golden/tokens/mode.light.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/twenty-variants/golden/warnings.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z fixtures/twenty-variants/snapshot.json regression baseline icon-button (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:58Z (no file change) regression baseline absolute-card (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:59Z (no file change) regression baseline nested-instance (정답이 아니라 변화 감지용)
+- 2026-09-02T14:11:59Z (no file change) regression baseline four-modes (정답이 아니라 변화 감지용)
+- 2026-09-02T14:12:00Z (no file change) regression baseline korean-names (정답이 아니라 변화 감지용)
+- 2026-09-02T14:12:00Z (no file change) regression baseline single-mode (정답이 아니라 변화 감지용)
+- 2026-09-02T14:12:00Z (no file change) regression baseline twenty-variants (정답이 아니라 변화 감지용)
+- 2026-09-02T14:12:43Z fixtures/AUTHORING.md regression fixture authoring script (출처 기록)
+- 2026-09-02T14:14:03Z fixtures/mutations/M01.json mutation fixtures M01~M12 and expected.json (SPEC 5.5 표)
+- 2026-09-02T14:14:03Z fixtures/mutations/M02.json mutation fixtures M01~M12 and expected.json (SPEC 5.5 표)
+- 2026-09-02T14:14:03Z fixtures/mutations/M03.json mutation fixtures M01~M12 and expected.json (SPEC 5.5 표)
+- 2026-09-02T14:14:03Z fixtures/mutations/M04.json mutation fixtures M01~M12 and expected.json (SPEC 5.5 표)
+- 2026-09-02T14:14:03Z fixtures/mutations/M05.json mutation fixtures M01~M12 and expected.json (SPEC 5.5 표)
+- 2026-09-02T14:14:03Z fixtures/mutations/M06.json mutation fixtures M01~M12 and expected.json (SPEC 5.5 표)
+- 2026-09-02T14:14:03Z fixtures/mutations/M07.json mutation fixtures M01~M12 and expected.json (SPEC 5.5 표)
+- 2026-09-02T14:14:03Z fixtures/mutations/M08.json mutation fixtures M01~M12 and expected.json (SPEC 5.5 표)
+- 2026-09-02T14:14:03Z fixtures/mutations/M09.json mutation fixtures M01~M12 and expected.json (SPEC 5.5 표)
+- 2026-09-02T14:14:03Z fixtures/mutations/M10.json mutation fixtures M01~M12 and expected.json (SPEC 5.5 표)
+- 2026-09-02T14:14:03Z fixtures/mutations/M11.json mutation fixtures M01~M12 and expected.json (SPEC 5.5 표)
+- 2026-09-02T14:14:03Z fixtures/mutations/M12.json mutation fixtures M01~M12 and expected.json (SPEC 5.5 표)
+- 2026-09-02T14:14:03Z fixtures/mutations/expected.json mutation fixtures M01~M12 and expected.json (SPEC 5.5 표)
+- 2026-09-03T00:51:44Z eval/thresholds.json eval/thresholds.json (scoring gate가 이미 요구한다)
+- 2026-09-03T06:49:36Z fixtures/absolute-card/golden/ir.compact.json R17 tokensUsed 리프 전개 (S1 원인)
+- 2026-09-03T06:49:36Z fixtures/button/golden/ir.compact.json R17 tokensUsed 리프 전개 (S1 원인)
+- 2026-09-03T06:49:36Z fixtures/four-modes/golden/ir.compact.json R17 tokensUsed 리프 전개 (S1 원인)
+- 2026-09-03T06:49:36Z fixtures/icon-button/golden/ir.compact.json R17 tokensUsed 리프 전개 (S1 원인)
+- 2026-09-03T06:49:36Z fixtures/korean-names/golden/ir.compact.json R17 tokensUsed 리프 전개 (S1 원인)
+- 2026-09-03T06:49:36Z fixtures/nested-instance/golden/ir.compact.json R17 tokensUsed 리프 전개 (S1 원인)
+- 2026-09-03T06:49:36Z fixtures/single-mode/golden/ir.compact.json R17 tokensUsed 리프 전개 (S1 원인)
+- 2026-09-03T06:49:36Z fixtures/twenty-variants/golden/ir.compact.json R17 tokensUsed 리프 전개 (S1 원인)
+- 2026-09-03T06:59:59Z fixtures/button/golden/kotlin/Tokens.kt button swift/kotlin 정답 골든 (SPEC 5.7~5.8)
+- 2026-09-03T06:59:59Z fixtures/button/golden/swift/Tokens.swift button swift/kotlin 정답 골든 (SPEC 5.7~5.8)
+- 2026-09-03T07:43:18Z fixtures/real-1/README.md real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/108-12663.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/11-11509.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/11-11513.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/11-11521.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/11-11525.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/11-11529.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/11-11537.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/11-11541.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/11-11545.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/11-11553.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/185-1061.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/185-1069.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/185-865.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/185-873.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/185-949.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/185-957.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/185-977.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/185-985.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/196-10059.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/196-10071.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/196-10075.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/196-10087.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/2072-9433.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/2072-9446.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/2072-9459.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/280-19104.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/34-12247.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/34-12250.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/34-12256.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/34-12259.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/34-12262.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/34-12268.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/34-12271.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/34-12274.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/34-12280.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/4185-3779.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/4185-3783.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/4185-3787.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/4185-3791.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/4185-3795.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/4185-3799.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/4185-3803.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/4185-3807.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/4185-3811.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/4185-3815.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/4185-3819.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/4185-3823.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/4185-3827.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/4185-3831.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/4185-3835.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/4185-3839.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/4185-3843.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/render/4185-3847.png real-1 최초 import (T305)
+- 2026-09-03T07:43:18Z fixtures/real-1/snapshot.json real-1 최초 import (T305)
+- 2026-09-03T07:43:35Z fixtures/real-1/README.md real-1 최초 import (T305)
+- 2026-09-03T08:18:17Z fixtures/absolute-card/golden/ir.compact.json D03 루트 이름 비교 제외, 루트 name=block (M-D03)
+- 2026-09-03T08:18:17Z fixtures/icon-button/golden/ir.compact.json D03 루트 이름 비교 제외, 루트 name=block (M-D03)
+- 2026-09-03T08:18:17Z fixtures/nested-instance/golden/ir.compact.json D03 루트 이름 비교 제외, 루트 name=block (M-D03)
+- 2026-09-03T09:07:16Z fixtures/captures/mcp/2026-09-03/4185-3778.json T306 REST sync 1회, MCP 캡처 5노드
+- 2026-09-03T09:07:16Z fixtures/real-1/snapshot.rest.json T306 REST sync 1회, MCP 캡처 5노드
+- 2026-09-03T09:32:32Z fixtures/captures/mcp/2026-09-03/11-11508.json T306 REST sync 1회, MCP 캡처 5노드
+- 2026-09-03T09:32:32Z fixtures/captures/mcp/2026-09-03/185-852.json T306 REST sync 1회, MCP 캡처 5노드
+- 2026-09-03T09:32:32Z fixtures/captures/mcp/2026-09-03/2072-9432.json T306 REST sync 1회, MCP 캡처 5노드
+- 2026-09-03T09:32:32Z fixtures/captures/mcp/2026-09-03/4185-3778.json T306 REST sync 1회, MCP 캡처 5노드
+- 2026-09-03T09:32:32Z fixtures/captures/mcp/2026-09-03/4185-3779.json T306 REST sync 1회, MCP 캡처 5노드
+- 2026-09-03T10:29:46Z fixtures/AUTHORING.md golden-scope: 잠금 범위 다섯 패턴 (maintainer decision)
+- 2026-09-03T10:29:46Z fixtures/captures/mcp/2026-09-03/11-11508.json golden-scope: 잠금 범위 다섯 패턴 (maintainer decision)
+- 2026-09-03T10:29:46Z fixtures/captures/mcp/2026-09-03/185-852.json golden-scope: 잠금 범위 다섯 패턴 (maintainer decision)
+- 2026-09-03T10:29:46Z fixtures/captures/mcp/2026-09-03/2072-9432.json golden-scope: 잠금 범위 다섯 패턴 (maintainer decision)
+- 2026-09-03T10:29:46Z fixtures/captures/mcp/2026-09-03/4185-3778.json golden-scope: 잠금 범위 다섯 패턴 (maintainer decision)
+- 2026-09-03T10:29:46Z fixtures/captures/mcp/2026-09-03/4185-3779.json golden-scope: 잠금 범위 다섯 패턴 (maintainer decision)
+- 2026-09-03T10:29:46Z fixtures/real-1/README.md golden-scope: 잠금 범위 다섯 패턴 (maintainer decision)
+- 2026-09-03T10:29:46Z fixtures/real-1/snapshot.rest.json golden-scope: 잠금 범위 다섯 패턴 (maintainer decision)
+- 2026-09-05T06:42:57Z fixtures/real-1/snapshot.json M-REAL1-REEXPORT 재export(번들 cf81e675 깨끗한 트리, import --expect-exporter 통과, --plan pro --file-key <FIGMA_FILE>): 숨김 fill 98개 제외(stroke 0개), R09 배경 판정 18개 변경(전부 raw:#ffffff -> 없음, Icon Button), IR Icon Button 15,661 -> 13,863B 나머지 세 세트 +15B(fileKey 길이만), doctor 경고 18 -> 0건 (maintainer decision)
+- 2026-09-05T09:58:39Z fixtures/real-2/golden/css/tokens.css real-2 regression baseline: O07 light/dark branch + devmode annotations
+- 2026-09-05T09:58:39Z fixtures/real-2/golden/ir.compact.json real-2 regression baseline: O07 light/dark branch + devmode annotations
+- 2026-09-05T09:58:39Z fixtures/real-2/golden/kotlin/Tokens.kt real-2 regression baseline: O07 light/dark branch + devmode annotations
+- 2026-09-05T09:58:39Z fixtures/real-2/golden/swift/Tokens.swift real-2 regression baseline: O07 light/dark branch + devmode annotations
+- 2026-09-05T09:58:39Z fixtures/real-2/golden/tokens/base.json real-2 regression baseline: O07 light/dark branch + devmode annotations
+- 2026-09-05T09:58:39Z fixtures/real-2/golden/tokens/mode.dark.json real-2 regression baseline: O07 light/dark branch + devmode annotations
+- 2026-09-05T09:58:39Z fixtures/real-2/golden/tokens/mode.light.json real-2 regression baseline: O07 light/dark branch + devmode annotations
+- 2026-09-05T09:58:39Z fixtures/real-2/golden/warnings.json real-2 regression baseline: O07 light/dark branch + devmode annotations
+- 2026-09-05T09:58:39Z fixtures/real-2/render/1-12.png real-2 regression baseline: O07 light/dark branch + devmode annotations
+- 2026-09-05T09:58:39Z fixtures/real-2/render/1-14.png real-2 regression baseline: O07 light/dark branch + devmode annotations
+- 2026-09-05T09:58:39Z fixtures/real-2/snapshot.json real-2 regression baseline: O07 light/dark branch + devmode annotations
+- 2026-09-06T05:19:04Z fixtures/real-1/golden/css/tokens.css regression baseline: tokens.css for S1
+- 2026-09-06T05:24:45Z fixtures/absolute-card/golden/css/tokens.css M-FIXTURE-BORDER: absolute-card strokes bound to border/width/sm, raw:1px -> token ref
+- 2026-09-06T05:24:45Z fixtures/absolute-card/golden/ir.compact.json M-FIXTURE-BORDER: absolute-card strokes bound to border/width/sm, raw:1px -> token ref
+- 2026-09-06T05:24:45Z fixtures/absolute-card/golden/tokens/base.json M-FIXTURE-BORDER: absolute-card strokes bound to border/width/sm, raw:1px -> token ref
+- 2026-09-06T05:24:45Z fixtures/absolute-card/snapshot.json M-FIXTURE-BORDER: absolute-card strokes bound to border/width/sm, raw:1px -> token ref
+- 2026-09-06T08:19:34Z fixtures/absolute-card/golden/css/tokens.css public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/absolute-card/golden/ir.compact.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/absolute-card/golden/tokens/base.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/absolute-card/golden/tokens/mode.dark.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/absolute-card/golden/tokens/mode.light.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/absolute-card/golden/warnings.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/absolute-card/snapshot.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/button/golden/css/tokens.css public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/button/golden/ir.compact.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/button/golden/kotlin/Tokens.kt public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/button/golden/swift/Tokens.swift public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/button/golden/tokens/base.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/button/golden/tokens/mode.dark.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/button/golden/tokens/mode.light.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/button/golden/warnings.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/button/snapshot.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/four-modes/golden/css/tokens.css public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/four-modes/golden/ir.compact.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/four-modes/golden/tokens/base.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/four-modes/golden/tokens/mode.brand.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/four-modes/golden/tokens/mode.contrast.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/four-modes/golden/tokens/mode.dark.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/four-modes/golden/tokens/mode.light.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/four-modes/golden/warnings.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/four-modes/snapshot.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/icon-button/golden/css/tokens.css public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/icon-button/golden/ir.compact.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/icon-button/golden/tokens/base.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/icon-button/golden/tokens/mode.dark.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/icon-button/golden/tokens/mode.light.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/icon-button/golden/warnings.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/icon-button/snapshot.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/korean-names/golden/css/tokens.css public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/korean-names/golden/ir.compact.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/korean-names/golden/tokens/base.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/korean-names/golden/tokens/mode.dark.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/korean-names/golden/tokens/mode.light.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/korean-names/golden/warnings.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/korean-names/snapshot.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/mutations/M01.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/mutations/M02.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/mutations/M03.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/mutations/M04.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/mutations/M05.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/mutations/M06.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/mutations/M07.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/mutations/M08.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/mutations/M09.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/mutations/M10.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/mutations/M11.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/mutations/M12.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/mutations/expected.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/nested-instance/golden/css/tokens.css public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/nested-instance/golden/ir.compact.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/nested-instance/golden/tokens/base.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/nested-instance/golden/tokens/mode.dark.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/nested-instance/golden/tokens/mode.light.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/nested-instance/golden/warnings.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/nested-instance/snapshot.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/golden/css/tokens.css public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/108-12663.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/11-11509.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/11-11513.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/11-11521.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/11-11525.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/11-11529.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/11-11537.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/11-11541.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/11-11545.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/11-11553.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/185-1061.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/185-1069.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/185-865.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/185-873.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/185-949.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/185-957.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/185-977.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/185-985.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/196-10059.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/196-10071.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/196-10075.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/196-10087.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/2072-9433.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/2072-9446.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/2072-9459.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/280-19104.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/34-12247.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/34-12250.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/34-12256.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/34-12259.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/34-12262.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/34-12268.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/34-12271.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/34-12274.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/34-12280.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/4185-3779.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/4185-3783.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/4185-3787.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/4185-3791.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/4185-3795.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/4185-3799.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/4185-3803.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/4185-3807.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/4185-3811.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/4185-3815.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/4185-3819.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/4185-3823.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/4185-3827.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/4185-3831.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/4185-3835.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/4185-3839.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/4185-3843.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/render/4185-3847.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-1/snapshot.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-2/golden/css/tokens.css public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-2/golden/ir.compact.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-2/golden/kotlin/Tokens.kt public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-2/golden/swift/Tokens.swift public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-2/golden/tokens/base.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-2/golden/tokens/mode.dark.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-2/golden/tokens/mode.light.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-2/golden/warnings.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-2/render/1-12.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-2/render/1-14.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/real-2/snapshot.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/single-mode/golden/css/tokens.css public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/single-mode/golden/ir.compact.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/single-mode/golden/tokens/base.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/single-mode/golden/warnings.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/single-mode/snapshot.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/twenty-variants/golden/css/tokens.css public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/twenty-variants/golden/ir.compact.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/twenty-variants/golden/tokens/base.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/twenty-variants/golden/tokens/mode.dark.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/twenty-variants/golden/tokens/mode.light.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/twenty-variants/golden/warnings.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z fixtures/twenty-variants/snapshot.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/absolute-card/reference/context.compact.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/absolute-card/reference/css/tokens.css public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/absolute-card/reference/tokens/base.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/absolute-card/reference/tokens/mode.dark.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/absolute-card/reference/tokens/mode.light.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/absolute-card/reference/warnings.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/absolute-card/snapshot.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/button/reference/context.compact.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/button/reference/css/tokens.css public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/button/reference/kotlin/Tokens.kt public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/button/reference/swift/Tokens.swift public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/button/reference/tokens/base.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/button/reference/tokens/mode.dark.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/button/reference/tokens/mode.light.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/button/reference/warnings.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/button/snapshot.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/four-modes/reference/context.compact.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/four-modes/reference/css/tokens.css public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/four-modes/reference/tokens/base.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/four-modes/reference/tokens/mode.brand.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/four-modes/reference/tokens/mode.contrast.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/four-modes/reference/tokens/mode.dark.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/four-modes/reference/tokens/mode.light.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/four-modes/reference/warnings.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/four-modes/snapshot.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/icon-button/reference/context.compact.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/icon-button/reference/css/tokens.css public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/icon-button/reference/tokens/base.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/icon-button/reference/tokens/mode.dark.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/icon-button/reference/tokens/mode.light.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/icon-button/reference/warnings.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/icon-button/snapshot.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/korean-names/reference/context.compact.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/korean-names/reference/css/tokens.css public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/korean-names/reference/tokens/base.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/korean-names/reference/tokens/mode.dark.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/korean-names/reference/tokens/mode.light.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/korean-names/reference/warnings.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/korean-names/snapshot.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/mutations/M01.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/mutations/M02.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/mutations/M03.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/mutations/M04.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/mutations/M05.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/mutations/M06.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/mutations/M07.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/mutations/M08.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/mutations/M09.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/mutations/M10.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/mutations/M11.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/mutations/M12.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/mutations/expected.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/nested-instance/reference/context.compact.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/nested-instance/reference/css/tokens.css public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/nested-instance/reference/tokens/base.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/nested-instance/reference/tokens/mode.dark.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/nested-instance/reference/tokens/mode.light.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/nested-instance/reference/warnings.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/nested-instance/snapshot.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/reference/css/tokens.css public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/108-12663.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/11-11509.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/11-11513.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/11-11521.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/11-11525.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/11-11529.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/11-11537.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/11-11541.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/11-11545.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/11-11553.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/185-1061.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/185-1069.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/185-865.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/185-873.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/185-949.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/185-957.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/185-977.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/185-985.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/196-10059.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/196-10071.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/196-10075.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/196-10087.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/2072-9433.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/2072-9446.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/2072-9459.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/280-19104.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/34-12247.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/34-12250.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/34-12256.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/34-12259.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/34-12262.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/34-12268.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/34-12271.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/34-12274.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/34-12280.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/4185-3779.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/4185-3783.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/4185-3787.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/4185-3791.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/4185-3795.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/4185-3799.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/4185-3803.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/4185-3807.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/4185-3811.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/4185-3815.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/4185-3819.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/4185-3823.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/4185-3827.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/4185-3831.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/4185-3835.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/4185-3839.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/4185-3843.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/render/4185-3847.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-1/snapshot.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-2/reference/context.compact.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-2/reference/css/tokens.css public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-2/reference/kotlin/Tokens.kt public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-2/reference/swift/Tokens.swift public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-2/reference/tokens/base.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-2/reference/tokens/mode.dark.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-2/reference/tokens/mode.light.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-2/reference/warnings.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-2/render/1-12.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-2/render/1-14.png public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/real-2/snapshot.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/single-mode/reference/context.compact.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/single-mode/reference/css/tokens.css public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/single-mode/reference/tokens/base.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/single-mode/reference/warnings.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/single-mode/snapshot.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/twenty-variants/reference/context.compact.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/twenty-variants/reference/css/tokens.css public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/twenty-variants/reference/tokens/base.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/twenty-variants/reference/tokens/mode.dark.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/twenty-variants/reference/tokens/mode.light.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/twenty-variants/reference/warnings.json public naming migration: samples and reference outputs
+- 2026-09-06T08:19:34Z samples/twenty-variants/snapshot.json public naming migration: samples and reference outputs
+- 2026-09-06T08:29:02Z samples/mutations/expected.json use the canonical context command in mutation expectations
+- 2026-09-06T09:20:48Z samples/real-1/reference/css/tokens.css sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/108-12663.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/11-11509.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/11-11513.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/11-11521.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/11-11525.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/11-11529.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/11-11537.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/11-11541.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/11-11545.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/11-11553.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/185-1061.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/185-1069.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/185-865.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/185-873.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/185-949.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/185-957.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/185-977.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/185-985.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/196-10059.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/196-10071.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/196-10075.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/196-10087.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/2072-9433.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/2072-9446.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/2072-9459.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/280-19104.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/34-12247.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/34-12250.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/34-12256.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/34-12259.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/34-12262.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/34-12268.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/34-12271.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/34-12274.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/34-12280.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/4185-3779.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/4185-3783.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/4185-3787.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/4185-3791.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/4185-3795.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/4185-3799.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/4185-3803.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/4185-3807.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/4185-3811.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/4185-3815.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/4185-3819.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/4185-3823.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/4185-3827.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/4185-3831.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/4185-3835.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/4185-3839.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/4185-3843.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/render/4185-3847.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-1/snapshot.json sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-2/reference/context.compact.json sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-2/reference/css/tokens.css sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-2/reference/kotlin/Tokens.kt sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-2/reference/swift/Tokens.swift sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-2/reference/tokens/base.json sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-2/reference/tokens/mode.dark.json sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-2/reference/tokens/mode.light.json sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-2/reference/warnings.json sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-2/render/1-12.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-2/render/1-14.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-2/snapshot.json sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-annotated-theme/reference/context.compact.json sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-annotated-theme/reference/css/tokens.css sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-annotated-theme/reference/kotlin/Tokens.kt sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-annotated-theme/reference/swift/Tokens.swift sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-annotated-theme/reference/tokens/base.json sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-annotated-theme/reference/tokens/mode.dark.json sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-annotated-theme/reference/tokens/mode.light.json sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-annotated-theme/reference/warnings.json sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-annotated-theme/render/1-12.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-annotated-theme/render/1-14.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-annotated-theme/snapshot.json sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/reference/css/tokens.css sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/108-12663.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/11-11509.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/11-11513.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/11-11521.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/11-11525.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/11-11529.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/11-11537.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/11-11541.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/11-11545.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/11-11553.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/185-1061.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/185-1069.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/185-865.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/185-873.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/185-949.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/185-957.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/185-977.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/185-985.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/196-10059.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/196-10071.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/196-10075.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/196-10087.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/2072-9433.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/2072-9446.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/2072-9459.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/280-19104.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/34-12247.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/34-12250.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/34-12256.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/34-12259.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/34-12262.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/34-12268.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/34-12271.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/34-12274.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/34-12280.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/4185-3779.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/4185-3783.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/4185-3787.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/4185-3791.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/4185-3795.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/4185-3799.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/4185-3803.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/4185-3807.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/4185-3811.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/4185-3815.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/4185-3819.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/4185-3823.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/4185-3827.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/4185-3831.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/4185-3835.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/4185-3839.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/4185-3843.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/render/4185-3847.png sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T09:20:48Z samples/real-design-system/snapshot.json sample directory rename: real-1 to real-design-system and real-2 to real-annotated-theme; paths only, no reference bytes changed
+- 2026-09-06T13:42:24Z samples/button/reference/context.agent.json T604: add the reviewed button Agent reference produced by the built CLI with context Button --from samples/button/snapshot.json --annotations --json --view agent
+- 2026-09-07T01:09:41Z samples/mutations/M13.json T706: add the P7 mutation samples M13-M15 and their expected results
+- 2026-09-07T01:09:41Z samples/mutations/M14.json T706: add the P7 mutation samples M13-M15 and their expected results
+- 2026-09-07T01:09:41Z samples/mutations/M15.json T706: add the P7 mutation samples M13-M15 and their expected results
+- 2026-09-07T01:09:41Z samples/mutations/expected.json T706: add the P7 mutation samples M13-M15 and their expected results

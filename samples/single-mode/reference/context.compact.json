@@ -1,0 +1,268 @@
+{
+  "annotations": [],
+  "component": {
+    "base": {
+      "props": {
+        "size": "sm",
+        "variant": "primary"
+      },
+      "root": {
+        "children": [
+          {
+            "children": [],
+            "id": "100:2",
+            "instanceOf": "80-6",
+            "layout": {
+              "dir": "none",
+              "sizing": {
+                "h": "hug",
+                "w": "hug"
+              }
+            },
+            "name": "icon",
+            "role": "instance",
+            "style": {}
+          },
+          {
+            "children": [],
+            "id": "100:8",
+            "layout": {
+              "dir": "none",
+              "sizing": {
+                "h": "hug",
+                "w": "hug"
+              }
+            },
+            "name": "label",
+            "role": "text",
+            "style": {
+              "fg": "color.surface.fg"
+            },
+            "text": {
+              "content": "Email",
+              "typo": "typo.label.md"
+            }
+          },
+          {
+            "children": [],
+            "id": "100:9",
+            "layout": {
+              "dir": "none",
+              "sizing": {
+                "h": "hug",
+                "w": "hug"
+              }
+            },
+            "name": "helper",
+            "role": "text",
+            "style": {
+              "fg": "color.surface.muted"
+            },
+            "text": {
+              "content": "We never share it.",
+              "typo": "typo.label.sm"
+            }
+          },
+          {
+            "children": [],
+            "id": "100:10",
+            "layout": {
+              "dir": "none",
+              "sizing": {
+                "h": "hug",
+                "w": "hug"
+              }
+            },
+            "name": "action",
+            "role": "text",
+            "style": {
+              "fg": "color.action.bg"
+            },
+            "text": {
+              "content": "Edit",
+              "typo": "typo.label.sm"
+            }
+          }
+        ],
+        "id": "100:1",
+        "layout": {
+          "align": "start",
+          "crossAlign": "center",
+          "dir": "row",
+          "gap": "space.xs",
+          "pad": [
+            "space.sm",
+            "space.md",
+            "space.sm",
+            "space.md"
+          ],
+          "sizing": {
+            "h": "hug",
+            "w": "fill"
+          }
+        },
+        "name": "field",
+        "role": "container",
+        "style": {
+          "bg": "color.action.bg",
+          "radius": "radius.sm"
+        }
+      }
+    },
+    "block": "field",
+    "name": "Field",
+    "props": {
+      "size": [
+        "sm",
+        "md",
+        "lg"
+      ],
+      "variant": [
+        "primary",
+        "secondary",
+        "ghost"
+      ]
+    },
+    "variants": [
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.sm"
+          }
+        ],
+        "props": {
+          "size": "md",
+          "variant": "primary"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.md"
+          }
+        ],
+        "props": {
+          "size": "lg",
+          "variant": "primary"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/style/bg",
+            "value": "color.surface.muted"
+          }
+        ],
+        "props": {
+          "size": "sm",
+          "variant": "secondary"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.sm"
+          },
+          {
+            "path": "/style/bg",
+            "value": "color.surface.muted"
+          }
+        ],
+        "props": {
+          "size": "md",
+          "variant": "secondary"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.md"
+          },
+          {
+            "path": "/style/bg",
+            "value": "color.surface.muted"
+          }
+        ],
+        "props": {
+          "size": "lg",
+          "variant": "secondary"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/style/bg",
+            "value": "color.surface.bg"
+          }
+        ],
+        "props": {
+          "size": "sm",
+          "variant": "ghost"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.sm"
+          },
+          {
+            "path": "/style/bg",
+            "value": "color.surface.bg"
+          }
+        ],
+        "props": {
+          "size": "md",
+          "variant": "ghost"
+        }
+      },
+      {
+        "delta": [
+          {
+            "path": "/layout/gap",
+            "value": "space.md"
+          },
+          {
+            "path": "/style/bg",
+            "value": "color.surface.bg"
+          }
+        ],
+        "props": {
+          "size": "lg",
+          "variant": "ghost"
+        }
+      }
+    ]
+  },
+  "source": {
+    "contentHash": "sha256:2d4f00f8573c020591f0c9ca20e468f25733fd91a7964af4856a1fa484fdd60a",
+    "fetchedAt": "2026-01-01T00:00:00Z",
+    "fileKey": "FIXTURE",
+    "fileVersion": "fixture-1",
+    "nodeId": "90:1"
+  },
+  "tokensUsed": [
+    "color.action.bg",
+    "color.surface.bg",
+    "color.surface.fg",
+    "color.surface.muted",
+    "radius.sm",
+    "space.md",
+    "space.sm",
+    "space.xs",
+    "typo.label.md.fontFamily",
+    "typo.label.md.fontSize",
+    "typo.label.md.fontWeight",
+    "typo.label.md.lineHeight",
+    "typo.label.sm.fontFamily",
+    "typo.label.sm.fontSize",
+    "typo.label.sm.fontWeight",
+    "typo.label.sm.lineHeight"
+  ],
+  "version": 1,
+  "warnings": []
+}

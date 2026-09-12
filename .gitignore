@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.tokenloom/
+*.tsbuildinfo
+.DS_Store
+.omc/
+runs/out/
+packages/adapters/plugin/dist/
+
+# Repository-local development state
+.local/

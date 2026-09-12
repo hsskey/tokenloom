@@ -1,0 +1,140 @@
+{
+  "note": "Forbidden patterns from docs/reference/verification.md section 3. Maintainers own this policy; keeping it as data prevents the forbidden-pattern gate from matching its own implementation.",
+  "patterns": [
+    {
+      "id": "network",
+      "regex": "fetch\\(",
+      "include": [
+        "packages/**/src/**/*.ts",
+        "apps/**/src/**/*.ts"
+      ],
+      "exclude": [
+        "packages/adapters/rest/src/**",
+        "packages/eval/src/**"
+      ],
+      "reason": "network calls belong in the two approved boundaries"
+    },
+    {
+      "id": "clock",
+      "regex": "Date\\.now\\(|new Date\\(",
+      "include": [
+        "packages/schema/src/**/*.ts",
+        "packages/parser/src/**/*.ts",
+        "packages/tokens/src/**/*.ts"
+      ],
+      "exclude": [],
+      "reason": "determinism"
+    },
+    {
+      "id": "random",
+      "regex": "Math\\.random",
+      "include": [
+        "packages/**/src/**/*.ts",
+        "apps/**/src/**/*.ts"
+      ],
+      "exclude": [],
+      "reason": "determinism"
+    },
+    {
+      "id": "geometry",
+      "regex": "geometry=paths",
+      "include": [
+        "**/*.ts",
+        "**/*.json",
+        "**/*.md"
+      ],
+      "exclude": [
+        "docs/reference/spec.md",
+        "docs/reference/verification.md",
+        "packages/verify/patterns.json",
+        ".claude/**"
+      ],
+      "reason": "prevents oversized REST responses"
+    },
+    {
+      "id": "empty-catch",
+      "regex": "catch\\s*(\\([^)]*\\))?\\s*\\{\\s*\\}",
+      "include": [
+        "**/*.ts"
+      ],
+      "exclude": [],
+      "reason": "silent failure"
+    },
+    {
+      "id": "unfinished",
+      "regex": "TODO|FIXME|not implemented|NotImplemented",
+      "include": [
+        "packages/**/src/**/*.ts",
+        "apps/**/src/**/*.ts"
+      ],
+      "exclude": [],
+      "reason": "unfinished implementation"
+    },
+    {
+      "id": "skip",
+      "regex": "\\.only\\(|\\.skip\\(",
+      "include": [
+        "**/*.test.ts"
+      ],
+      "exclude": [],
+      "reason": "disabled test"
+    },
+    {
+      "id": "blackbox",
+      "regex": "from \"\\.\\./src|packages/parser/src|packages/tokens/src",
+      "include": [
+        "**/*.reference.test.ts"
+      ],
+      "exclude": [],
+      "reason": "black-box boundary violation"
+    },
+    {
+      "id": "snapshot-update",
+      "regex": "--update|(^|[^-\\w])-u([^\\w]|$)",
+      "include": [
+        "package.json",
+        "vitest.config.ts",
+        "vitest.base.ts",
+        "packages/*/vitest.config.ts",
+        "apps/*/vitest.config.ts"
+      ],
+      "exclude": [],
+      "reason": "automatic snapshot update"
+    },
+    {
+      "id": "unstable-json",
+      "regex": "JSON\\.stringify\\(",
+      "include": [
+        "packages/parser/src/**/*.ts",
+        "packages/tokens/src/**/*.ts"
+      ],
+      "exclude": [],
+      "reason": "unstable key order"
+    },
+    {
+      "id": "exit-zero",
+      "regex": "process\\.exit\\(0\\)",
+      "include": [
+        "packages/**/src/**/*.ts"
+      ],
+      "exclude": [],
+      "reason": "exit-code bypass"
+    }
+  ],
+  "weakMatchers": [
+    "toBeTruthy()",
+    "toBeDefined()",
+    "not.toThrow()"
+  ],
+  "weakScope": [
+    "**/*.rules.test.ts",
+    "**/*.reference.test.ts"
+  ],
+  "typeEscapes": {
+    "anyAnnotation": ":\\s*any\\b",
+    "asAny": "\\bas\\s+any\\b",
+    "tsIgnore": "@ts-ignore",
+    "tsExpectError": "@ts-expect-error",
+    "maxAsAny": 5
+  }
+}

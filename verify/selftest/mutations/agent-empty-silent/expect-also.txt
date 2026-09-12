@@ -1,0 +1,3 @@
+# Emitting nothing for a zero-result discovery also breaks the A08 CLI rule test that tests executes.
+# determinism does not catch it: an empty stdout is still identical across shuffled inputs, and the exit stays 0.
+tests

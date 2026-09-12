@@ -1,0 +1,22 @@
+{
+  "note": "Baseline for the benchmark gate's environment-calibration probe. Maintainers own this file. environmentKey() in packages/verify/src/gates/bench.ts derives each key from CI mode, platform, architecture, and core count. An unlisted host records its probe and key without an environment verdict. See docs/adr/0007-calibrate-the-benchmark-host-before-judging-timing.md for the five-run median procedure.",
+  "environments": {
+    "local-darwin-arm64-12": {
+      "conditions": {
+        "commit": "e9851501c12e78b4516ffa253e1465117d7bc28d",
+        "loadAvg": [2.17, 2.82, 4.92],
+        "measuredAt": "2026-09-03T16:23:18Z",
+        "node": "v24.20.0",
+        "swapUsed": "0.00M"
+      },
+      "g09Reference": {
+        "cacheMs": 225.292,
+        "irP50Ms": 0.464
+      },
+      "probe": {
+        "allocMs": 29.229,
+        "jsonParseMs": 42.137
+      }
+    }
+  }
+}

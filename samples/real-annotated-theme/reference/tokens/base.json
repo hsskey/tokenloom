@@ -1,0 +1,38 @@
+{
+  "space": {
+    "md": {
+      "$type": "dimension",
+      "$value": "16px"
+    },
+    "sm": {
+      "$type": "dimension",
+      "$value": "8px"
+    }
+  },
+  "typo": {
+    "label": {
+      "md": {
+        "fontFamily": {
+          "$type": "fontFamily",
+          "$value": "Inter"
+        },
+        "fontSize": {
+          "$type": "dimension",
+          "$value": "14px"
+        },
+        "fontWeight": {
+          "$type": "number",
+          "$value": 600
+        },
+        "letterSpacing": {
+          "$type": "dimension",
+          "$value": "0px"
+        },
+        "lineHeight": {
+          "$type": "dimension",
+          "$value": "20px"
+        }
+      }
+    }
+  }
+}
