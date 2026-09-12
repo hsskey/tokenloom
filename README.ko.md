@@ -24,6 +24,31 @@ snapshot
 코딩 에이전트가 Figma의 전체 노드 트리를 직접 탐색하는 대신, tokenloom이 먼저 컴포넌트와 variant를
 찾고 현재 작업에 필요한 범위만 전달합니다.
 
+## 바로 실행해보기
+
+Figma 없이 tokenloom을 처음부터 끝까지 실행해 볼 수 있습니다. `samples/` 아래에 sample snapshot이
+들어 있어, `npx`로 배포된 패키지를 이 snapshot에 바로 돌려볼 수 있습니다. Node.js 22 이상이
+필요합니다.
+
+이 저장소를 clone한 뒤 루트에서 bundled sample의 `Button` 컴포넌트 design context를 조회합니다.
+
+```sh
+npx @hsskey/tokenloom context Button --from samples/button/snapshot.json --view agent --json
+```
+
+해당 컴포넌트의 구조, variant, token reference를 JSON으로 출력합니다.
+
+같은 snapshot에서 CSS, Swift, Kotlin용 디자인 토큰을 생성합니다.
+
+```sh
+npx @hsskey/tokenloom tokens build --from samples/button/snapshot.json --out /tmp/tk --platform css,swift,kotlin
+```
+
+`/tmp/tk` 아래에 DTCG token document, CSS custom properties, Swift와 Kotlin source를 만듭니다.
+
+`samples/` 아래에는 `real-design-system`, `four-modes`, `twenty-variants` 등 다른 snapshot도 있습니다.
+`--from`에 각 디렉터리의 `snapshot.json` 경로를 지정하면 됩니다.
+
 ## 시작하기
 
 ### 1. tokenloom 설치
@@ -44,7 +69,13 @@ tokenloom init
 
 ### 2. Figma 페이지 export
 
-Figma Community에서 **tokenloom exporter** 플러그인을 설치합니다.
+**tokenloom exporter** 플러그인은 Figma Community 심사 중이며 아직 공개 설치할 수 없습니다.
+공개 전까지는 `samples/` 아래의 bundled snapshot으로 Figma 없이 tokenloom을 실행하세요
+([바로 실행해보기](#바로-실행해보기) 참고).
+
+지금 Figma 전체 흐름을 확인하려면 exporter를 소스에서 빌드해 Figma desktop app에 직접 로드합니다.
+`packages/adapters/plugin`을 빌드한 뒤, Figma에서 **Plugins > Development > Import plugin from
+manifest**를 선택하고 그 패키지의 `manifest.json`을 지정합니다.
 
 구현하려는 컴포넌트가 있는 페이지에서 플러그인을 실행하고 snapshot을 내려받은 뒤, 작업 중인
 프로젝트 안에 저장합니다.
