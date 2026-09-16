@@ -42,6 +42,26 @@ describe("Snapshot schema", () => {
     expect(Snapshot.parse(loadButton()).componentSets[0]?.components[0]?.root.bound.strokeWeight).toBe(undefined);
   });
 
+  it("accepts a stroke width as one number, a four-number tuple, or unknown (docs/reference/spec.md section 4.1)", () => {
+    const withStroke = (weight: unknown): unknown => {
+      const snap = loadButton() as { componentSets: { components: { root: { strokes?: unknown } }[] }[] };
+      const root = snap.componentSets[0]?.components[0]?.root;
+      if (root !== undefined) root.strokes = [{ color: { r: 0, g: 0, b: 0, a: 1 }, weight }];
+      return snap;
+    };
+    expect([1, [0, 0, 1, 0], "unknown"].map((weight) => Snapshot.safeParse(withStroke(weight)).success))
+      .toEqual([true, true, true]);
+  });
+
+  it("rejects a stroke without a width (docs/reference/spec.md section 4.1)", () => {
+    const bad = loadButton() as { componentSets: { components: { root: { strokes?: unknown } }[] }[] };
+    const root = bad.componentSets[0]?.components[0]?.root;
+    if (root !== undefined) root.strokes = [{ color: { r: 0, g: 0, b: 0, a: 1 } }];
+    const result = Snapshot.safeParse(bad);
+    expect(result.success).toBe(false);
+    expect(result.error?.issues[0]?.path.at(-1)).toBe("weight");
+  });
+
   it("rejects a Snapshot without source.fileVersion", () => {
     const bad = loadButton() as { source: Record<string, unknown> };
     delete bad.source.fileVersion;

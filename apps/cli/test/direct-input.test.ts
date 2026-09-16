@@ -203,6 +203,47 @@ describe("A05: paths are resolved against the invocation directory, never guesse
       .toEqual({ status: 1, stdout: "", mentionsDecoy: false });
   });
 
+  // The base component root is 12:35 in the sample; a stroke added there surfaces in component.base.root.
+  function writeExportWithBaseStroke(weight: unknown): string {
+    const dir = temp();
+    const snap = exportFrom(sampleSnapshot) as { componentSets: { components: { root: { strokes?: unknown } }[] }[] };
+    const root = snap.componentSets[0]?.components[0]?.root;
+    if (root !== undefined) root.strokes = [{ color: { r: 0, g: 0, b: 0, a: 1 }, weight }];
+    const path = join(dir, "stroke.json");
+    writeFileSync(path, JSON.stringify(snap));
+    return path;
+  }
+
+  it("R10: keeps unequal per-side stroke widths through to the design context without max approximation", () => {
+    const out = run(["context", "Button", "--from", writeExportWithBaseStroke([0, 0, 1, 0]), "--json"]);
+    const body = JSON.parse(out.stdout) as { component: { base: { root: { style: Record<string, string> } } } };
+
+    expect({ status: out.status, borderWidth: body.component.base.root.style.borderWidth })
+      .toEqual({ status: 0, borderWidth: "raw:0px 0px 1px 0px" });
+  });
+
+  it("R10: reports an unknown visible stroke width as a warning and fails strict rather than dropping it", () => {
+    const path = writeExportWithBaseStroke("unknown");
+    const normal = run(["context", "Button", "--from", path, "--json"]);
+    const body = JSON.parse(normal.stdout) as { component: { base: { root: { style: Record<string, string> } } }; warnings: { code: string; nodeId: string }[] };
+    const strict = run(["context", "Button", "--from", path, "--json", "--strict"]);
+
+    expect({
+      status: normal.status,
+      hasBorder: "border" in body.component.base.root.style,
+      hasWidth: "borderWidth" in body.component.base.root.style,
+      warned: body.warnings.some((w) => w.code === "UNKNOWN_STROKE_WIDTH" && w.nodeId === "12:35"),
+      strictStatus: strict.status,
+    }).toEqual({ status: 0, hasBorder: true, hasWidth: false, warned: true, strictStatus: 2 });
+  });
+
+  it("R10: rejects a stroke that carries no width at the CLI boundary", () => {
+    const out = run(["context", "Button", "--from", writeExportWithBaseStroke(undefined), "--json"]);
+
+    expect({ status: out.status, mentionsWeight: out.stderr.includes("strokes.0.weight") })
+      .toEqual({ status: 1, mentionsWeight: true });
+  });
+
   it("no machine-specific absolute path leaks into the design payload", () => {
     const dir = temp();
     const path = writeExport(dir, "checkout.json");

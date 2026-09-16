@@ -1,7 +1,7 @@
 // Only this package knows Figma field names (docs/reference/spec.md section 4.1 boundary).
 // These pure transforms are testable without the figma global; code.ts owns API calls.
 import type {
-  AnnotationT, CollectionT, PluginExportT, RawNodeT, TextStyleT, VariableT,
+  AnnotationT, CollectionT, PluginExportT, RawNodeT, StrokeWeightT, TextStyleT, VariableT,
 } from "@tokenloom/schema";
 
 /** Minimal shape supplied by the plugin API, independent of figma global types. */
@@ -56,7 +56,13 @@ export interface FigmaNode {
   layoutSizingVertical?: string;
   fills?: readonly FigmaPaint[];
   strokes?: readonly FigmaStroke[];
-  strokeWeight?: number;
+  // A uniform width is a number; a per-side width makes the runtime getter return the figma.mixed symbol.
+  strokeWeight?: number | symbol;
+  // IndividualStrokesMixin exposes the four side widths when strokeWeight is figma.mixed.
+  strokeTopWeight?: number;
+  strokeRightWeight?: number;
+  strokeBottomWeight?: number;
+  strokeLeftWeight?: number;
   cornerRadius?: number;
   opacity?: number;
   characters?: string;
@@ -266,6 +272,7 @@ export function toRawNode(node: FigmaNode, mainIds?: ReadonlyMap<string, string>
   // Snapshot cannot represent strokes without colors, so remove each such stroke with its binding.
   const strokePairs = paintPairs(node.strokes, "strokes", node.boundVariables).flatMap(({ paint, bound }) =>
     paint.color === undefined ? [] : [{ color: { ...paint.color, a: paint.color.a ?? 1 }, bound }]);
+  const strokeWeight = strokeWeightOf(node);
   const out: RawNodeT = {
     id: node.id,
     name: node.name,
@@ -274,13 +281,13 @@ export function toRawNode(node: FigmaNode, mainIds?: ReadonlyMap<string, string>
     bbox: { x: box?.x ?? 0, y: box?.y ?? 0, w: box?.width ?? 0, h: box?.height ?? 0 },
     bound: toBound(node, fillPairs[0]?.bound, strokePairs[0]?.bound),
     children: (node.children ?? []).map((c) => toRawNode(c, mainIds)),
-    extra: { strokeWeight: node.strokeWeight ?? 0 },
+    extra: { strokeWeight: strokeWeight ?? 0 },
   };
   const layout = toLayout(node);
   if (layout !== undefined) out.layout = layout;
   const fills = toFills(fillPairs);
   if (fills !== undefined) out.fills = fills;
-  const strokes = toStrokes(strokePairs, node.strokeWeight);
+  const strokes = toStrokes(strokePairs, strokeWeight);
   if (strokes !== undefined) out.strokes = strokes;
   if (node.cornerRadius !== undefined) out.radius = node.cornerRadius;
   if (node.opacity !== undefined) out.opacity = node.opacity;
@@ -337,7 +344,21 @@ function toFills(pairs: readonly PaintPair[]): RawNodeT["fills"] {
   });
 }
 
-function toStrokes(pairs: readonly { color: ColorLike }[], strokeWeight: number | undefined): RawNodeT["strokes"] {
+/**
+ * Resolve the stroke width Figma reports for a node. A number is uniform. `figma.mixed` (a symbol) means
+ * per-side widths, read from IndividualStrokesMixin as `[top, right, bottom, left]`; a mixed node without
+ * those side widths (VECTOR and other non-frame nodes) yields `"unknown"` rather than an invented width.
+ */
+export function strokeWeightOf(node: FigmaNode): StrokeWeightT | undefined {
+  const weight = node.strokeWeight;
+  if (typeof weight === "number") return weight;
+  if (weight === undefined) return undefined;
+  const sides = [node.strokeTopWeight, node.strokeRightWeight, node.strokeBottomWeight, node.strokeLeftWeight];
+  if (sides.every((side): side is number => typeof side === "number")) return sides as [number, number, number, number];
+  return "unknown";
+}
+
+function toStrokes(pairs: readonly { color: ColorLike }[], strokeWeight: StrokeWeightT | undefined): RawNodeT["strokes"] {
   if (pairs.length === 0) return undefined;
   return pairs.map(({ color }) => ({ color, weight: strokeWeight ?? 1 }));
 }

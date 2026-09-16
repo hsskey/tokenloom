@@ -161,6 +161,11 @@ function layoutOf(state: CompactionState, node: RawNodeT): DesignNodeT["layout"]
   return layout;
 }
 
+/** Collapse four equal values to one `<n>px`, matching the CSS shorthand a code generator copies. */
+function pxList(parts: readonly number[]): string {
+  return [...new Set(parts)].length === 1 ? `${parts[0] as number}px` : parts.map((p) => `${p}px`).join(" ");
+}
+
 function radiusValue(state: CompactionState, node: RawNodeT): string | undefined {
   const ref = refOf(state, node.bound.radius);
   if (ref !== null) return ref;
@@ -168,9 +173,25 @@ function radiusValue(state: CompactionState, node: RawNodeT): string | undefined
   if (radius === undefined) return undefined;
   const parts = typeof radius === "number" ? [radius] : radius;
   if (parts.every((p) => p <= 0)) return undefined;
-  const text = [...new Set(parts)].length === 1 ? `${parts[0] as number}px` : parts.map((p) => `${p}px`).join(" ");
+  const text = pxList(parts);
   warn(state, "UNBOUND_DIMENSION", node.id, text);
   return `raw:${text}`;
+}
+
+/**
+ * Border width for a stroke. A uniform width uses the `bound.strokeWeight` TokenRef when present,
+ * otherwise `raw:<n>px` without a warning (docs/reference/spec.md section 4.4 R10). A per-side width is
+ * always a raw CSS four-value shorthand because one variable cannot describe four sides. An `"unknown"`
+ * width omits `borderWidth` and emits `UNKNOWN_STROKE_WIDTH` so the visible stroke is never silently dropped.
+ */
+function borderWidthValue(state: CompactionState, node: RawNodeT, stroke: NonNullable<RawNodeT["strokes"]>[number]): string | undefined {
+  const weight = stroke.weight;
+  if (weight === "unknown") {
+    warn(state, "UNKNOWN_STROKE_WIDTH", node.id, toHex(stroke.color));
+    return undefined;
+  }
+  if (typeof weight === "number") return refOf(state, node.bound.strokeWeight) ?? `raw:${pxList([weight])}`;
+  return `raw:${pxList(weight)}`;
 }
 
 function styleOf(state: CompactionState, node: RawNodeT, role: DesignNodeT["role"]): Record<string, string> {
@@ -182,8 +203,8 @@ function styleOf(state: CompactionState, node: RawNodeT, role: DesignNodeT["role
   const stroke = node.strokes?.[0];
   if (stroke !== undefined) {
     style.border = colorValue(state, node.bound.stroke, stroke.color, node.id);
-    // Stroke width accepts a raw value by contract, so an absent binding does not produce a warning.
-    style.borderWidth = refOf(state, node.bound.strokeWeight) ?? `raw:${stroke.weight}px`;
+    const borderWidth = borderWidthValue(state, node, stroke);
+    if (borderWidth !== undefined) style.borderWidth = borderWidth;
   }
   const radius = radiusValue(state, node);
   if (radius !== undefined) style.radius = radius;
