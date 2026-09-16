@@ -16,7 +16,7 @@ Figma loads `packages/adapters/plugin/manifest.json`.
 | Field | Value | Purpose |
 |---|---|---|
 | `name` | `tokenloom exporter` | Name shown in the Plugins menu |
-| `id` | `tokenloom-exporter` | Plugin identifier |
+| `id` | `1680544980365532256` | Figma-assigned plugin identifier |
 | `api` | `1.0.0` | Plugin API version |
 | `main` | `dist/code.js` | Bundled plugin code |
 | `ui` | `src/ui.html` | Single-action export UI |
