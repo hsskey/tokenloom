@@ -190,6 +190,27 @@ describe("RawNode to DesignNode rules (docs/reference/spec.md section 4.4)", () 
     expect(unbound.warnings).toEqual([]);
   });
 
+  it("R10: emits a four-value raw borderWidth for per-side stroke widths", () => {
+    const state = stateOf();
+    const out = compactNode(state, node({ id: "1", type: "FRAME", strokes: [{ color: { r: 0, g: 0, b: 0, a: 1 }, weight: [0, 0, 1, 0] }] }));
+    expect(out?.style.borderWidth).toBe("raw:0px 0px 1px 0px");
+    expect(state.warnings.filter((w) => w.code === "UNBOUND_DIMENSION")).toEqual([]);
+  });
+
+  it("R10: omits borderWidth and emits UNKNOWN_STROKE_WIDTH for an unknown stroke width", () => {
+    const state = stateOf({ variables: [V_COLOR] });
+    const out = compactNode(state, node({ id: "1", type: "FRAME", strokes: [{ color: { r: 0, g: 0, b: 0, a: 1 }, weight: "unknown" }], bound: { stroke: "v8" } }));
+    expect(out?.style.border).toBe("color.button.primary.bg");
+    expect(out?.style.borderWidth).toBe(undefined);
+    expect(state.warnings).toEqual([{ code: "UNKNOWN_STROKE_WIDTH", nodeId: "1", detail: "#000000" }]);
+  });
+
+  it("R10: collapses equal per-side widths to one value", () => {
+    const state = stateOf();
+    expect(compactNode(state, node({ id: "1", type: "FRAME", strokes: [{ color: { r: 0, g: 0, b: 0, a: 1 }, weight: [1, 1, 1, 1] }] }))?.style.borderWidth)
+      .toBe("raw:1px");
+  });
+
   it("R11: reports positive unbound radius values as raw pixels with UNBOUND_DIMENSION", () => {
     const state = stateOf();
     expect(compactNode(state, node({ id: "1", type: "FRAME", radius: 8 }))?.style.radius).toBe("raw:8px");

@@ -147,6 +147,51 @@ describe("plugin export conversion (docs/reference/spec.md section 4.1)", () => 
     expect(toRawNode(NODE).bound.strokeWeight).toBe(undefined);
   });
 
+  it("docs/reference/spec.md section 4.1: exported JSON keeps a stroke width when strokeWeight is figma.mixed", () => {
+    const mixed: FigmaNode = {
+      ...NODE,
+      strokes: [{ type: "SOLID", color: { r: 0, g: 0, b: 0 } }],
+      strokeWeight: Symbol("figma.mixed"),
+      strokeTopWeight: 0, strokeRightWeight: 0, strokeBottomWeight: 1, strokeLeftWeight: 0,
+    };
+    const built = buildExport({
+      fileKey: "FK", fileVersion: "v1", fetchedAt: "2026-01-01T00:00:00Z",
+      collections: [], variables: [], textStyles: [],
+      sets: [{ id: "1:1", name: "Button", props: {}, components: [{ id: "1:2", props: {}, root: mixed }] }],
+    });
+    const parsed = Snapshot.safeParse(JSON.parse(JSON.stringify(built)));
+    expect(parsed.success).toBe(true);
+    expect(parsed.success ? parsed.data.componentSets[0]?.components[0]?.root.strokes : undefined)
+      .toEqual([{ color: { r: 0, g: 0, b: 0, a: 1 }, weight: [0, 0, 1, 0] }]);
+  });
+
+  it("docs/reference/spec.md section 4.1: writes the four side widths in top, right, bottom, left order when strokeWeight is figma.mixed", () => {
+    const node: FigmaNode = {
+      ...NODE,
+      strokes: [{ type: "SOLID", color: { r: 1, g: 0, b: 0 } }],
+      strokeWeight: Symbol("figma.mixed"),
+      strokeTopWeight: 2, strokeRightWeight: 0.5, strokeBottomWeight: 3, strokeLeftWeight: 1,
+    };
+    expect(toRawNode(node).strokes).toEqual([{ color: { r: 1, g: 0, b: 0, a: 1 }, weight: [2, 0.5, 3, 1] }]);
+  });
+
+  it("docs/reference/spec.md section 4.1: records unknown as the stroke width when a mixed weight has no side widths", () => {
+    const node: FigmaNode = {
+      ...NODE,
+      type: "VECTOR",
+      strokes: [{ type: "SOLID", color: { r: 0, g: 0, b: 0 } }],
+      strokeWeight: Symbol("figma.mixed"),
+    };
+    expect(toRawNode(node).strokes).toEqual([{ color: { r: 0, g: 0, b: 0, a: 1 }, weight: "unknown" }]);
+  });
+
+  it("docs/reference/spec.md section 4.1: keeps a numeric stroke width and records it in extra", () => {
+    const node: FigmaNode = { ...NODE, strokes: [{ type: "SOLID", color: { r: 1, g: 0, b: 0 } }], strokeWeight: 2 };
+    const out = toRawNode(node);
+    expect(out.strokes).toEqual([{ color: { r: 1, g: 0, b: 0, a: 1 }, weight: 2 }]);
+    expect(out.extra?.strokeWeight).toBe(2);
+  });
+
   it("docs/reference/spec.md section 4.1: omits the fills key when every fill is hidden", () => {
     const node: FigmaNode = { ...NODE, fills: [{ type: "SOLID", color: { r: 0, g: 0, b: 0 }, visible: false }] };
     expect(toRawNode(node).fills).toBe(undefined);

@@ -41,10 +41,11 @@ describe("design context schema", () => {
     expect(DesignNode.safeParse({ ...leaf, layout: { ...leaf.layout, pad: [1, 2, 3, 4] } }).success).toBe(true);
   });
 
-  it("accepts only the ten documented WarningCode values", () => {
-    expect(WarningCode.options).toHaveLength(10);
+  it("accepts only the eleven documented WarningCode values", () => {
+    expect(WarningCode.options).toHaveLength(11);
     expect(WarningCode.safeParse("UNBOUND_COLOR").success).toBe(true);
     expect(WarningCode.safeParse("MODE_COLLAPSED").success).toBe(true);
+    expect(WarningCode.safeParse("UNKNOWN_STROKE_WIDTH").success).toBe(true);
     expect(WarningCode.safeParse("SOMETHING_ELSE").success).toBe(false);
   });
 

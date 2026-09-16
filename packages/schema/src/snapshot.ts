@@ -6,6 +6,19 @@ export const Color = z.object({ r: z.number(), g: z.number(), b: z.number(), a: 
 
 export const VarValue = z.union([Color, z.number(), z.string(), z.boolean(), z.object({ alias: VarId })]);
 
+/**
+ * Stroke width. A number applies one width to every side. A `[top, right, bottom, left]` tuple carries
+ * an exact width per side, produced when Figma reports `figma.mixed` and the node exposes the four side
+ * widths. `"unknown"` marks a visible stroke whose width could not be established, so downstream code
+ * reports it rather than inventing or dropping a thickness. The tuple order matches `layout.padding`.
+ */
+export type StrokeWeightT = number | [number, number, number, number] | "unknown";
+export const StrokeWeight: z.ZodType<StrokeWeightT> = z.union([
+  z.number(),
+  z.tuple([z.number(), z.number(), z.number(), z.number()]),
+  z.literal("unknown"),
+]);
+
 export const Variable = z.object({
   id: VarId,
   name: z.string(),                        // Original Figma name, for example "color/button/primary/bg".
@@ -47,7 +60,7 @@ export interface RawNodeT {
     sizingV?: "HUG" | "FILL" | "FIXED";
   };
   fills?: { type: "SOLID" | "IMAGE" | "GRADIENT" | "OTHER"; color?: { r: number; g: number; b: number; a: number } }[];
-  strokes?: { color: { r: number; g: number; b: number; a: number }; weight: number }[];
+  strokes?: { color: { r: number; g: number; b: number; a: number }; weight: StrokeWeightT }[];
   radius?: number | [number, number, number, number];
   opacity?: number;
   text?: { characters: string; fontFamily: string; fontSize: number; fontWeight: number; lineHeight: number };
@@ -73,7 +86,7 @@ export const RawNode: z.ZodType<RawNodeT> = z.lazy(() => z.object({
     sizingV: z.enum(["HUG", "FILL", "FIXED"]).optional(),
   }).optional(),
   fills: z.array(z.object({ type: z.enum(["SOLID", "IMAGE", "GRADIENT", "OTHER"]), color: Color.optional() })).optional(),
-  strokes: z.array(z.object({ color: Color, weight: z.number() })).optional(),
+  strokes: z.array(z.object({ color: Color, weight: StrokeWeight })).optional(),
   radius: z.union([z.number(), z.tuple([z.number(), z.number(), z.number(), z.number()])]).optional(),
   opacity: z.number().optional(),
   text: z.object({

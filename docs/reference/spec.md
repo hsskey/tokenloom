@@ -201,7 +201,7 @@ export interface RawNodeT {
     sizingV?: "HUG" | "FILL" | "FIXED";
   };
   fills?: { type: "SOLID" | "IMAGE" | "GRADIENT" | "OTHER"; color?: { r: number; g: number; b: number; a: number } }[];
-  strokes?: { color: { r: number; g: number; b: number; a: number }; weight: number }[];
+  strokes?: { color: { r: number; g: number; b: number; a: number }; weight: number | [number, number, number, number] | "unknown" }[];
   radius?: number | [number, number, number, number];
   opacity?: number;
   text?: { characters: string; fontFamily: string; fontSize: number; fontWeight: number; lineHeight: number };
@@ -227,7 +227,7 @@ export const RawNode: z.ZodType<RawNodeT> = z.lazy(() => z.object({
     sizingV: z.enum(["HUG", "FILL", "FIXED"]).optional(),
   }).optional(),
   fills: z.array(z.object({ type: z.enum(["SOLID", "IMAGE", "GRADIENT", "OTHER"]), color: Color.optional() })).optional(),
-  strokes: z.array(z.object({ color: Color, weight: z.number() })).optional(),
+  strokes: z.array(z.object({ color: Color, weight: z.union([z.number(), z.tuple([z.number(), z.number(), z.number(), z.number()]), z.literal("unknown")]) })).optional(),
   radius: z.union([z.number(), z.tuple([z.number(), z.number(), z.number(), z.number()])]).optional(),
   opacity: z.number().optional(),
   text: z.object({ characters: z.string(), fontFamily: z.string(), fontSize: z.number(), fontWeight: z.number(), lineHeight: z.number() }).optional(),
@@ -289,6 +289,8 @@ Only the REST and plugin adapters know Figma field names.
 The parser and token builder consume only `Snapshot`.
 Adapters omit fills and strokes where `visible` is false, while preserving Figma order in the `fills` array.
 `bound.fill` and `bound.stroke` refer to the first paint that remains after visibility filtering.
+A stroke `weight` is one number for a uniform width, a `[top, right, bottom, left]` tuple in `layout.padding` order for an exact per-side width, or `"unknown"` for a visible stroke whose width cannot be established.
+When Figma reports a mixed stroke weight, the plugin adapter writes the four side widths as `[top, right, bottom, left]`, or `"unknown"` when the node exposes no side widths.
 The CLI loader reapplies the same filtering and binding rules when it reads a stored snapshot.
 The plugin export format adds `renderPngBase64` to `Snapshot`; `tokenloom snapshot import` writes each PNG separately and replaces it with a `renderPng` path.
 
@@ -351,7 +353,7 @@ export const WarningCode = z.enum([
   "UNBOUND_COLOR", "UNBOUND_DIMENSION", "UNBOUND_TYPO",
   "ABSOLUTE_POSITION", "UNKNOWN_NODE_TYPE", "NAME_COLLISION",
   "NON_ASCII_TOKEN_NAME", "VARIANT_STRUCTURE_DIFF", "ALIAS_CYCLE",
-  "MODE_COLLAPSED",
+  "MODE_COLLAPSED", "UNKNOWN_STROKE_WIDTH",
 ]);
 
 export const DesignContext = z.object({
@@ -405,7 +407,7 @@ export const DesignContext = z.object({
 | R07 | Alignment | Map `MIN` to `start`, `CENTER` to `center`, `MAX` to `end`, and `SPACE_BETWEEN` to `between`. Counter alignment becomes `crossAlign`. |
 | R08 | Sizing | Map `HUG` to `hug`, `FILL` to `fill`, and `FIXED` to `fixed` with `size`. Default to `hug`. |
 | R09 | `style.bg` and `style.fg` | For a solid first fill, use its TokenRef when `bound.fill` exists. Otherwise use `raw:#hex` and emit `UNBOUND_COLOR`. Text nodes use `fg`. |
-| R10 | `style.border` | Treat the first stroke color as in R09. Use the `bound.strokeWeight` TokenRef for `style.borderWidth`; otherwise use `raw:<n>px` without an unbound warning. |
+| R10 | `style.border` | Treat the first stroke color as in R09. Use the `bound.strokeWeight` TokenRef for `style.borderWidth`; otherwise use `raw:<n>px` without an unbound warning. A per-side width becomes `raw:<top>px <right>px <bottom>px <left>px`, collapsing to `raw:<n>px` when the four sides are equal. An `"unknown"` width omits `style.borderWidth` and emits `UNKNOWN_STROKE_WIDTH`. |
 | R11 | `style.radius` | Use the `bound.radius` TokenRef. Otherwise, a positive radius becomes `raw:<n>px` and emits `UNBOUND_DIMENSION`. |
 | R12 | `style.opacity` | Include only values below 1. |
 | R13 | Text | Map `characters` to `content`. Use `bound.textStyle` for `typo`, or emit `UNBOUND_TYPO` when absent. |
@@ -1250,6 +1252,7 @@ The dependency allowlist is in `docs/reference/verification.md` section 9.
 | 5xx | Retry twice with exponential backoff and concurrency one. |
 | Unknown node type | Preserve `role: unknown` and emit a warning. |
 | Unbound color | Use `raw:#hex` and emit `UNBOUND_COLOR`. |
+| Unknown stroke width | Keep the border color, omit `style.borderWidth`, and emit `UNKNOWN_STROKE_WIDTH`. |
 | Name collision | Emit `NAME_COLLISION`; any candidate ID occurring once can be selected with `--node`, while an ambiguous requested name/node pair or no unique candidate ID requires a corrected snapshot. |
 | Alias cycle | Emit `ALIAS_CYCLE` and fail the build. |
 | Variant structure mismatch | Store the complete `root` and emit a warning. |
