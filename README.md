@@ -71,13 +71,8 @@ Claude Code can now use tokenloom to retrieve component context from a Figma exp
 
 ### 2. Export a Figma page
 
-The **tokenloom exporter** plugin is in review for Figma Community and is not publicly installable
-yet. Until it is published, use the bundled snapshots under `samples/` (see [Try it now](#try-it-now))
-to run tokenloom without Figma.
-
-For the full Figma loop today, build the exporter from source and load it in the Figma desktop app:
-build `packages/adapters/plugin`, then in Figma choose **Plugins > Development > Import plugin from
-manifest** and select that package's `manifest.json`.
+Install [**tokenloom exporter**](https://www.figma.com/community/plugin/1680544980365532256/tokenloom-exporter)
+from Figma Community.
 
 Run the plugin on the page that contains the component you want to implement, download the snapshot,
 and save it somewhere inside your project.

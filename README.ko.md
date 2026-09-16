@@ -69,13 +69,8 @@ tokenloom init
 
 ### 2. Figma 페이지 export
 
-**tokenloom exporter** 플러그인은 Figma Community 심사 중이며 아직 공개 설치할 수 없습니다.
-공개 전까지는 `samples/` 아래의 bundled snapshot으로 Figma 없이 tokenloom을 실행하세요
-([바로 실행해보기](#바로-실행해보기) 참고).
-
-지금 Figma 전체 흐름을 확인하려면 exporter를 소스에서 빌드해 Figma desktop app에 직접 로드합니다.
-`packages/adapters/plugin`을 빌드한 뒤, Figma에서 **Plugins > Development > Import plugin from
-manifest**를 선택하고 그 패키지의 `manifest.json`을 지정합니다.
+Figma Community에서 [**tokenloom exporter**](https://www.figma.com/community/plugin/1680544980365532256/tokenloom-exporter)
+플러그인을 설치합니다.
 
 구현하려는 컴포넌트가 있는 페이지에서 플러그인을 실행하고 snapshot을 내려받은 뒤, 작업 중인
 프로젝트 안에 저장합니다.
