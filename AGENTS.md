@@ -17,7 +17,7 @@ This is a pnpm workspace. Run `corepack enable` before `pnpm install` so the pin
 | `docs/reference/verification.md` | Changing tests or verification, or looking up what a gate checks |
 | `docs/goals.md` | Deciding scope, non-goals, or compatibility |
 | `.claude/rules/INDEX.md` | Before changing any file; the rules are scoped by path |
-| `docs/agents/` | Issue tracking, triage vocabulary, glossary and ADR conventions, component generation |
+| `docs/agents/` | Issue tracking, triage vocabulary, glossary and ADR conventions, component generation, or how pipeline pull request bodies are produced |
 | `samples/` and `verify/` | Changing test data, or reading committed verification results |
 | [docs/plugin-build.md](docs/plugin-build.md) | Building or changing the Figma exporter from source, or capturing a new sample design |
 
