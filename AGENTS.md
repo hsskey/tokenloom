@@ -19,6 +19,7 @@ This is a pnpm workspace. Run `corepack enable` before `pnpm install` so the pin
 | `.claude/rules/INDEX.md` | Before changing any file; the rules are scoped by path |
 | `docs/agents/` | Issue tracking, triage vocabulary, glossary and ADR conventions, component generation |
 | `samples/` and `verify/` | Changing test data, or reading committed verification results |
+| [docs/plugin-build.md](docs/plugin-build.md) | Building or changing the Figma exporter from source, or capturing a new sample design |
 
 ## Before you start
 
