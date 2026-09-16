@@ -1,6 +1,6 @@
 {
   "name": "@hsskey/tokenloom",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "license": "MIT",
   "description": "A CLI that turns a Figma design into design tokens for three platforms (CSS, Swift, Kotlin) and into a design context for LLM prompts, deterministically.",

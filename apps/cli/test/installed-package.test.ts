@@ -119,7 +119,7 @@ describe("the packed package in an unrelated consumer", () => {
       }).toEqual({
         manifest: {
           name: "@hsskey/tokenloom",
-          version: "0.1.0",
+          version: "0.2.0",
           engines: { node: ">=22" },
           bin: { tokenloom: "dist/tokenloom.js" },
         },
