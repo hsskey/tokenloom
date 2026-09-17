@@ -9,9 +9,9 @@ import {
   createSessionPort, type ChildRunWithStdin, type RunnableTrajectoryCondition, type ToolPort, type TrajectoryCondition,
   type TrajectoryRecovery, type TrajectoryRun, type TrajectoryTaskSpec, type TrajectoryToolCall, type TrajectoryTurn,
 } from "./agent-session-port";
-import type { LlmAdapter } from "./model-port";
+import type { HarnessCommit, LlmAdapter, LlmResult, ModelResolution, ProviderCallEvidence } from "./model-port";
 import { promptHash } from "./prompt";
-import { runsDir } from "./runs";
+import { readHarnessCommit, runsDir } from "./runs";
 import { scoreS1, scoreS2 } from "./score";
 import { runCoverage } from "./coverage";
 import { expectedVariants } from "./variant-reference";
@@ -86,7 +86,7 @@ export interface TrajectoryOptions {
 export interface TrajectorySet { records: TrajectoryRun[]; costUsd: number; stopped: Stop; path: string | null }
 type Stop = "budget" | "pricing" | null;
 interface Combination { spec: TrajectoryTaskSpec; condition: RunnableTrajectoryCondition; repeat: number }
-interface SetState { lock: string; adapter: LlmAdapter["kind"]; remaining: number; stopped: Stop }
+interface SetState { lock: string; harnessCommit: HarnessCommit; adapter: LlmAdapter["kind"]; remaining: number; stopped: Stop }
 
 /**
  * Pre-call bound from the prompt, both measured per-call blocks, and capped output. Reserving the
@@ -227,6 +227,10 @@ async function runOne(options: TrajectoryOptions, combo: Combination, state: Set
         text, render: renderVariants, readPng: (path) => readFileSync(path),
       })
     : null;
+  const results = turns.map((t) => t.result);
+  const providerEvidence = results
+    .map((r) => r.providerEvidence).filter((e): e is ProviderCallEvidence => e !== null);
+  const resolved = sharedResolvedModel(results);
   return {
     coverageStatus: coverage.coverageStatus,
     ...(coverage.coverage !== null ? { coverage: coverage.coverage } : {}),
@@ -241,8 +245,20 @@ async function runOne(options: TrajectoryOptions, combo: Combination, state: Set
       ? { output: text, sampleName: combo.spec.sampleName, tokensCssSha256: sha256(tokensCss), referenceLockCommit: state.lock }
       : null,
     promptHash: promptHash(port.template), toolCalls, recovery, ...(incomparable ? { incomparable } : {}),
+    requestedModel: matrix.model, resolvedModel: resolved.resolvedModel, modelResolution: resolved.modelResolution,
+    providerEvidence, harnessCommit: state.harnessCommit, referenceLockCommit: state.lock,
     ...(error === undefined ? {} : { error }),
   };
+}
+
+function sharedResolvedModel(
+  results: LlmResult[],
+): { resolvedModel: string | null; modelResolution: ModelResolution | null } {
+  const models = new Set(results.map((r) => r.resolvedModel));
+  if (results.length === 0 || models.size !== 1 || models.has(null)) return { resolvedModel: null, modelResolution: null };
+  const resolutions = new Set(results.map((r) => r.modelResolution));
+  const first = results[0] as LlmResult;
+  return { resolvedModel: first.resolvedModel, modelResolution: resolutions.size === 1 ? first.modelResolution : null };
 }
 
 /** Runs every combination in order, stopping the whole set at the first budget or pricing stop. */
@@ -254,10 +270,11 @@ export async function runTrajectory(options: TrajectoryOptions): Promise<Traject
   const manifest = await options.child("git", ["show", `${lock}:${MANIFEST}`], options.repoRoot);
   if (manifest.code !== 0) throw new Error("trajectory: reference-lock lookup failed");
   validateReferenceInputs(options.repoRoot, options.matrix, manifest.stdout);
+  const harnessCommit = await readHarnessCommit(options.child, options.repoRoot);
   const adapter = options.makeAdapter(0, 0);
   if (adapter.kind === "claude" && options.rate === null) throw new Error("trajectory: missing pricing for claude adapter");
   const state: SetState = {
-    lock, adapter: adapter.kind, remaining: options.matrix.budgetUsd, stopped: null,
+    lock, harnessCommit, adapter: adapter.kind, remaining: options.matrix.budgetUsd, stopped: null,
   };
   const records: TrajectoryRun[] = [];
   for (const combo of trajectoryCombinations(options.matrix)) {

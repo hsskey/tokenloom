@@ -136,7 +136,7 @@ export interface OutputBasis {
  * estimate whose weaker basis is returned explicitly.
  */
 export function outputBasis(runs: EvalRun[], model: string, promptHash: string): OutputBasis {
-  const sent = runs.filter((r) => r.adapter === "claude" && r.skipped === undefined && r.model === model);
+  const sent = runs.filter((r) => r.adapter === "claude" && r.skipped === undefined && aliasOf(r) === model);
   const sameHash = sent.filter((r) => r.promptHash === promptHash);
   const picked = sameHash.length > 0 ? sameHash : sent;
   return {
@@ -164,7 +164,7 @@ export interface CostBasis {
  */
 export function costBasis(runs: EvalRun[], model: string, promptHash: string): CostBasis {
   const wrote = runs.filter(
-    (r) => r.adapter === "claude" && r.skipped === undefined && r.model === model && r.cacheCreation > 0);
+    (r) => r.adapter === "claude" && r.skipped === undefined && aliasOf(r) === model && r.cacheCreation > 0);
   const sameHash = wrote.filter((r) => r.promptHash === promptHash);
   const picked = sameHash.length > 0 ? sameHash : wrote;
   const line = leastSquares(picked.map((r) => r.estTokens), picked.map((r) => r.cacheCreation));
@@ -222,6 +222,8 @@ export interface Row {
   inputTokensP50: string;
   costP50: string;
   latencyP50: string;
+  nSent: string;
+  nCacheWrite: string;
 }
 
 export interface Failure {
@@ -234,6 +236,7 @@ export interface FixedCost {
   input: string;
   sessionSchemaTokens: string;
   tokensPerComponentP50: string;
+  nCacheWrite: string;
 }
 
 export interface ReportModel {
@@ -272,6 +275,28 @@ function groupKey(run: EvalRun): string {
   return `${sampleClass(run)}\u0000${run.input}\u0000${run.inputVariant}`;
 }
 
+export function aliasOf(run: EvalRun): string {
+  return run.requestedModel ?? run.model;
+}
+
+const SECTION_UNRECORDED = "unrecorded";
+
+export function sectionKey(run: EvalRun): string {
+  return [
+    run.promptHash,
+    run.model,
+    run.requestedModel ?? SECTION_UNRECORDED,
+    run.resolvedModel ?? SECTION_UNRECORDED,
+    run.harnessCommit?.sha ?? SECTION_UNRECORDED,
+    run.harnessCommit === undefined ? SECTION_UNRECORDED : String(run.harnessCommit.dirty),
+    run.artifact?.referenceLockCommit ?? SECTION_UNRECORDED,
+  ].join("\u0000");
+}
+
+export function reportSectionKeys(runs: EvalRun[]): string[] {
+  return [...new Set(runs.filter((r) => r.adapter === "claude").map(sectionKey))];
+}
+
 /** Prompt hashes that partition report sections, preserving first appearance (SPEC 9.6). */
 export function promptHashes(runs: EvalRun[]): string[] {
   return [...new Set(runs.filter((r) => r.adapter === "claude").map((r) => r.promptHash))];
@@ -281,7 +306,7 @@ export function promptHashes(runs: EvalRun[]): string[] {
 export function realRuns(runs: EvalRun[], model?: string, promptHash?: string): EvalRun[] {
   const real = runs.filter((r) =>
     r.adapter === "claude"
-    && (model === undefined || r.model === model)
+    && (model === undefined || aliasOf(r) === model)
     && (promptHash === undefined || r.promptHash === promptHash));
   // Different commands imply different system prompts, so a table uses only the latest invocation.
   // Skipped rows have no invocation and remain as report failures.
@@ -313,6 +338,7 @@ export function buildRows(runs: EvalRun[]): Row[] {
   const groups = group(runs, groupKey);
   return [...groups.keys()].sort().map((key) => {
     const sent = (groups.get(key) ?? []).filter((r) => r.skipped === undefined);
+    const wrote = sent.filter((r) => r.cacheCreation > 0);
     const [klass, input, inputVariant] = key.split("\u0000");
     return {
       class: klass ?? "",
@@ -323,11 +349,11 @@ export function buildRows(runs: EvalRun[]): Row[] {
       s3: fixed(mean(sent.map((r) => r.s3 ?? Number.NaN)), SCORE_DIGITS),
       // Mean variantRecall over rows that recorded coverage; legacy rows without it read n/a.
       coverage: fixed(mean(sent.map((r) => r.coverage?.variantRecall ?? Number.NaN)), SCORE_DIGITS),
-      // Count cache writes only so repeated reads do not replace first-input cost with the session prefix.
-      inputTokensP50: integer(percentile(
-        sent.filter((r) => r.cacheCreation > 0).map((r) => r.inputTokens + r.cacheCreation), 50)),
+      inputTokensP50: integer(percentile(wrote.map((r) => r.inputTokens + r.cacheCreation), 50)),
       costP50: fixed(percentile(sent.map((r) => r.costUsd ?? Number.NaN), 50), COST_DIGITS),
       latencyP50: integer(percentile(sent.map((r) => r.ms.llm ?? Number.NaN), 50)),
+      nSent: String(sent.length),
+      nCacheWrite: String(wrote.length),
     };
   });
 }
@@ -383,12 +409,13 @@ export function buildFailures(runs: EvalRun[], thresholds: Thresholds): Failure[
 export function buildFixedCosts(runs: EvalRun[]): FixedCost[] {
   const byInput = group(runs.filter((r) => r.skipped === undefined), (r) => r.input);
   return [...byInput.keys()].sort().map((input) => {
-    const lines = byInput.get(input) ?? [];
+    const wrote = (byInput.get(input) ?? []).filter((r) => r.cacheCreation > 0);
     return {
       input,
       // Session fixed cost is the reused cache_read prefix; each component adds cache_creation plus input_tokens.
-      sessionSchemaTokens: integer(percentile(lines.map((r) => r.cacheRead), 50)),
-      tokensPerComponentP50: integer(percentile(lines.map((r) => r.inputTokens + r.cacheCreation), 50)),
+      sessionSchemaTokens: integer(percentile(wrote.map((r) => r.cacheRead), 50)),
+      tokensPerComponentP50: integer(percentile(wrote.map((r) => r.inputTokens + r.cacheCreation), 50)),
+      nCacheWrite: String(wrote.length),
     };
   });
 }

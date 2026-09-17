@@ -7,8 +7,8 @@ import { estimateTokens } from "@tokenloom/schema";
 import {
   costUpperBound, createSessionPort, effectiveOutputTokenCap, fakeAdapter, loadTrajectoryMatrix,
   readTrajectoryRuns, runTrajectory, trajectoryCombinations, planTrajectory, summarizeTrajectory, totalInput, trajectoryTotalCost,
-  type ChildOutput, type ChildRunWithStdin, type LlmAdapter, type LlmResult, type Rate, type ToolPort,
-  type TrajectoryMatrixT, type TrajectoryOptions, type TrajectoryRun,
+  type ChildOutput, type ChildRunWithStdin, type LlmAdapter, type LlmResult, type ProviderCallEvidence,
+  type Rate, type ToolPort, type TrajectoryMatrixT, type TrajectoryOptions, type TrajectoryRun,
 } from "../src/index";
 
 const repoRoot = resolve(import.meta.dirname, "../../..");
@@ -27,7 +27,7 @@ const gitLock: ChildRunWithStdin = (_command, args, cwd) => Promise.resolve<Chil
 
 const usage = { inputTokens: 0, cacheCreation: 0, cacheRead: 0, outputTokens: 0 };
 function reply(text: string, costUsd: number | null = 0): LlmResult {
-  return { ...usage, text, model: "fake", ms: 0, invocation: "fake", costUsd };
+  return { ...usage, text, model: "fake", requestedModel: "fake", resolvedModel: null, modelResolution: null, providerEvidence: null, ms: 0, invocation: "fake", costUsd };
 }
 
 /** Returns the scripted turns in order and repeats the last one, so a loop cannot read past the script. */
@@ -431,5 +431,55 @@ describe("aggregation input", () => {
     const run = { inputTokens: 1, cacheCreation: 2, cacheRead: 4 } as TrajectoryRun;
 
     expect(totalInput(run)).toBe(7);
+  });
+});
+
+const EVIDENCE: ProviderCallEvidence = {
+  format: "stream-json", initModel: "claude-opus-5", assistantModels: ["claude-opus-5"], modelUsage: { "claude-opus-5": {} },
+};
+
+function resolvingClaude(texts: string[], resolvedModel: string | null): LlmAdapter {
+  let turn = 0;
+  return {
+    kind: "claude",
+    run: () => {
+      const text = texts[Math.min(turn, texts.length - 1)] ?? "";
+      turn += 1;
+      return Promise.resolve<LlmResult>({
+        ...usage, text, model: resolvedModel ?? "opus", requestedModel: "opus", resolvedModel,
+        modelResolution: resolvedModel === null ? null : "producing-message",
+        providerEvidence: EVIDENCE, ms: 0, invocation: "test", costUsd: 0.01,
+      });
+    },
+  };
+}
+
+describe("model provenance on trajectory rows (SPEC 9.1)", () => {
+  it("records the shared resolved model, one evidence entry per turn, and the reference lock", async () => {
+    const { port } = stubPort([{ content: "{}", exitCode: 0 }]);
+    const adapter = resolvingClaude(["TOOL component=Button", FINAL], "claude-opus-5");
+    const set = await runTrajectory(options({
+      matrix: oneTask(matrix()), rate: RATE, toolPortFor: () => port, makeAdapter: () => adapter,
+    }));
+    const record = set.records[0];
+
+    expect(record?.success).toBe(true);
+    expect({
+      resolvedModel: record?.resolvedModel, modelResolution: record?.modelResolution,
+      requestedModel: record?.requestedModel, lock: record?.referenceLockCommit,
+    }).toEqual({
+      resolvedModel: "claude-opus-5", modelResolution: "producing-message", requestedModel: "opus", lock: LOCK,
+    });
+    expect(record?.providerEvidence).toHaveLength(record?.turns ?? 0);
+  });
+
+  it("keeps resolvedModel null and still records the reference lock when the run fails", async () => {
+    const set = await runTrajectory(options({
+      matrix: oneTask(matrix()), rate: RATE, makeAdapter: () => scripted([FINAL], 0.01, "claude"),
+    }));
+    const record = set.records[0];
+
+    expect({ success: record?.success, resolvedModel: record?.resolvedModel, lock: record?.referenceLockCommit })
+      .toEqual({ success: false, resolvedModel: null, lock: LOCK });
   });
 });

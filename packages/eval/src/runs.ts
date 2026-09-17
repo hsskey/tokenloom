@@ -6,6 +6,18 @@ import { z } from "zod";
 import { Coverage, CoverageErrorCode } from "./coverage";
 import { S3Detail, S3Status } from "./visual";
 import { InputSource, InputVariant, NO_INPUT_VARIANT } from "./matrix";
+import type { ChildRun, HarnessCommit } from "./model-port";
+
+const ProviderCallEvidenceRow = z.object({
+  format: z.enum(["json", "stream-json"]),
+  initModel: z.string().nullable(),
+  assistantModels: z.array(z.string()),
+  modelUsage: z.record(z.string(), z.unknown()),
+});
+
+const ArtifactRow = z.object({
+  output: z.string(), sampleName: z.string(), tokensCssSha256: z.string(), referenceLockCommit: z.string(),
+});
 
 export const EvaluationRun = z.object({
   cmd: z.literal("eval"),
@@ -47,6 +59,12 @@ export const EvaluationRun = z.object({
   coverageError: CoverageErrorCode.optional(),
   /** Rescored from a stored response and replaces the earlier row for the same combination (SPEC 9.6). */
   rescored: z.object({ at: z.string(), reason: z.string() }).optional(),
+  requestedModel: z.string().optional(),
+  resolvedModel: z.string().nullable().optional(),
+  modelResolution: z.enum(["producing-message", "sole-model-usage-key"]).nullable().optional(),
+  providerEvidence: z.array(ProviderCallEvidenceRow).optional(),
+  harnessCommit: z.object({ sha: z.string(), dirty: z.boolean() }).optional(),
+  artifact: ArtifactRow.optional(),
 });
 export type EvalRun = z.infer<typeof EvaluationRun>;
 
@@ -100,6 +118,25 @@ function decodeRun(record: Record<string, unknown>): EvalRun {
     : typeof record.irLevel === "string" ? record.irLevel : "";
   const { fixture: _fixture, irLevel: _irLevel, ...canonical } = record;
   return EvaluationRun.parse({ ...canonical, sampleName, inputVariant });
+}
+
+const MANIFEST_PATH = "samples/manifest.json";
+const COMMIT_SHA = /^[0-9a-f]{40}$/;
+
+export async function readHarnessCommit(child: ChildRun, repoRoot: string): Promise<HarnessCommit> {
+  const head = await child("git", ["rev-parse", "HEAD"], repoRoot);
+  const sha = head.stdout.trim();
+  if (head.code !== 0 || !COMMIT_SHA.test(sha)) throw new Error("harnessCommit: HEAD lookup failed");
+  const status = await child("git", ["status", "--porcelain", "--", ".", ":(exclude)runs/"], repoRoot);
+  if (status.code !== 0) throw new Error("harnessCommit: status lookup failed");
+  return { sha, dirty: status.stdout.trim() !== "" };
+}
+
+export async function readReferenceLockCommit(child: ChildRun, repoRoot: string): Promise<string> {
+  const log = await child("git", ["log", "-1", "--format=%H", "--", MANIFEST_PATH], repoRoot);
+  const lock = log.stdout.trim();
+  if (log.code !== 0 || !COMMIT_SHA.test(lock)) throw new Error("referenceLock: lookup failed");
+  return lock;
 }
 
 export function repoRootFrom(start: string): string {

@@ -2,7 +2,7 @@
 import { stableStringify } from "@tokenloom/schema";
 import type { CoverageT, CoverageError } from "./coverage";
 import type { S3StatusT, S3DetailT } from "./visual";
-import type { ChildOutput, LlmResult } from "./model-port";
+import type { ChildOutput, HarnessCommit, LlmResult, ModelResolution, ProviderCallEvidence } from "./model-port";
 import { extractBlocks } from "./score";
 
 /** Conditions a matrix may run: every view, tool name, and harness path is defined for exactly these. */
@@ -40,6 +40,8 @@ export interface TrajectoryRun {
   toolCalls: TrajectoryToolCall[]; recovery: TrajectoryRecovery[]; incomparable?: boolean; error?: string;
   coverageStatus?: "measured" | "error"; coverage?: CoverageT | null; coverageError?: CoverageError;
   s3?: number | null; s3Status?: S3StatusT; s3Detail?: S3DetailT;
+  requestedModel?: string; resolvedModel?: string | null; modelResolution?: ModelResolution | null;
+  providerEvidence?: ProviderCallEvidence[]; harnessCommit?: HarnessCommit; referenceLockCommit?: string;
 }
 
 /** `ChildRun` extended with stdin. MCP stdio needs JSON-RPC input; CLI conditions need full stderr. */
