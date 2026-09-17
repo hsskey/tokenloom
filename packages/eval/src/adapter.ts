@@ -78,7 +78,6 @@ interface ModelStream {
   mainLoopModels: (string | undefined)[];
 }
 
-// A malformed line is skipped rather than thrown, so one bad line does not discard a paid call.
 function parseModelStream(stream: string): ModelStream {
   const out: ModelStream = { parsedAny: false, result: null, initModel: null, mainLoopModels: [] };
   for (const line of stream.split("\n")) {
@@ -88,7 +87,6 @@ function parseModelStream(stream: string): ModelStream {
     try { event = JSON.parse(trimmed) as StreamEvent; } catch { continue; }
     out.parsedAny = true;
     if (event.type === "system" && event.subtype === "init") out.initModel = event.model ?? null;
-    // A main-loop assistant message has no parent tool use; a subagent's is not a producing message.
     if (event.type === "assistant" && (event.parent_tool_use_id ?? null) === null) {
       out.mainLoopModels.push(event.message?.model);
     }
@@ -101,10 +99,6 @@ function distinctAssistantModels(mainLoopModels: (string | undefined)[]): string
   return [...new Set(mainLoopModels.filter((m): m is string => typeof m === "string" && m.length > 0))];
 }
 
-/**
- * SPEC 9.1 J3 resolution. Contradictory producing evidence (disagreeing or omitted models, or a
- * rule 1/2 conflict) resolves to `null` rather than a usage key, so a known contradiction is never hidden.
- */
 function resolveModel(
   mainLoopModels: (string | undefined)[], modelUsage: Record<string, unknown>,
 ): { resolvedModel: string | null; modelResolution: ModelResolution | null } {

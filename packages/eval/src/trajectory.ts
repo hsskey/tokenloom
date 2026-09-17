@@ -225,7 +225,6 @@ async function runOne(options: TrajectoryOptions, combo: Combination, state: Set
   };
 }
 
-/** A trajectory row's resolved ID is the one non-null value every turn shares, otherwise null (SPEC 9.1). */
 function sharedResolvedModel(
   results: LlmResult[],
 ): { resolvedModel: string | null; modelResolution: ModelResolution | null } {

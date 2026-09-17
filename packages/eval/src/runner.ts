@@ -236,7 +236,6 @@ async function send(
   record.s2 = Number(scoreS2(result.text).toFixed(4));
   // S3 is computed only for samples with rendered PNGs; absence produces null.
   record.s3 = null;
-  // Embedded so a later scorer change can rescore from the stored output without a new call (J7).
   if (tokensCss !== null && referenceLockCommit !== undefined) {
     record.artifact = {
       output: result.text, sampleName: record.sampleName,

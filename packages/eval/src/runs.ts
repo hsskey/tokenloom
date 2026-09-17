@@ -114,7 +114,6 @@ function decodeRun(record: Record<string, unknown>): EvalRun {
 const MANIFEST_PATH = "samples/manifest.json";
 const COMMIT_SHA = /^[0-9a-f]{40}$/;
 
-// `dirty` excludes `runs/` because a run appends observation rows there (SPEC 9.6).
 export async function readHarnessCommit(child: ChildRun, repoRoot: string): Promise<HarnessCommit> {
   const head = await child("git", ["rev-parse", "HEAD"], repoRoot);
   const sha = head.stdout.trim();
