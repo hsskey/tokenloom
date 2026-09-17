@@ -139,7 +139,6 @@ export function cmdEvalReport(parsed: Parsed): number {
   return EXIT.ok;
 }
 
-// A recorded resolvedModel is authoritative and shown as measured; otherwise no inferred ID is (SPEC 9.1).
 function modelText(run: EvalRun | undefined, pricing: ReturnType<typeof readPricing>): string {
   const alias = run?.requestedModel ?? run?.model ?? "unknown";
   const resolved = run?.resolvedModel;

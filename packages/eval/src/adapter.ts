@@ -102,11 +102,8 @@ function distinctAssistantModels(mainLoopModels: (string | undefined)[]): string
 }
 
 /**
- * SPEC 9.1 J3 model resolution, in order and nothing else:
- * 1. Every main-loop assistant message names one identical model: that ID (`producing-message`).
- * 2. No main-loop assistant message exists and `modelUsage` has one key: that key (`sole-model-usage-key`).
- * Contradictory producing evidence (disagreeing or omitted models, or a rule 1/2 conflict) resolves to
- * `null` rather than falling back to a key, so a known contradiction is never hidden.
+ * SPEC 9.1 J3 resolution. Contradictory producing evidence (disagreeing or omitted models, or a
+ * rule 1/2 conflict) resolves to `null` rather than a usage key, so a known contradiction is never hidden.
  */
 function resolveModel(
   mainLoopModels: (string | undefined)[], modelUsage: Record<string, unknown>,
@@ -153,7 +150,6 @@ export function createClaudeAdapter(run: ChildRun = realRun): LlmAdapter {
         ? { format: "stream-json", initModel: stream.initModel,
             assistantModels: distinctAssistantModels(stream.mainLoopModels), modelUsage }
         : null;
-      // No `result` message means no authoritative usage, so the call reads as a child failure.
       if (stream.result === null) return failed(evidence);
       const usage = stream.result.usage ?? {};
       const { resolvedModel, modelResolution } = resolveModel(stream.mainLoopModels, modelUsage);
