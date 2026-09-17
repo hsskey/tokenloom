@@ -606,3 +606,4 @@ Entries below record the path at the time of locking, so earlier lines use the p
 - 2026-09-07T01:09:41Z samples/mutations/M14.json T706: add the P7 mutation samples M13-M15 and their expected results
 - 2026-09-07T01:09:41Z samples/mutations/M15.json T706: add the P7 mutation samples M13-M15 and their expected results
 - 2026-09-07T01:09:41Z samples/mutations/expected.json T706: add the P7 mutation samples M13-M15 and their expected results
+- 2026-09-17T08:21:59Z eval/thresholds.json add variant coverage thresholds (variantRecall, variantPrecision, duplicateVariantsMax) for the new coverage metric

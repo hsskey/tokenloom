@@ -2,17 +2,85 @@
 // gate depends on that split.
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import type { CoverageT } from "./coverage";
 import type { EvalRun } from "./runs";
 
 export interface Thresholds {
   s1: number;
   s2: number;
   s3: number;
+  variantRecall: number;
+  variantPrecision: number;
+  duplicateVariantsMax: number;
 }
 
 /** Thresholds come only from eval/thresholds.json rather than code literals. */
 export function readThresholds(repoRoot: string): Thresholds {
   return JSON.parse(readFileSync(resolve(repoRoot, "eval/thresholds.json"), "utf8")) as Thresholds;
+}
+
+/** A metric's outcome: `not-applicable` is a true no-reference N/A; `not-recorded` means a legacy row (J1, J4). */
+export type Check = "pass" | "fail" | "error" | "not-applicable" | "not-recorded";
+export interface Verdict { s1: Check; s2: Check; s3: Check; coverage: Check; overall: boolean | null }
+
+/** The scored fields a verdict reads. S3 fields stay optional so T1 never asserts unimplemented visual scoring. */
+export interface VerdictInput {
+  s1?: number | null;
+  s2?: number | null;
+  coverageStatus?: "measured" | "error";
+  coverage?: CoverageT | null;
+  s3Status?: "measured" | "not-applicable" | "error";
+  s3?: number | null;
+}
+
+function thresholdCheck(value: number | null | undefined, passes: (v: number) => boolean): Check {
+  if (value === undefined) return "not-recorded";
+  if (value === null) return "not-applicable";
+  return passes(value) ? "pass" : "fail";
+}
+
+function coverageCheck(input: VerdictInput, thresholds: Thresholds): Check {
+  if (input.coverageStatus === undefined) return "not-recorded";
+  if (input.coverageStatus === "error") return "error";
+  const coverage = input.coverage;
+  if (coverage === null || coverage === undefined) return "error";
+  const passes = coverage.variantRecall >= thresholds.variantRecall
+    && coverage.variantPrecision !== null && coverage.variantPrecision >= thresholds.variantPrecision
+    && coverage.duplicates <= thresholds.duplicateVariantsMax;
+  return passes ? "pass" : "fail";
+}
+
+function s3Check(input: VerdictInput, thresholds: Thresholds): Check {
+  if (input.s3Status === undefined) return "not-recorded";
+  if (input.s3Status === "not-applicable") return "not-applicable";
+  if (input.s3Status === "error") return "error";
+  return (input.s3 ?? Number.POSITIVE_INFINITY) <= thresholds.s3 ? "pass" : "fail";
+}
+
+/**
+ * A conjunction over the four checks. A coverage or S3 `fail`/`error` dominates an unknown value, so a
+ * coverage-failing row is `false` even before S3 is wired; only an unscored coverage or S3 yields `null`,
+ * which keeps every legacy row out of a verdict it was never scored for (5.3).
+ */
+function overallVerdict(checks: Omit<Verdict, "overall">): boolean | null {
+  const failing = (check: Check): boolean => check === "fail" || check === "error";
+  if (failing(checks.coverage) || failing(checks.s3)) return false;
+  if (checks.coverage === "not-recorded" || checks.s3 === "not-recorded") return null;
+  const passed = (check: Check, orNotApplicable = false): boolean =>
+    check === "pass" || (orNotApplicable && check === "not-applicable");
+  return checks.coverage === "pass" && passed(checks.s2)
+    && passed(checks.s1, true) && passed(checks.s3, true);
+}
+
+/** Verdicts are derived on read from scored fields and thresholds, never stored. */
+export function runVerdict(input: VerdictInput, thresholds: Thresholds): Verdict {
+  const checks = {
+    s1: thresholdCheck(input.s1, (v) => v >= thresholds.s1),
+    s2: thresholdCheck(input.s2, (v) => v >= thresholds.s2),
+    s3: s3Check(input, thresholds),
+    coverage: coverageCheck(input, thresholds),
+  };
+  return { ...checks, overall: overallVerdict(checks) };
 }
 
 export interface Rate {
@@ -150,6 +218,7 @@ export interface Row {
   s1: string;
   s2: string;
   s3: string;
+  coverage: string;
   inputTokensP50: string;
   costP50: string;
   latencyP50: string;
@@ -278,6 +347,8 @@ export function buildRows(runs: EvalRun[]): Row[] {
       s1: fixed(mean(sent.map((r) => r.s1 ?? Number.NaN)), SCORE_DIGITS),
       s2: fixed(mean(sent.map((r) => r.s2 ?? Number.NaN)), SCORE_DIGITS),
       s3: fixed(mean(sent.map((r) => r.s3 ?? Number.NaN)), SCORE_DIGITS),
+      // Mean variantRecall over rows that recorded coverage; legacy rows without it read n/a.
+      coverage: fixed(mean(sent.map((r) => r.coverage?.variantRecall ?? Number.NaN)), SCORE_DIGITS),
       inputTokensP50: integer(percentile(wrote.map((r) => r.inputTokens + r.cacheCreation), 50)),
       costP50: fixed(percentile(sent.map((r) => r.costUsd ?? Number.NaN), 50), COST_DIGITS),
       latencyP50: integer(percentile(sent.map((r) => r.ms.llm ?? Number.NaN), 50)),

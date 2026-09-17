@@ -13,6 +13,8 @@ import type { HarnessCommit, LlmAdapter, LlmResult, ModelResolution, ProviderCal
 import { promptHash } from "./prompt";
 import { readHarnessCommit, runsDir } from "./runs";
 import { scoreS1, scoreS2 } from "./score";
+import { runCoverage } from "./coverage";
+import { expectedVariants } from "./variant-reference";
 import { percentile, type Rate } from "./stats";
 
 export const TRAJECTORY_REPEATS = 2; // T803 owns the harness; registered so no later lane edits the eval barrel.
@@ -49,12 +51,23 @@ export const TrajectoryMatrix = z.object({
     views: z.record(Condition, z.string()) as z.ZodType<Record<RunnableTrajectoryCondition, string>>,
   }),
   tasks: z.array(z.object({ task: z.enum(["known-component", "unknown-component", "variant-only", "recovery"]),
-    sampleName: z.string(), snapshot: z.string(), instruction: z.string() })).min(1),
+    sampleName: z.string(), snapshot: z.string(), instruction: z.string(), variant: z.string().optional() })).min(1),
 });
 export type TrajectoryMatrixT = z.infer<typeof TrajectoryMatrix>;
 
-export function loadTrajectoryMatrix(path: string): TrajectoryMatrixT {
-  return TrajectoryMatrix.parse(parse(readFileSync(path, "utf8")));
+/** Resolving each task's `variant` proves it names a base or one variant, so an ambiguous or unknown
+ *  selector fails at load rather than after a provider call. Requires the snapshots, so the caller
+ *  passes `repoRoot`; a caller without it validates schema shape only. */
+function validateTrajectoryVariants(matrix: TrajectoryMatrixT, repoRoot: string): void {
+  for (const task of matrix.tasks) {
+    if (task.variant !== undefined) expectedVariants(repoRoot, { sampleName: task.sampleName, variant: task.variant });
+  }
+}
+
+export function loadTrajectoryMatrix(path: string, repoRoot?: string): TrajectoryMatrixT {
+  const matrix = TrajectoryMatrix.parse(parse(readFileSync(path, "utf8")));
+  if (repoRoot !== undefined) validateTrajectoryVariants(matrix, repoRoot);
+  return matrix;
 }
 
 export interface TrajectoryOptions {
@@ -205,11 +218,15 @@ async function runOne(options: TrajectoryOptions, combo: Combination, state: Set
   const text = turns[turns.length - 1]?.result.text ?? "";
   const tokensCss = readTokensCss(repoRoot, combo.spec.sampleName);
   const scored = complete && tokensCss !== null;
+  const coverage = runCoverage(repoRoot, { sampleName: combo.spec.sampleName, variant: combo.spec.variant }, text);
   const results = turns.map((t) => t.result);
   const providerEvidence = results
     .map((r) => r.providerEvidence).filter((e): e is ProviderCallEvidence => e !== null);
   const resolved = sharedResolvedModel(results);
   return {
+    coverageStatus: coverage.coverageStatus,
+    ...(coverage.coverage !== null ? { coverage: coverage.coverage } : {}),
+    ...(coverage.coverageError === undefined ? {} : { coverageError: coverage.coverageError }),
     cmd: "trajectory", utcDate: options.utcDate, task: combo.spec.task, condition: combo.condition,
     repeat: combo.repeat, adapter: state.adapter, model, invocation, success,
     turns: turns.length, durationMs: Date.now() - started, ...usage, costUsd,

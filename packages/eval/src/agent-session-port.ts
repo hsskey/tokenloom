@@ -1,5 +1,6 @@
 // Whole-task trajectory types. No I/O here: `ChildRun` stays the only child-process boundary.
 import { stableStringify } from "@tokenloom/schema";
+import type { CoverageT, CoverageError } from "./coverage";
 import type { ChildOutput, HarnessCommit, LlmResult, ModelResolution, ProviderCallEvidence } from "./model-port";
 import { extractBlocks } from "./score";
 
@@ -36,6 +37,7 @@ export interface TrajectoryRun {
   inputTokens: number; cacheCreation: number; cacheRead: number; outputTokens: number; costUsd: number | null;
   s1: number | null; s2: number | null; artifact: TrajectoryArtifact | null; promptHash: string;
   toolCalls: TrajectoryToolCall[]; recovery: TrajectoryRecovery[]; incomparable?: boolean; error?: string;
+  coverageStatus?: "measured" | "error"; coverage?: CoverageT | null; coverageError?: CoverageError;
   requestedModel?: string; resolvedModel?: string | null; modelResolution?: ModelResolution | null;
   providerEvidence?: ProviderCallEvidence[]; harnessCommit?: HarnessCommit; referenceLockCommit?: string;
 }
@@ -45,7 +47,11 @@ export type ChildRunWithStdin =
   (command: string, args: string[], cwd: string, stdin?: string) => Promise<ChildOutput>;
 
 /** One trajectory task: the snapshot the harness queries and what the model is asked to build. */
-export interface TrajectoryTaskSpec { task: TrajectoryTask; sampleName: string; snapshot: string; instruction: string }
+export interface TrajectoryTaskSpec {
+  task: TrajectoryTask; sampleName: string; snapshot: string; instruction: string;
+  /** A base or single-variant selector; present when the task asks for one variant, not the whole set. */
+  variant?: string;
+}
 /** Experiment input, so it lives in the matrix file like `packages/eval/prompts/css.md`, not in code. */
 export interface TrajectoryPrompt { instructions: string; views: Record<RunnableTrajectoryCondition, string> }
 

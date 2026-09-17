@@ -1,5 +1,5 @@
 {
-  "eval/thresholds.json": "sha256:ca17f1f2848aa366fd8aed8c0c0c6a36c4c7b2b41280e951f5c25247caa1bd99",
+  "eval/thresholds.json": "sha256:5edbfdcf1aefaa65e713e355654a2e9abb8d2a3a1c818f8a396be2ed46d107b7",
   "samples/absolute-card/reference/context.compact.json": "sha256:8df6a2e202b380e1f7a75c78842fbc87120c98cb476722e1ff5e44394b5bb8c9",
   "samples/absolute-card/reference/css/tokens.css": "sha256:573a65788750829e79c349f45ab623d209d930f289e265a6847e0492ad9e51be",
   "samples/absolute-card/reference/tokens/base.json": "sha256:15a04a97c34f0d0fdd5583227fe56be32ff4f2d8ae0259d9f67dd6d490294e1d",

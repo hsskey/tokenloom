@@ -36,11 +36,11 @@ export function renderReport(model: ReportModel): string {
     + ` / mcp captures ${model.mcpCaptures}`;
 
   const works = table(
-    ["Sample class", "Input", "Input variant", "S1", "S2", "S3",
+    ["Sample class", "Input", "Input variant", "S1", "S2", "S3", "Coverage",
       "Input tokens p50 (cache-write rows)", "Cost p50 (all sent rows)", "Latency p50 (all sent rows)",
       "n sent", "n cache-write"],
     model.rows.map((r) =>
-      [r.class, r.input, r.inputVariant, r.s1, r.s2, r.s3,
+      [r.class, r.input, r.inputVariant, r.s1, r.s2, r.s3, r.coverage,
         r.inputTokensP50, r.costP50, r.latencyP50, r.nSent, r.nCacheWrite]),
   );
 

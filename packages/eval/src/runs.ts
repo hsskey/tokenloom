@@ -3,6 +3,7 @@ import { appendFileSync, existsSync, mkdirSync, readFileSync, readdirSync } from
 import { dirname, join, resolve } from "node:path";
 import { stableStringify } from "@tokenloom/schema";
 import { z } from "zod";
+import { Coverage, CoverageErrorCode } from "./coverage";
 import { InputSource, InputVariant, NO_INPUT_VARIANT } from "./matrix";
 import type { ChildRun, HarnessCommit } from "./model-port";
 
@@ -48,6 +49,10 @@ export const EvaluationRun = z.object({
   s1: z.number().nullable().optional(),
   s2: z.number().nullable().optional(),
   s3: z.number().nullable().optional(),
+  /** Variant coverage (SPEC 9.5, J1). Absent on rows recorded before the metric existed. */
+  coverageStatus: z.enum(["measured", "error"]).optional(),
+  coverage: Coverage.nullable().optional(),
+  coverageError: CoverageErrorCode.optional(),
   /** Rescored from a stored response and replaces the earlier row for the same combination (SPEC 9.6). */
   rescored: z.object({ at: z.string(), reason: z.string() }).optional(),
   requestedModel: z.string().optional(),
