@@ -7,7 +7,8 @@ import type { ChildRun, LlmAdapter } from "./model-port";
 
 export const CLAUDE_SESSION_KIND = "claude";
 /** Records the real command shape: a per-call provider budget is not the section 9.2 invocation. */
-export const CLAUDE_SESSION_INVOCATION = "claude -p --output-format json --restricted --model <id> --max-budget-usd <bound>";
+export const CLAUDE_SESSION_INVOCATION =
+  "claude -p --output-format stream-json --verbose --restricted --model <id> --max-budget-usd <bound>";
 const [BUDGET_DIGITS, INIT_ID, CALL_ID] = [4, 1, 2];
 const [CLI_PATH, MCP_ENTRY, TSX_PATH] = ["apps/cli/dist/tokenloom.js", "packages/mcp/src/index.ts", "node_modules/.bin/tsx"];
 const PROTOCOL_VERSION = "2024-11-05";
@@ -15,6 +16,12 @@ const MISSING_USAGE = "MISSING_AUTHORITATIVE_USAGE";
 const USAGE_KEYS = ["input_tokens", "cache_creation_input_tokens", "cache_read_input_tokens", "output_tokens"];
 const validToken = (value: unknown): value is number => typeof value === "number" && Number.isInteger(value) && value >= 0;
 const validCost = (value: unknown): value is number => typeof value === "number" && Number.isFinite(value) && value >= 0;
+
+function isResultLine(line: string): boolean {
+  const trimmed = line.trim();
+  if (trimmed === "" || !trimmed.startsWith("{")) return false;
+  try { return (JSON.parse(trimmed) as { type?: string }).type === "result"; } catch { return false; }
+}
 
 /** The provider and harness enforce the same dollar bound; this Claude version has no output-token flag. */
 export function createClaudeSessionAdapter(perCallBudgetUsd: number, run: ChildRunWithStdin = realRun): LlmAdapter {
@@ -24,11 +31,15 @@ export function createClaudeSessionAdapter(perCallBudgetUsd: number, run: ChildR
   const capped: ChildRun = async (cmd, args, cwd) => {
     const res = await run(cmd, [...args, "--max-budget-usd", providerBudgetUsd.toFixed(BUDGET_DIGITS)], cwd);
     if (res.code !== 0 || res.stdout.trim() === "") { usageComplete = false; return res; }
-    const body = JSON.parse(res.stdout) as { total_cost_usd?: unknown; usage?: Record<string, unknown> };
+    const lines = res.stdout.split("\n");
+    const index = lines.findLastIndex(isResultLine);
+    if (index < 0) { usageComplete = false; return res; }
+    const body = JSON.parse(lines[index] ?? "{}") as { total_cost_usd?: unknown; usage?: Record<string, unknown> };
     usageComplete = USAGE_KEYS.every((key) => validToken(body.usage?.[key]));
     for (const key of USAGE_KEYS) if (!validToken(body.usage?.[key])) delete body.usage?.[key];
     if (!validCost(body.total_cost_usd)) delete body.total_cost_usd;
-    return { ...res, stdout: JSON.stringify(body) };
+    lines[index] = JSON.stringify(body);
+    return { ...res, stdout: lines.join("\n") };
   };
   const inner = createClaudeAdapter(capped);
   return {

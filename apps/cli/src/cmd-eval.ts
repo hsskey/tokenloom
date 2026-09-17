@@ -3,9 +3,10 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
 import {
   appendRuns, buildFixedCosts, buildFailures, buildMcpCaptures, buildRows, buildSampleNotes,
-  dryRun, loadMatrix, promptHashes, readPricing, readRuns, readThresholds, realRuns,
-  renderReports, runMatrix, selectAdapter,
-  type DryRunSummary,
+  dryRun, loadMatrix, readHarnessCommit, readPricing, readReferenceLockCommit, readRuns,
+  readThresholds, realRun, realRuns, renderReports, reportSectionKeys, runMatrix, sectionKey,
+  selectAdapter,
+  type DryRunSummary, type EvalRun,
 } from "@tokenloom/eval";
 import { EXIT, flagBool, flagString, usageError, type Parsed } from "./args";
 import { repoRoot } from "./runs";
@@ -68,6 +69,9 @@ export async function cmdEvalRun(parsed: Parsed): Promise<number> {
   }
   const parallelRaw = flagString(parsed, "parallel");
   const date = utcDate();
+  const provenance = adapter.kind === "claude"
+    ? { harnessCommit: await readHarnessCommit(realRun, root), referenceLockCommit: await readReferenceLockCommit(realRun, root) }
+    : {};
   const summary = await runMatrix({
     repoRoot: root,
     matrix,
@@ -75,6 +79,7 @@ export async function cmdEvalRun(parsed: Parsed): Promise<number> {
     adapter,
     budgetUsd: budget,
     utcDate: date,
+    ...provenance,
   });
   const path = appendRuns(root, date, summary.records);
 
@@ -102,11 +107,11 @@ export function cmdEvalReport(parsed: Parsed): number {
   const root = repoRoot(process.cwd());
   const since = flagString(parsed, "since");
   const all = readRuns(root).filter((r) => since === undefined || r.utcDate >= since);
-  // Prompt hashes distinguish same-day evaluation sets that --since cannot separate (docs/reference/spec.md section 9.6).
   const hash = flagString(parsed, "prompt-hash");
-  // Without a selected hash, keep separate sections so one header cannot describe mixed prompts.
-  const sections = (hash === undefined ? promptHashes(all) : [hash])
-    .map((h) => realRuns(all, undefined, h)).filter((s) => s.length > 0);
+  const pool = hash === undefined ? all : all.filter((r) => r.promptHash === hash);
+  const sections = reportSectionKeys(pool)
+    .map((key) => realRuns(pool.filter((r) => sectionKey(r) === key)))
+    .filter((s) => s.length > 0);
   if (sections.length === 0) {
     return usageError(`eval report: no real (adapter=claude) runs${hash === undefined ? "" : ` with promptHash ${hash}`} in runs/*.jsonl`);
   }
@@ -117,7 +122,7 @@ export function cmdEvalReport(parsed: Parsed): number {
     const first = real[0];
     return {
       date: utcDate(),
-      model: modelText(first?.model ?? "unknown", pricing),
+      model: modelText(first, pricing),
       promptHash: first?.promptHash ?? "unknown",
       mcpCaptures: buildMcpCaptures(real),
       rows: buildRows(real),
@@ -134,10 +139,15 @@ export function cmdEvalReport(parsed: Parsed): number {
   return EXIT.ok;
 }
 
-/** Report model aliases and the pricing-file mapping without presenting billed IDs as measured data. */
-function modelText(alias: string, pricing: ReturnType<typeof readPricing>): string {
-  const resolved = pricing?.models[alias]?.resolvedModel;
-  return resolved === undefined
+// A recorded resolvedModel is authoritative and shown as measured; otherwise no inferred ID is (SPEC 9.1).
+function modelText(run: EvalRun | undefined, pricing: ReturnType<typeof readPricing>): string {
+  const alias = run?.requestedModel ?? run?.model ?? "unknown";
+  const resolved = run?.resolvedModel;
+  if (resolved !== undefined && resolved !== null && resolved !== "") {
+    return `${alias} (alias; resolved ${resolved} from ${run?.modelResolution ?? "provider evidence"})`;
+  }
+  const priced = pricing?.models[alias]?.resolvedModel;
+  return priced === undefined
     ? alias
-    : `${alias} (alias; eval/pricing.json resolvedModel ${resolved}; id not recorded in run lines)`;
+    : `${alias} (alias; eval/pricing.json resolvedModel ${priced}; id not recorded in run lines)`;
 }
