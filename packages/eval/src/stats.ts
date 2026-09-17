@@ -316,8 +316,6 @@ export function buildFailures(runs: EvalRun[], thresholds: Thresholds): Failure[
 export function buildFixedCosts(runs: EvalRun[]): FixedCost[] {
   const byInput = group(runs.filter((r) => r.skipped === undefined), (r) => r.input);
   return [...byInput.keys()].sort().map((input) => {
-    // Both columns use cache-write rows only; a read-only repeat carries just the session prefix and
-    // would collapse the per-component p50 to the input-tokens floor.
     const wrote = (byInput.get(input) ?? []).filter((r) => r.cacheCreation > 0);
     return {
       input,
