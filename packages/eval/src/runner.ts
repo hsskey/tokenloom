@@ -1,9 +1,10 @@
 // Drives matrix -> prompt -> adapter -> runs/*.jsonl. Controls flow only; every verdict is made by
 // score.ts and stats.ts.
+import { createHash } from "node:crypto";
 import { estimateTokens, pool } from "@tokenloom/schema";
 import { combinations, NO_INPUT_VARIANT, targetOf, type MatrixT } from "./matrix";
 import { buildMcpPromptInput, buildPromptInput, promptHash, renderPrompt, templateText } from "./prompt";
-import type { LlmAdapter } from "./model-port";
+import type { HarnessCommit, LlmAdapter } from "./model-port";
 import {
   costBasis, outputBasis, readPlanning, readPricing, realRuns,
   type BudgetPlanning, type CostBasis, type OutputBasis, type Rate,
@@ -32,6 +33,8 @@ export interface PlanningOptions {
 
 export interface RunOptions extends PlanningOptions {
   adapter: LlmAdapter;
+  harnessCommit?: HarnessCommit;
+  referenceLockCommit?: string;
 }
 
 export interface RunSummary {
@@ -189,6 +192,7 @@ export function plan(options: PlanningOptions, adapterKind: LlmAdapter["kind"]):
       repeat: combo.repeat,
       adapter: adapterKind,
       model: options.matrix.model,
+      requestedModel: options.matrix.model,
       invocation: "",
       promptHash: hash,
       bytesIn,
@@ -210,7 +214,9 @@ export function plan(options: PlanningOptions, adapterKind: LlmAdapter["kind"]):
   });
 }
 
-async function send(planned: Planned, adapter: LlmAdapter, model: string, repoRoot: string): Promise<void> {
+async function send(
+  planned: Planned, adapter: LlmAdapter, model: string, repoRoot: string, referenceLockCommit?: string,
+): Promise<void> {
   const result = await adapter.run(planned.prompt, { sampleName: planned.record.sampleName, model, repoRoot });
   const record = planned.record;
   record.bytesOut = Buffer.byteLength(result.text, "utf8");
@@ -221,6 +227,10 @@ async function send(planned: Planned, adapter: LlmAdapter, model: string, repoRo
   record.outputTokens = result.outputTokens;
   record.costUsd = result.costUsd;
   record.model = result.model;
+  record.requestedModel = result.requestedModel;
+  record.resolvedModel = result.resolvedModel;
+  record.modelResolution = result.modelResolution;
+  if (result.providerEvidence !== null) record.providerEvidence = [result.providerEvidence];
   record.invocation = result.invocation;
   record.ms = { llm: result.ms };
   if (result.error !== undefined) record.error = result.error;
@@ -233,8 +243,16 @@ async function send(planned: Planned, adapter: LlmAdapter, model: string, repoRo
   record.coverageStatus = coverage.coverageStatus;
   if (coverage.coverage !== null) record.coverage = coverage.coverage;
   if (coverage.coverageError !== undefined) record.coverageError = coverage.coverageError;
+  if (tokensCss !== null && referenceLockCommit !== undefined) {
+    record.artifact = {
+      output: result.text, sampleName: record.sampleName,
+      tokensCssSha256: sha256(tokensCss), referenceLockCommit,
+    };
+  }
   writeOutput(repoRoot, record, result.text);
 }
+
+const sha256 = (text: string): string => createHash("sha256").update(text, "utf8").digest("hex");
 
 /**
  * Preserves the raw response under the gitignored local `runsDir`. It is not report input, but lets
@@ -261,6 +279,7 @@ function readTokensCss(repoRoot: string, sampleName: string): string | null {
 export async function runMatrix(options: RunOptions): Promise<RunSummary> {
   const adapter = options.adapter;
   const planned = plan(options, adapter.kind);
+  if (options.harnessCommit !== undefined) for (const p of planned) p.record.harnessCommit = options.harnessCommit;
   const started = Date.now();
   const sendable = planned.filter((p) => p.record.skipped === undefined);
   const abortAt = options.budgetUsd === undefined ? undefined : options.budgetUsd * ABORT_RATIO;
@@ -276,7 +295,7 @@ export async function runMatrix(options: RunOptions): Promise<RunSummary> {
     }
     inFlight += 1;
     try {
-      await send(item, adapter, options.matrix.model, options.repoRoot);
+      await send(item, adapter, options.matrix.model, options.repoRoot, options.referenceLockCommit);
     } finally {
       inFlight -= 1;
     }

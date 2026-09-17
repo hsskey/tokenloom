@@ -1,7 +1,7 @@
 // Whole-task trajectory types. No I/O here: `ChildRun` stays the only child-process boundary.
 import { stableStringify } from "@tokenloom/schema";
 import type { CoverageT, CoverageError } from "./coverage";
-import type { ChildOutput, LlmResult } from "./model-port";
+import type { ChildOutput, HarnessCommit, LlmResult, ModelResolution, ProviderCallEvidence } from "./model-port";
 import { extractBlocks } from "./score";
 
 /** Conditions a matrix may run: every view, tool name, and harness path is defined for exactly these. */
@@ -38,6 +38,8 @@ export interface TrajectoryRun {
   s1: number | null; s2: number | null; artifact: TrajectoryArtifact | null; promptHash: string;
   toolCalls: TrajectoryToolCall[]; recovery: TrajectoryRecovery[]; incomparable?: boolean; error?: string;
   coverageStatus?: "measured" | "error"; coverage?: CoverageT | null; coverageError?: CoverageError;
+  requestedModel?: string; resolvedModel?: string | null; modelResolution?: ModelResolution | null;
+  providerEvidence?: ProviderCallEvidence[]; harnessCommit?: HarnessCommit; referenceLockCommit?: string;
 }
 
 /** `ChildRun` extended with stdin. MCP stdio needs JSON-RPC input; CLI conditions need full stderr. */

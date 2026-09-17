@@ -1314,7 +1314,11 @@ model: opus
 
 `model` is required.
 Without a fixed value, the `claude --model` default can change between runs and make comparisons invalid under section 9.6.
-Each run passes this value to `claude --model` and records the actual model ID from the response's single `modelUsage` key.
+Each run passes this value to `claude --model` and records it as `requestedModel`.
+The provider-returned ID is resolved separately as `resolvedModel`: it is the model named by every main-loop assistant message (`parent_tool_use_id` absent or null) when they agree, or the sole `modelUsage` key when no such message exists, and `null` when the producing evidence is contradictory or absent.
+Contradictory producing evidence never falls back to a `modelUsage` key, so a known disagreement is not hidden.
+`model` holds `resolvedModel` when one is established and the requested alias otherwise, so rows written before these fields existed keep their meaning.
+Each provider call keeps its raw `providerEvidence`, and no inferred ID is recorded as measured.
 `maxInputTokens` applies to estimated input tokens using the section 2.2 coefficient.
 An oversized combination is recorded as `skipped: MAX_INPUT_TOKENS` without truncation, which would change the measured input.
 The estimate excludes fixed adapter cost and therefore does not guarantee actual request size.
@@ -1330,7 +1334,7 @@ Listed samples produce one snapshot row per set to pair with each MCP row; unlis
 
 ### 9.2 LLM adapters
 
-- `claude` runs `claude -p "<prompt>" --output-format json --restricted --model <id>` from a neutral directory outside the repository. It reads token counts from `usage`, cost from `total_cost_usd`, and the actual model ID from the single `modelUsage` key.
+- `claude` runs `claude -p "<prompt>" --output-format stream-json --verbose --restricted --model <id>` from a neutral directory outside the repository. It reads token counts, cost, and text from the stream's final `result` line, and resolves the model ID by the section 9.1 rules from the main-loop assistant messages and `modelUsage`.
 - `--restricted` is required for reproducibility and cost. Without it, local tools, MCP servers, and settings enter the system prompt and vary inputs by machine. Measured cost for the same opus prompt was $0.2361 with 23,048 `cache_creation` tokens by default, versus $0.0611 with 5,564 tokens under `--restricted`, a 3.9x difference. Without isolation, each call costs about $0.63 and cannot meet the cost limit in `docs/goals.md`. The neutral directory also prevents repository instructions from entering the system prompt.
 - Runs with different command lines have different system prompts and cannot share a table. The run row records the command shape in `invocation`.
 - `fake` returns `packages/eval/samples/fake-responses/<sample>.md` when `TOKENLOOM_LLM=fake`. Tests and the self-test gate use fake. A `--dry-run` invokes no model and does not select a provider adapter.
@@ -1403,20 +1407,23 @@ The render page at `packages/eval/render/index.html` loads `tokens.css`, generat
 ```
 # tokenloom eval <date> / model <id> / prompt <hash> / mcp captures <n>/<sets>
 ## What works
-| Sample class | Input | Input variant | S1 | S2 | S3 | Coverage | Input tokens p50 (cache-write rows) | Cost p50 | Latency p50 |
+| Sample class | Input | Input variant | S1 | S2 | S3 | Coverage | Input tokens p50 (cache-write rows) | Cost p50 (all sent rows) | Latency p50 (all sent rows) | n sent | n cache-write |
 ## What does not work
 | Target | Failure | Retry condition |
 ## Fixed cost by input source
-| Input | Session schema tokens | Tokens per component p50 |
+| Input | Session schema tokens (cache-write rows) | Tokens per component p50 (cache-write rows) | n cache-write |
 ## Sample size and limitations
 ```
 
 - If run rows contain multiple prompt hashes, emit all four sections once per hash in first-seen order. Each section header is calculated only from its hash. `--prompt-hash` selects one set. Never combine hashes because comparisons require equal model IDs and prompt hashes.
-- Header `model` is the matrix alias. If run rows lack the actual ID because `modelUsage` did not contain one key, append the alias mapping from `eval/pricing.json` and `id not recorded in run lines`. Without a mapping, show only the alias. Never present an inferred ID alone as a measurement.
+- Header `model` is the matrix alias. When a section's rows carry an authoritative `resolvedModel` (section 9.1), append it as measured. Otherwise, when the rows lack a resolved ID, append the alias mapping from `eval/pricing.json` and `id not recorded in run lines`, or show only the alias without a mapping. Never present an inferred ID alone as a measurement.
+- One-shot report sections are keyed by prompt hash, model, requested model, resolved model, harness commit sha and dirty flag, and the artifact reference-lock commit, with `unrecorded` for an absent part. Rows with different model provenance, harness code state, or reference lock never share a table. Rows written before these fields existed lack every added part and keep grouping by prompt hash and model.
 - What works separates `Sample designs` and `Synthetic test data`, even for equal input sources and input variants. MCP rows can exist only for sample designs. Classification uses run-line `sampleName`; versioned readers normalize the legacy `fixture` field from historical rows. The `real-` prefix marks sample designs, while Snapshot `source.kind` remains authoritative in repository data.
 - `Coverage` is the mean `variantRecall` of the group's rows that recorded coverage, or `n/a` when none did, which is every row recorded before the metric existed.
-- `Cost p50` is the p50 of sent-row `costUsd` within a group, or `n/a` when every value is absent.
-- `Input tokens p50 (cache-write rows)` is the p50 of `inputTokens + cacheCreation` among sent cache-write rows, using the same predicate as `costBasis`. Repeated prompts use cache reads and are excluded so the column means first-input cost. A group without a write is `n/a`, and each section explains this below the table.
+- `Cost p50 (all sent rows)` is the p50 of sent-row `costUsd` within a group, or `n/a` when every value is absent. It is the provider CLI's cost estimate, not billed cost. `Latency p50 (all sent rows)` is the p50 of sent-row `ms.llm`. `n sent` is the population of both columns.
+- `Input tokens p50 (cache-write rows)` is the p50 of `inputTokens + cacheCreation` among sent cache-write rows, using the same predicate as `costBasis`. Repeated prompts use cache reads and are excluded so the column means first-input cost. A group without a write is `n/a`, and each section explains this below the table. `n cache-write` is the population of this column.
+- Fixed cost by input source uses sent cache-write rows for both `Session schema tokens` and `Tokens per component p50`, with `n cache-write` as their population. A read-only repeat carries only the session prefix, so including it drags the per-component p50 down to the input-tokens floor; an input without a cache-write row reports `n/a` rather than a fabricated zero.
+- Every p50 is nearest-rank: for an even population it returns the lower of the two middle values, which keeps recomputed trajectory numbers byte-stable. This differs from the ordinary median (`bench/util.ts`) that section 7 of the verification contract uses; the two agree only for an odd population.
 - What does not work emits one row per `target`, folding repeats and failure types into values with `r<n>` markers. Join distinct failures with `;`. Put the full cause once in Sample size and limitations; raw and MCP S1 cells link to that explanation.
 - S1 failures for MCP input or persisted `irLevel: raw` refer to Sample size and limitations instead of a threshold message because those inputs lack `tokensUsed`. The wording depends only on persisted `input` and `irLevel`. The explanation names the missing field rather than a threshold. Compact rows retain threshold messages. Emit the shared explanation only when applicable.
 

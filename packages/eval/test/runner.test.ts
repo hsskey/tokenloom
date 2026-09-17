@@ -4,9 +4,10 @@ import { dirname, join, resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
   ABORT_RATIO, appendRuns, buildMcpPromptInput, buildSampleNotes, combinations, buildPromptInput,
-  createClaudeAdapter, dryRun, fakeAdapter, loadMatrix, outputBasis, plan, promptHash, readPricing,
-  readRuns, readTrackedRuns, realRuns, renderPrompt, runMatrix, runsDir, selectAdapter, targetOf, templateText,
-  type ChildRun, type EvalRun, type LlmAdapter, type MatrixT,
+  createClaudeAdapter, dryRun, fakeAdapter, loadMatrix, outputBasis, plan, promptHash, readHarnessCommit,
+  readPricing, readRuns, readTrackedRuns, realRuns, renderPrompt, reportSectionKeys, runMatrix, runsDir,
+  sectionKey, selectAdapter, targetOf, templateText,
+  type ChildRun, type EvalRun, type LlmAdapter, type LlmResult, type MatrixT,
 } from "../src/index";
 
 const repoRoot = resolve(import.meta.dirname, "../../..");
@@ -194,70 +195,129 @@ describe("adapter (SPEC 9.2)", () => {
   });
 });
 
-/** Fixed shape of a `claude --output-format json` response without making a real call. */
-const CLAUDE_JSON = JSON.stringify({
-  result: "```css\n:root {}\n```",
-  total_cost_usd: 0.0611,
-  usage: {
-    input_tokens: 4,
-    cache_creation_input_tokens: 5564,
-    cache_read_input_tokens: 37544,
-    output_tokens: 3210,
-  },
-  modelUsage: { "claude-opus-5": { inputTokens: 4 } },
-});
+function stream(events: object[]): string {
+  return events.map((event) => JSON.stringify(event)).join("\n") + "\n";
+}
+const INIT = { type: "system", subtype: "init", model: "claude-opus-5" };
+const RESULT = {
+  type: "result", subtype: "success", result: "```css\n:root {}\n```", total_cost_usd: 0.0611,
+  usage: { input_tokens: 4, cache_creation_input_tokens: 5564, cache_read_input_tokens: 37544, output_tokens: 3210 },
+  modelUsage: { "claude-opus-5": { inputTokens: 4 }, "claude-haiku-4-5": { inputTokens: 9 } },
+};
+const mainLoop = (model: string): object => ({ type: "assistant", parent_tool_use_id: null, message: { model, content: [] } });
+const CLAUDE_STREAM = stream([INIT, mainLoop("claude-opus-5"), RESULT]);
+const stubRun = (out: { code: number; stdout: string; stderr?: string }): ChildRun =>
+  () => Promise.resolve({ code: out.code, stdout: out.stdout, stderr: out.stderr ?? "" });
+const runAdapter = (stdout: string, code = 0): Promise<LlmResult> =>
+  createClaudeAdapter(stubRun({ code, stdout })).run("p", { sampleName: "button", model: "opus", repoRoot });
 
 describe("claude adapter child-run injection (SPEC 9.2)", () => {
-  const stubRun = (out: { code: number; stdout: string; stderr?: string }): ChildRun =>
-    () => Promise.resolve({ code: out.code, stdout: out.stdout, stderr: out.stderr ?? "" });
-
-  // The guard lives in the real implementation, so an injected double still runs in this suite.
-  it("maps usage, total_cost_usd, and modelUsage into result fields", async () => {
-    const adapter = createClaudeAdapter(stubRun({ code: 0, stdout: CLAUDE_JSON }));
-
-    const result = await adapter.run("프롬프트", { sampleName: "button", model: "opus", repoRoot });
+  it("maps usage, cost, and text from the final result line", async () => {
+    const result = await runAdapter(CLAUDE_STREAM);
 
     expect({
-      text: result.text, model: result.model, inputTokens: result.inputTokens,
-      cacheCreation: result.cacheCreation, cacheRead: result.cacheRead,
-      outputTokens: result.outputTokens, costUsd: result.costUsd,
+      text: result.text, inputTokens: result.inputTokens, cacheCreation: result.cacheCreation,
+      cacheRead: result.cacheRead, outputTokens: result.outputTokens, costUsd: result.costUsd,
     }).toEqual({
-      text: "```css\n:root {}\n```", model: "claude-opus-5", inputTokens: 4,
-      cacheCreation: 5564, cacheRead: 37544, outputTokens: 3210, costUsd: 0.0611,
+      text: "```css\n:root {}\n```", inputTokens: 4, cacheCreation: 5564, cacheRead: 37544,
+      outputTokens: 3210, costUsd: 0.0611,
     });
   });
 
-  it("calls claude with the exact SPEC 9.2 command", async () => {
-    const calls: [string, string[]][] = [];
-    const adapter = createClaudeAdapter((cmd, args) => {
-      calls.push([cmd, args]);
-      return Promise.resolve({ code: 0, stdout: CLAUDE_JSON, stderr: "" });
-    });
+  it("resolves the producing model even when modelUsage has several keys", async () => {
+    const result = await runAdapter(CLAUDE_STREAM);
 
-    await adapter.run("프롬프트", { sampleName: "button", model: "opus", repoRoot });
+    expect({
+      model: result.model, requestedModel: result.requestedModel,
+      resolvedModel: result.resolvedModel, modelResolution: result.modelResolution,
+    }).toEqual({
+      model: "claude-opus-5", requestedModel: "opus",
+      resolvedModel: "claude-opus-5", modelResolution: "producing-message",
+    });
+  });
+
+  it("falls back to a sole modelUsage key only when no producing message names a model", async () => {
+    const result = await runAdapter(stream([INIT, { ...RESULT, modelUsage: { "claude-opus-5": {} } }]));
+
+    expect({ resolvedModel: result.resolvedModel, modelResolution: result.modelResolution })
+      .toEqual({ resolvedModel: "claude-opus-5", modelResolution: "sole-model-usage-key" });
+  });
+
+  it("records null rather than inferring an id from two modelUsage keys", async () => {
+    const result = await runAdapter(stream([INIT, { ...RESULT, modelUsage: { "claude-opus-5": {}, "claude-haiku-4-5": {} } }]));
+
+    expect({ resolvedModel: result.resolvedModel, model: result.model, modelResolution: result.modelResolution })
+      .toEqual({ resolvedModel: null, model: "opus", modelResolution: null });
+  });
+
+  it("keeps contradictory producing models null instead of hiding them behind a key", async () => {
+    const result = await runAdapter(stream([
+      mainLoop("claude-opus-5"), mainLoop("claude-sonnet-5"), { ...RESULT, modelUsage: { "claude-opus-5": {} } },
+    ]));
+
+    expect({ resolvedModel: result.resolvedModel, modelResolution: result.modelResolution })
+      .toEqual({ resolvedModel: null, modelResolution: null });
+  });
+
+  it("ignores a subagent model and resolves from the main-loop message", async () => {
+    const subagent = { type: "assistant", parent_tool_use_id: "toolu_1", message: { model: "claude-haiku-4-5", content: [] } };
+    const result = await runAdapter(stream([
+      mainLoop("claude-opus-5"), subagent, { ...RESULT, modelUsage: { "claude-opus-5": {}, "claude-haiku-4-5": {} } },
+    ]));
+
+    expect({ resolvedModel: result.resolvedModel, assistantModels: result.providerEvidence?.assistantModels })
+      .toEqual({ resolvedModel: "claude-opus-5", assistantModels: ["claude-opus-5"] });
+  });
+
+  it("resolves null when a producing message and a sole modelUsage key disagree", async () => {
+    const result = await runAdapter(stream([mainLoop("claude-opus-5"), { ...RESULT, modelUsage: { "claude-sonnet-5": {} } }]));
+
+    expect(result.resolvedModel).toBe(null);
+  });
+
+  it("never resolves from system/init alone", async () => {
+    const result = await runAdapter(stream([INIT, { ...RESULT, modelUsage: { a: {}, b: {} } }]));
+
+    expect({ resolvedModel: result.resolvedModel, initModel: result.providerEvidence?.initModel })
+      .toEqual({ resolvedModel: null, initModel: "claude-opus-5" });
+  });
+
+  it("keeps init model, ordered distinct assistant models, and verbatim modelUsage as evidence", async () => {
+    const result = await runAdapter(CLAUDE_STREAM);
+
+    expect(result.providerEvidence).toEqual({
+      format: "stream-json", initModel: "claude-opus-5", assistantModels: ["claude-opus-5"],
+      modelUsage: { "claude-opus-5": { inputTokens: 4 }, "claude-haiku-4-5": { inputTokens: 9 } },
+    });
+  });
+
+  it("calls claude with the stream-json SPEC 9.2 command", async () => {
+    const calls: [string, string[]][] = [];
+    await createClaudeAdapter((cmd, args) => {
+      calls.push([cmd, args]);
+      return Promise.resolve({ code: 0, stdout: CLAUDE_STREAM, stderr: "" });
+    }).run("프롬프트", { sampleName: "button", model: "opus", repoRoot });
 
     expect(calls).toEqual([[
       "claude",
-      ["-p", "프롬프트", "--output-format", "json", "--restricted", "--model", "opus"],
+      ["-p", "프롬프트", "--output-format", "stream-json", "--verbose", "--restricted", "--model", "opus"],
     ]]);
   });
 
   it("returns an error with zero tokens for a nonzero exit and empty stdout", async () => {
-    const adapter = createClaudeAdapter(stubRun({ code: 1, stdout: "", stderr: "credit balance too low" }));
-
-    const result = await adapter.run("프롬프트", { sampleName: "button", model: "opus", repoRoot });
+    const result = await runAdapter("", 1);
 
     expect({ error: result.error, inputTokens: result.inputTokens, outputTokens: result.outputTokens, costUsd: result.costUsd })
-      .toEqual({ error: "exit 1 | credit balance too low", inputTokens: 0, outputTokens: 0, costUsd: null });
+      .toEqual({ error: "exit 1", inputTokens: 0, outputTokens: 0, costUsd: null });
   });
 
-  it("keeps the exit code and the stdout a failed call reports its own refusal on", async () => {
-    const refusal = '{"type":"result","subtype":"error_max_budget"}';
-    const adapter = createClaudeAdapter(stubRun({ code: 1, stdout: refusal, stderr: "" }));
+  it("reports the child diagnostic and keeps evidence when the stream has no result line", async () => {
+    const result = await runAdapter(stream([INIT, mainLoop("claude-opus-5")]));
 
-    const result = await adapter.run("프롬프트", { sampleName: "button", model: "opus", repoRoot });
-
-    expect(result.error).toBe(`exit 1 | ${refusal}`);
+    expect({
+      erred: result.error !== undefined, costUsd: result.costUsd,
+      resolvedModel: result.resolvedModel, hasEvidence: result.providerEvidence !== null,
+    }).toEqual({ erred: true, costUsd: null, resolvedModel: null, hasEvidence: true });
   });
 });
 
@@ -298,7 +358,8 @@ describe("runner", () => {
     const pricey: LlmAdapter = {
       kind: "claude",
       run: async (_p, ctx) => ({
-        text: "x", model: ctx.model, ms: 1, invocation: "test", inputTokens: 1,
+        text: "x", model: ctx.model, requestedModel: ctx.model, resolvedModel: null, modelResolution: null,
+        providerEvidence: null, ms: 1, invocation: "test", inputTokens: 1,
         cacheCreation: 0, cacheRead: 0, outputTokens: 1, costUsd: 5,
       }),
     };
@@ -489,7 +550,8 @@ describe("cost guard (SPEC 9.6)", () => {
     const pricey: LlmAdapter = {
       kind: "claude",
       run: async (_p, ctx) => ({
-        text: "x", model: ctx.model, ms: 1, invocation: "test", inputTokens: 1,
+        text: "x", model: ctx.model, requestedModel: ctx.model, resolvedModel: null, modelResolution: null,
+        providerEvidence: null, ms: 1, invocation: "test", inputTokens: 1,
         cacheCreation: 0, cacheRead: 0, outputTokens: 1, costUsd: perCall,
       }),
     };
@@ -618,5 +680,96 @@ describe("report aggregation (SPEC 9.6)", () => {
     expect(notes[0]).toBe("combinations: 2");
     expect(notes[1]).toBe("sent: 2");
     expect(notes[3]).toBe("total cost usd: 0.7400");
+  });
+});
+
+const SECTION_PROVENANCE: Partial<EvalRun> = {
+  requestedModel: "opus", resolvedModel: "claude-opus-5",
+  harnessCommit: { sha: "a".repeat(40), dirty: false },
+  artifact: { output: "", sampleName: "button", tokensCssSha256: "h", referenceLockCommit: "L" },
+};
+
+describe("one-shot report section keys (SPEC 9.6)", () => {
+  it("keeps rows in one section when every provenance part matches", () => {
+    const keys = reportSectionKeys([line("a/raw", SECTION_PROVENANCE), line("b/raw", SECTION_PROVENANCE)]);
+    expect(keys).toHaveLength(1);
+  });
+
+  it("separates rows differing only in resolved model, harness sha, harness dirty, or reference lock", () => {
+    const base = sectionKey(line("x", SECTION_PROVENANCE));
+    const variants = [
+      { resolvedModel: "claude-sonnet-5" },
+      { resolvedModel: null },
+      { harnessCommit: { sha: "b".repeat(40), dirty: false } },
+      { harnessCommit: { sha: "a".repeat(40), dirty: true } },
+      { artifact: { output: "", sampleName: "button", tokensCssSha256: "h", referenceLockCommit: "OTHER" } },
+    ] as Partial<EvalRun>[];
+    for (const over of variants) {
+      expect(sectionKey(line("x", { ...SECTION_PROVENANCE, ...over }))).not.toBe(base);
+    }
+  });
+
+  it("groups legacy rows lacking every provenance part by prompt hash and model", () => {
+    expect(reportSectionKeys([line("a/raw"), line("b/raw")])).toHaveLength(1);
+    expect(reportSectionKeys([
+      line("a/raw", { promptHash: "h1" }), line("b/raw", { promptHash: "h2" }),
+    ])).toHaveLength(2);
+  });
+});
+
+describe("provenance-aware baselines (SPEC 9.1)", () => {
+  it("selects output-basis rows by requested alias when model holds a resolved id", () => {
+    const rows = readTrackedRuns(writeRunsDir([
+      line("a/raw", { model: "claude-opus-5", requestedModel: "opus", promptHash: "h1", outputTokens: 200 }),
+      line("b/raw", { model: "claude-opus-5", requestedModel: "opus", promptHash: "h1", outputTokens: 400 }),
+    ]));
+
+    expect(outputBasis(rows, "opus", "h1")).toEqual({ promptHash: "h1", lines: 2, outputTokensMean: 300 });
+  });
+});
+
+describe("harness commit provenance (SPEC 9.6)", () => {
+  it("reads the head sha and excludes runs/ from the dirty check", async () => {
+    const calls: string[][] = [];
+    const child: ChildRun = (_cmd, args) => {
+      calls.push(args);
+      return Promise.resolve({ code: 0, stdout: args[0] === "rev-parse" ? `${"a".repeat(40)}\n` : "", stderr: "" });
+    };
+
+    const commit = await readHarnessCommit(child, repoRoot);
+
+    expect(commit).toEqual({ sha: "a".repeat(40), dirty: false });
+    expect(calls[1]).toEqual(["status", "--porcelain", "--", ".", ":(exclude)runs/"]);
+  });
+
+  it("marks the tree dirty for any tracked or untracked change outside runs/", async () => {
+    const child: ChildRun = (_cmd, args) =>
+      Promise.resolve({ code: 0, stdout: args[0] === "rev-parse" ? `${"b".repeat(40)}\n` : " M packages/eval/src/x.ts\n", stderr: "" });
+
+    expect((await readHarnessCommit(child, repoRoot)).dirty).toBe(true);
+  });
+});
+
+describe("one-shot artifact embedding (J7)", () => {
+  it("embeds the output and reference lock while still writing runs/out", async () => {
+    const root = evalRoot(true);
+    const date = "1970-01-02";
+    const summary = await runMatrix({
+      repoRoot: root, matrix: loadMatrix(writeMatrix(BUTTON_MATRIX), root), parallel: 1,
+      adapter: fakeAdapter, referenceLockCommit: "LOCK123", harnessCommit: { sha: "c".repeat(40), dirty: false }, utcDate: date,
+    });
+    const record = summary.records[0];
+
+    expect(record?.artifact).toEqual({
+      output: expect.stringContaining("```css"), sampleName: "button",
+      tokensCssSha256: expect.any(String), referenceLockCommit: "LOCK123",
+    });
+    expect(record?.harnessCommit).toEqual({ sha: "c".repeat(40), dirty: false });
+    expect(existsSync(join(runsDir(root), "out", date, "button-compact.r0.md"))).toBe(true);
+  });
+
+  it("omits the artifact when no reference lock is provided", async () => {
+    const summary = await buttonRun(evalRoot(true));
+    expect(summary.records[0]?.artifact).toBe(undefined);
   });
 });
