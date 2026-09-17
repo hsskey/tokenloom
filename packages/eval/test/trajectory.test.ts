@@ -10,6 +10,7 @@ import {
   type ChildOutput, type ChildRunWithStdin, type LlmAdapter, type LlmResult, type ProviderCallEvidence,
   type Rate, type ToolPort, type TrajectoryMatrixT, type TrajectoryOptions, type TrajectoryRun,
 } from "../src/index";
+import { expectedVariants } from "../src/variant-reference";
 
 const repoRoot = resolve(import.meta.dirname, "../../..");
 const MATRIX = resolve(repoRoot, "eval/trajectory.yaml");
@@ -114,6 +115,15 @@ describe("trajectory matrix", () => {
 
   it("plans the whole set without calling a model", () => {
     expect(planTrajectory(matrix()).runs).toBe(24);
+  });
+
+  it("targets the variant-only task at the exact single-variant selector so every condition builds one component", () => {
+    const variantOnly = loadTrajectoryMatrix(MATRIX, repoRoot).tasks.find((t) => t.task === "variant-only");
+    const expected = expectedVariants(repoRoot, { sampleName: "twenty-variants", variant: "size=md,state=default" });
+
+    expect(variantOnly?.variant).toBe("size=md,state=default");
+    expect(variantOnly?.instruction).toContain("size=md,state=default");
+    expect(expected.selectors).toEqual(["size=md,state=default"]);
   });
 });
 

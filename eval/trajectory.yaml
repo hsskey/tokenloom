@@ -30,6 +30,7 @@ prompt:
     The harness runs the query and gives you its output. The snapshot path and the view are already fixed.
 
     When you have the design context, output exactly two fenced blocks, ```css then ```html, and nothing else.
+    The html block carries one element per expected variant, each with a `data-variant="<k=v,...>"` selector, so coverage matches every variant the task must contain.
     Every colour, spacing, radius, and typography value is a var(--...) derived from tokensUsed. No literals.
 tasks:
   - task: known-component
@@ -43,7 +44,10 @@ tasks:
   - task: variant-only
     sampleName: twenty-variants
     snapshot: samples/twenty-variants/snapshot.json
-    instruction: Generate only the size=md variant of the component set named Chip.
+    # `size=md` alone matches five state variants of Chip, so each condition would build a different subset.
+    # The full selector names one variant, giving the coverage and S3 gates a single expected component.
+    variant: size=md,state=default
+    instruction: Generate only the size=md,state=default variant of the component set named Chip.
   - task: recovery
     sampleName: button
     snapshot: samples/button/snapshot.json

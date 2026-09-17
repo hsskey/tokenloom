@@ -76,6 +76,8 @@ describe("scoreS3 measurement (SPEC 9.5)", () => {
     const result = scoreS3([ref("a", "ref-a")], [], pngReader({ "ref-a": WHITE }), [], []);
     expect(result.s3Status).toBe("error");
     expect(result.s3).toBe(null);
+    // The gated max stays null over an empty comparison set; a Math.max() default of -Infinity would pass the 0.05 gate.
+    expect(result.s3Detail.max).toBe(null);
     expect(result.s3Detail.errors).toEqual([{ selector: null, code: "NO_COMPARABLE_VARIANT" }]);
   });
 
