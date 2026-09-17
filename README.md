@@ -169,6 +169,65 @@ Uses tokenloom's design information together with the existing project to implem
 tokenloom is not a `.fig` file parser or a general-purpose UI code generator, and it does not send
 the complete Figma file to an LLM.
 
+## Evaluation harness
+
+The tokenloom CLI above (`snapshot`, `context`, `tokens`) is deterministic local processing and never
+calls a language model. This repository also carries a separate development evaluation harness, and
+that harness is the only part of the project that makes real model calls. It is a development tool,
+not part of the shipped CLI workflow. Its purpose is to measure how a change in the design-context
+representation affects both the component a coding agent generates and the model usage that generation
+takes.
+
+### What it measures
+
+* **S1 (token reference validity)** — the generated CSS parses and every `var(--x)` it uses exists in
+  the reference `tokens.css`.
+* **S2 (token compliance)** — the ratio of design-token references to hard-coded literals in the
+  generated CSS.
+* **Variant coverage** — the required variant set compared against the `data-variant` markers in the
+  generated HTML, reported as recall and precision with any duplicate, missing, or unexpected
+  variants. Coverage is a separate failure dimension and never folds into S1 or S2.
+* **S3 (visual difference)** — for each expected variant that has a reference render, the pixel
+  mismatch between the reference and the generated variant. The gated value is the worst variant's
+  mismatch; the mean is recorded alongside it as a diagnostic. When no expected variant has a
+  reference render, S3 is not applicable. Coverage and S3 are independent failure dimensions.
+* **Usage metrics** — input and output tokens, an estimated cost, latency, and the model provenance
+  (the requested alias and the provider-resolved model id) of each run.
+
+### How results are recorded
+
+* Each run is stored as a JSONL run record; reports are computed from those records, never written by
+  hand.
+* Runs are compared only within a set that shares the same prompt hash and model provenance, so a
+  change to the prompt or the model starts a new comparison set.
+* Threshold failures are shown in the report; the thresholds live in `eval/thresholds.json`.
+* Run records are append-only and are not rewritten.
+
+### Reproducing without spending money
+
+Plan a trajectory evaluation without any model call:
+
+```sh
+pnpm tokenloom eval trajectory --matrix eval/trajectory.yaml --dry-run --json
+```
+
+Plan a one-shot evaluation with the fake adapter, which also makes no model call:
+
+```sh
+TOKENLOOM_LLM=fake pnpm tokenloom eval run --matrix eval/matrix.mvp.yaml --dry-run
+```
+
+Regenerate a report from the committed run records (reads `runs/*.jsonl`, makes no model call):
+
+```sh
+pnpm tokenloom eval report --out reports/<date>.md
+```
+
+An example committed report is [`reports/2026-09-17.md`](./reports/2026-09-17.md), computed from real
+run records and showing S1, S2, token usage, cost, and latency. Real model calls happen only through
+`eval run` or `eval trajectory` without the fake adapter and require an explicit budget; see
+[`docs/reference/spec.md`](./docs/reference/spec.md) section 9 for the full contract.
+
 ## Documentation
 
 For deeper technical details:
