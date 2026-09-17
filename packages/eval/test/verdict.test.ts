@@ -65,8 +65,8 @@ describe("trajectory variant validation at load (SPEC 9.5)", () => {
   function matrixWithVariant(variant: string): string {
     const source = readFileSync(resolve(repoRoot, "eval/trajectory.yaml"), "utf8");
     const patched = source.replace(
-      "    snapshot: samples/twenty-variants/snapshot.json",
-      `    snapshot: samples/twenty-variants/snapshot.json\n    variant: "${variant}"`,
+      "    variant: size=md,state=default",
+      `    variant: "${variant}"`,
     );
     const path = join(mkdtempSync(join(tmpdir(), "tl-variant-")), "trajectory.yaml");
     writeFileSync(path, patched);
