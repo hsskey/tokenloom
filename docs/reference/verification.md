@@ -125,6 +125,8 @@ Current metric keys begin with `context_`; versioned readers accept historical `
 
 Without a machine baseline, the benchmark gate decides only environment-independent measurements.
 
+"Median" in this section is the ordinary median (`bench/util.ts`): the mean of the two middle values for an even population. The evaluation report's p50 (`docs/reference/spec.md` section 9.6) is nearest-rank instead and returns the lower middle value for an even population. The two agree only for an odd population, so a benchmark median and a report p50 are not interchangeable.
+
 ## 8. Self-test samples
 
 Each directory under `verify/selftest/<gate>/` intentionally breaks one contract in an isolated repository copy.

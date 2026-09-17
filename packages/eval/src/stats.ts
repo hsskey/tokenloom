@@ -153,6 +153,8 @@ export interface Row {
   inputTokensP50: string;
   costP50: string;
   latencyP50: string;
+  nSent: string;
+  nCacheWrite: string;
 }
 
 export interface Failure {
@@ -165,6 +167,7 @@ export interface FixedCost {
   input: string;
   sessionSchemaTokens: string;
   tokensPerComponentP50: string;
+  nCacheWrite: string;
 }
 
 export interface ReportModel {
@@ -244,6 +247,7 @@ export function buildRows(runs: EvalRun[]): Row[] {
   const groups = group(runs, groupKey);
   return [...groups.keys()].sort().map((key) => {
     const sent = (groups.get(key) ?? []).filter((r) => r.skipped === undefined);
+    const wrote = sent.filter((r) => r.cacheCreation > 0);
     const [klass, input, inputVariant] = key.split("\u0000");
     return {
       class: klass ?? "",
@@ -252,11 +256,11 @@ export function buildRows(runs: EvalRun[]): Row[] {
       s1: fixed(mean(sent.map((r) => r.s1 ?? Number.NaN)), SCORE_DIGITS),
       s2: fixed(mean(sent.map((r) => r.s2 ?? Number.NaN)), SCORE_DIGITS),
       s3: fixed(mean(sent.map((r) => r.s3 ?? Number.NaN)), SCORE_DIGITS),
-      // Count cache writes only so repeated reads do not replace first-input cost with the session prefix.
-      inputTokensP50: integer(percentile(
-        sent.filter((r) => r.cacheCreation > 0).map((r) => r.inputTokens + r.cacheCreation), 50)),
+      inputTokensP50: integer(percentile(wrote.map((r) => r.inputTokens + r.cacheCreation), 50)),
       costP50: fixed(percentile(sent.map((r) => r.costUsd ?? Number.NaN), 50), COST_DIGITS),
       latencyP50: integer(percentile(sent.map((r) => r.ms.llm ?? Number.NaN), 50)),
+      nSent: String(sent.length),
+      nCacheWrite: String(wrote.length),
     };
   });
 }
@@ -312,12 +316,15 @@ export function buildFailures(runs: EvalRun[], thresholds: Thresholds): Failure[
 export function buildFixedCosts(runs: EvalRun[]): FixedCost[] {
   const byInput = group(runs.filter((r) => r.skipped === undefined), (r) => r.input);
   return [...byInput.keys()].sort().map((input) => {
-    const lines = byInput.get(input) ?? [];
+    // Both columns use cache-write rows only; a read-only repeat carries just the session prefix and
+    // would collapse the per-component p50 to the input-tokens floor.
+    const wrote = (byInput.get(input) ?? []).filter((r) => r.cacheCreation > 0);
     return {
       input,
       // Session fixed cost is the reused cache_read prefix; each component adds cache_creation plus input_tokens.
-      sessionSchemaTokens: integer(percentile(lines.map((r) => r.cacheRead), 50)),
-      tokensPerComponentP50: integer(percentile(lines.map((r) => r.inputTokens + r.cacheCreation), 50)),
+      sessionSchemaTokens: integer(percentile(wrote.map((r) => r.cacheRead), 50)),
+      tokensPerComponentP50: integer(percentile(wrote.map((r) => r.inputTokens + r.cacheCreation), 50)),
+      nCacheWrite: String(wrote.length),
     };
   });
 }

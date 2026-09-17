@@ -1397,19 +1397,21 @@ The render page at `packages/eval/render/index.html` loads `tokens.css`, generat
 ```
 # tokenloom eval <date> / model <id> / prompt <hash> / mcp captures <n>/<sets>
 ## What works
-| Sample class | Input | Input variant | S1 | S2 | S3 | Input tokens p50 (cache-write rows) | Cost p50 | Latency p50 |
+| Sample class | Input | Input variant | S1 | S2 | S3 | Input tokens p50 (cache-write rows) | Cost p50 (all sent rows) | Latency p50 (all sent rows) | n sent | n cache-write |
 ## What does not work
 | Target | Failure | Retry condition |
 ## Fixed cost by input source
-| Input | Session schema tokens | Tokens per component p50 |
+| Input | Session schema tokens (cache-write rows) | Tokens per component p50 (cache-write rows) | n cache-write |
 ## Sample size and limitations
 ```
 
 - If run rows contain multiple prompt hashes, emit all four sections once per hash in first-seen order. Each section header is calculated only from its hash. `--prompt-hash` selects one set. Never combine hashes because comparisons require equal model IDs and prompt hashes.
 - Header `model` is the matrix alias. If run rows lack the actual ID because `modelUsage` did not contain one key, append the alias mapping from `eval/pricing.json` and `id not recorded in run lines`. Without a mapping, show only the alias. Never present an inferred ID alone as a measurement.
 - What works separates `Sample designs` and `Synthetic test data`, even for equal input sources and input variants. MCP rows can exist only for sample designs. Classification uses run-line `sampleName`; versioned readers normalize the legacy `fixture` field from historical rows. The `real-` prefix marks sample designs, while Snapshot `source.kind` remains authoritative in repository data.
-- `Cost p50` is the p50 of sent-row `costUsd` within a group, or `n/a` when every value is absent.
-- `Input tokens p50 (cache-write rows)` is the p50 of `inputTokens + cacheCreation` among sent cache-write rows, using the same predicate as `costBasis`. Repeated prompts use cache reads and are excluded so the column means first-input cost. A group without a write is `n/a`, and each section explains this below the table.
+- `Cost p50 (all sent rows)` is the p50 of sent-row `costUsd` within a group, or `n/a` when every value is absent. It is the provider CLI's cost estimate, not billed cost. `Latency p50 (all sent rows)` is the p50 of sent-row `ms.llm`. `n sent` is the population of both columns.
+- `Input tokens p50 (cache-write rows)` is the p50 of `inputTokens + cacheCreation` among sent cache-write rows, using the same predicate as `costBasis`. Repeated prompts use cache reads and are excluded so the column means first-input cost. A group without a write is `n/a`, and each section explains this below the table. `n cache-write` is the population of this column.
+- Fixed cost by input source uses sent cache-write rows for both `Session schema tokens` and `Tokens per component p50`, with `n cache-write` as their population. A read-only repeat carries only the session prefix, so including it drags the per-component p50 down to the input-tokens floor; an input without a cache-write row reports `n/a` rather than a fabricated zero.
+- Every p50 is nearest-rank: for an even population it returns the lower of the two middle values, which keeps recomputed trajectory numbers byte-stable. This differs from the ordinary median (`bench/util.ts`) that section 7 of the verification contract uses; the two agree only for an odd population.
 - What does not work emits one row per `target`, folding repeats and failure types into values with `r<n>` markers. Join distinct failures with `;`. Put the full cause once in Sample size and limitations; raw and MCP S1 cells link to that explanation.
 - S1 failures for MCP input or persisted `irLevel: raw` refer to Sample size and limitations instead of a threshold message because those inputs lack `tokensUsed`. The wording depends only on persisted `input` and `irLevel`. The explanation names the missing field rather than a threshold. Compact rows retain threshold messages. Emit the shared explanation only when applicable.
 

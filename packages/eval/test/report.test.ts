@@ -1,11 +1,13 @@
 import { describe, expect, it } from "vitest";
 import {
   S1_INPUT_CAUSE, S1_INPUT_NOTE, S1_INPUT_RETRY,
-  buildFailures, buildMcpCaptures, buildRows, buildSampleNotes, promptHashes, realRuns,
+  buildFailures, buildFixedCosts, buildMcpCaptures, buildRows, buildSampleNotes, percentile,
+  promptHashes, realRuns,
 } from "../src/stats";
-import type { ReportModel, Row } from "../src/stats";
+import type { FixedCost, ReportModel, Row } from "../src/stats";
 import { WORKS_NOTE, renderReport, renderReports } from "../src/report";
 import type { EvalRun } from "../src/runs";
+import { median as benchMedian } from "../../../bench/util";
 
 /** Shape of a real MCP row from runs/2026-09-05.jsonl with irrelevant fields overridden. */
 const LINE: EvalRun = {
@@ -340,5 +342,95 @@ describe("failure table folds by target (SPEC 9.6)", () => {
     expect(failures).toHaveLength(1);
     expect(failures[0]?.mode).toBe("MAX_INPUT_TOKENS est 240000 tokens (r0)");
     expect(failures[0]?.retryWhen).toBe("maxInputTokens raised or design context shrinks");
+  });
+});
+
+describe("nearest-rank p50 versus benchmark median (SPEC 9.6)", () => {
+  it("returns the middle value for an odd population under both definitions", () => {
+    expect(percentile([1, 2, 3], 50)).toBe(2);
+    expect(benchMedian([1, 2, 3])).toBe(2);
+  });
+
+  it("returns the lower middle value for an even population, unlike the benchmark median", () => {
+    expect(percentile([1, 2, 3, 4], 50)).toBe(2);
+    expect(benchMedian([1, 2, 3, 4])).toBe(2.5);
+  });
+});
+
+describe("fixed cost uses cache-write rows for both columns (SPEC 9.6)", () => {
+  const write = (over: Partial<EvalRun>): EvalRun =>
+    snapshotLine({ sampleName: "button", inputTokens: 2, cacheCreation: 6000, cacheRead: 11000, ...over });
+  const readOnly = (over: Partial<EvalRun>): EvalRun =>
+    snapshotLine({ sampleName: "button", inputTokens: 2, cacheCreation: 0, cacheRead: 16000, ...over });
+  const snapshotOf = (costs: FixedCost[]): FixedCost | undefined => costs.find((c) => c.input === "snapshot");
+
+  it("reports the per-component column from write rows only, never the read-only floor", () => {
+    const snapshot = snapshotOf(buildFixedCosts([
+      write({ repeat: 0 }), readOnly({ repeat: 1 }), readOnly({ repeat: 2 }), readOnly({ repeat: 3 }),
+    ]));
+
+    expect(snapshot?.tokensPerComponentP50).toBe("6002");
+    expect(snapshot?.tokensPerComponentP50).not.toBe("2");
+    expect(snapshot?.sessionSchemaTokens).toBe("11000");
+    expect(snapshot?.nCacheWrite).toBe("1");
+  });
+
+  it("reports n/a rather than a fabricated zero for a group without a cache-write row", () => {
+    const snapshot = snapshotOf(buildFixedCosts([readOnly({ repeat: 0 }), readOnly({ repeat: 1 })]));
+
+    expect(snapshot?.tokensPerComponentP50).toBe("n/a");
+    expect(snapshot?.sessionSchemaTokens).toBe("n/a");
+    expect(snapshot?.nCacheWrite).toBe("0");
+  });
+});
+
+describe("What works p50 cells recompute from the population named in each header (SPEC 9.6)", () => {
+  const line = (over: Partial<EvalRun>): EvalRun =>
+    snapshotLine({ sampleName: "button", target: "button/compact", ...over });
+
+  it("recomputes input tokens from cache-write rows and cost and latency from all sent rows", () => {
+    const fixture = [
+      line({ repeat: 0, inputTokens: 2, cacheCreation: 5000, costUsd: 0.02, ms: { llm: 4000 } }),
+      line({ repeat: 1, inputTokens: 2, cacheCreation: 7000, costUsd: 0.30, ms: { llm: 6000 } }),
+      line({ repeat: 2, inputTokens: 2, cacheCreation: 0, costUsd: 0.05, ms: { llm: 5000 } }),
+    ];
+    const row = rowOf(buildRows(fixture), "Synthetic test data", "snapshot", "compact");
+
+    const wrote = fixture.filter((r) => r.cacheCreation > 0);
+    expect(row?.nSent).toBe(String(fixture.length));
+    expect(row?.nCacheWrite).toBe(String(wrote.length));
+    expect(row?.inputTokensP50).toBe(String(percentile(wrote.map((r) => r.inputTokens + r.cacheCreation), 50)));
+    expect(row?.costP50).toBe((percentile(fixture.map((r) => r.costUsd ?? Number.NaN), 50) ?? 0).toFixed(4));
+    expect(row?.latencyP50).toBe(String(percentile(fixture.map((r) => r.ms.llm ?? Number.NaN), 50)));
+  });
+});
+
+describe("cost columns are the provider CLI estimate (SPEC 9.6)", () => {
+  it("labels the all-sent cost column and calls it an estimate rather than billed cost", () => {
+    const body = renderReport(reportModel({ rows: [] }));
+
+    expect(body).toContain("| Cost p50 (all sent rows) |");
+    expect(body).toContain("provider CLI's cost estimate, not billed cost");
+  });
+
+  it("names nearest-rank and its difference from the ordinary median", () => {
+    const body = renderReport(reportModel({ rows: [] }));
+
+    expect(body).toContain("nearest-rank");
+    expect(body).toContain("ordinary median");
+  });
+});
+
+describe("committed snapshot group no longer prints the input-tokens floor (SPEC 9.6)", () => {
+  it("reports a per-component p50 above the input-tokens floor for the committed snapshot group", async () => {
+    const { readTrackedRuns, repoRootFrom } = await import("../src/runs");
+    const { fileURLToPath } = await import("node:url");
+    const root = repoRootFrom(fileURLToPath(import.meta.url));
+    const section = realRuns(readTrackedRuns(root), undefined, "c9525a86e192");
+    const snapshot = buildFixedCosts(section).find((c) => c.input === "snapshot");
+
+    expect(snapshot).toBeDefined();
+    expect(snapshot?.tokensPerComponentP50).not.toBe("2");
+    expect(Number(snapshot?.tokensPerComponentP50)).toBeGreaterThan(2);
   });
 });
