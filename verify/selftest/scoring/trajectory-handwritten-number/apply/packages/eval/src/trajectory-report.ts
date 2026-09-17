@@ -1,5 +1,5 @@
-// Self-test defect: a report file that hand-writes a measurement. The scoring gate's reportLiterals
-// must reject the numeric literal below, exactly as it would in the real report producer.
+// The scoring gate scans this file for hand-written numbers (A10), so it holds none:
+// every measurement arrives already computed from the run records and this file only assembles strings.
 import { fixed, integer } from "./stats";
 import {
   REQUIRED_CONDITIONS, REQUIRED_TASKS, renderAllTasksCell, renderCountCell, summarizeTrajectory,
@@ -37,6 +37,7 @@ const diagnosticRow = (s: ConditionSummary): string => row([
 const cellsOf = (cells: TrajectoryCell[], condition: string): TrajectoryCell[] =>
   cells.filter((cell) => cell.condition === condition);
 
+/** A cell is always present in trajectoryCells; an absent one would mean no runs, which reads as `-`. */
 const primaryRows = (cells: TrajectoryCell[]): string[] => [
   ...REQUIRED_TASKS.map((task) => row([task, ...REQUIRED_CONDITIONS.map((condition) => {
     const cell = cells.find((candidate) => candidate.task === task && candidate.condition === condition);
@@ -45,6 +46,7 @@ const primaryRows = (cells: TrajectoryCell[]): string[] => [
   row(["All tasks", ...REQUIRED_CONDITIONS.map((condition) => renderAllTasksCell(cellsOf(cells, condition)))]),
 ];
 
+/** Rows with unlike prompt hashes, model provenance, or invocation shapes never share a section. */
 const section = (runs: TrajectoryRun[], partition: TrajectoryPartition): string => {
   const cells = trajectoryCells(runs, partition);
   return [

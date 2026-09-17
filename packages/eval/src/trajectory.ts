@@ -363,7 +363,10 @@ export function trajectoryCells(runs: TrajectoryRun[], partition: TrajectoryPart
   return REQUIRED_TASKS.flatMap((task) => REQUIRED_CONDITIONS.map((condition) => {
     const all = rows.filter((run) => run.task === task && run.condition === condition);
     const comparable = all.filter((run) => run.incomparable !== true);
-    return { task, condition, recorded: all.length, comparable: comparable.length, successes: comparable.filter((run) => run.success).length };
+    return {
+      task, condition, recorded: all.length, comparable: comparable.length,
+      successes: comparable.filter((run) => run.success).length,
+    };
   }));
 }
 
