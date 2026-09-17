@@ -1,6 +1,7 @@
 // Whole-task trajectory types. No I/O here: `ChildRun` stays the only child-process boundary.
 import { stableStringify } from "@tokenloom/schema";
 import type { CoverageT, CoverageError } from "./coverage";
+import type { S3StatusT, S3DetailT } from "./visual";
 import type { ChildOutput, HarnessCommit, LlmResult, ModelResolution, ProviderCallEvidence } from "./model-port";
 import { extractBlocks } from "./score";
 
@@ -38,6 +39,7 @@ export interface TrajectoryRun {
   s1: number | null; s2: number | null; artifact: TrajectoryArtifact | null; promptHash: string;
   toolCalls: TrajectoryToolCall[]; recovery: TrajectoryRecovery[]; incomparable?: boolean; error?: string;
   coverageStatus?: "measured" | "error"; coverage?: CoverageT | null; coverageError?: CoverageError;
+  s3?: number | null; s3Status?: S3StatusT; s3Detail?: S3DetailT;
   requestedModel?: string; resolvedModel?: string | null; modelResolution?: ModelResolution | null;
   providerEvidence?: ProviderCallEvidence[]; harnessCommit?: HarnessCommit; referenceLockCommit?: string;
 }

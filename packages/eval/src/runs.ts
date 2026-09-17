@@ -4,6 +4,7 @@ import { dirname, join, resolve } from "node:path";
 import { stableStringify } from "@tokenloom/schema";
 import { z } from "zod";
 import { Coverage, CoverageErrorCode } from "./coverage";
+import { S3Detail, S3Status } from "./visual";
 import { InputSource, InputVariant, NO_INPUT_VARIANT } from "./matrix";
 import type { ChildRun, HarnessCommit } from "./model-port";
 
@@ -49,6 +50,9 @@ export const EvaluationRun = z.object({
   s1: z.number().nullable().optional(),
   s2: z.number().nullable().optional(),
   s3: z.number().nullable().optional(),
+  /** Visual difference (SPEC 9.5, J4). `s3Status` absent means the row predates S3 wiring. */
+  s3Status: S3Status.optional(),
+  s3Detail: S3Detail.optional(),
   /** Variant coverage (SPEC 9.5, J1). Absent on rows recorded before the metric existed. */
   coverageStatus: z.enum(["measured", "error"]).optional(),
   coverage: Coverage.nullable().optional(),
