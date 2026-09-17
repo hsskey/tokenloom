@@ -15,6 +15,7 @@ import { runsDir } from "./runs";
 import { scoreS1, scoreS2 } from "./score";
 import { runCoverage } from "./coverage";
 import { expectedVariants } from "./variant-reference";
+import { measureS3, renderVariants } from "./visual";
 import { percentile, type Rate } from "./stats";
 
 export const TRAJECTORY_REPEATS = 2; // T803 owns the harness; registered so no later lane edits the eval barrel.
@@ -219,10 +220,18 @@ async function runOne(options: TrajectoryOptions, combo: Combination, state: Set
   const tokensCss = readTokensCss(repoRoot, combo.spec.sampleName);
   const scored = complete && tokensCss !== null;
   const coverage = runCoverage(repoRoot, { sampleName: combo.spec.sampleName, variant: combo.spec.variant }, text);
+  const s3 = coverage.coverageStatus === "measured"
+    ? await measureS3({
+        repoRoot, target: { sampleName: combo.spec.sampleName },
+        expected: expectedVariants(repoRoot, { sampleName: combo.spec.sampleName, variant: combo.spec.variant }),
+        text, render: renderVariants, readPng: (path) => readFileSync(path),
+      })
+    : null;
   return {
     coverageStatus: coverage.coverageStatus,
     ...(coverage.coverage !== null ? { coverage: coverage.coverage } : {}),
     ...(coverage.coverageError === undefined ? {} : { coverageError: coverage.coverageError }),
+    ...(s3 === null ? {} : { s3: s3.s3, s3Status: s3.s3Status, s3Detail: s3.s3Detail }),
     cmd: "trajectory", utcDate: options.utcDate, task: combo.spec.task, condition: combo.condition,
     repeat: combo.repeat, adapter: state.adapter, model, invocation, success,
     turns: turns.length, durationMs: Date.now() - started, ...usage, costUsd,

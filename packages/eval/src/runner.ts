@@ -10,6 +10,8 @@ import {
 } from "./stats";
 import { readTrackedRuns, runsDir, type EvalRun } from "./runs";
 import { runCoverage } from "./coverage";
+import { expectedVariants } from "./variant-reference";
+import { measureS3, renderVariants, type RenderPort } from "./visual";
 import { scoreS1, scoreS2 } from "./score";
 import { readFileSync, existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
@@ -32,6 +34,7 @@ export interface PlanningOptions {
 
 export interface RunOptions extends PlanningOptions {
   adapter: LlmAdapter;
+  render?: RenderPort;
 }
 
 export interface RunSummary {
@@ -210,7 +213,9 @@ export function plan(options: PlanningOptions, adapterKind: LlmAdapter["kind"]):
   });
 }
 
-async function send(planned: Planned, adapter: LlmAdapter, model: string, repoRoot: string): Promise<void> {
+const readPng = (path: string): Buffer => readFileSync(path);
+
+async function send(planned: Planned, adapter: LlmAdapter, model: string, repoRoot: string, render: RenderPort): Promise<void> {
   const result = await adapter.run(planned.prompt, { sampleName: planned.record.sampleName, model, repoRoot });
   const record = planned.record;
   record.bytesOut = Buffer.byteLength(result.text, "utf8");
@@ -227,13 +232,29 @@ async function send(planned: Planned, adapter: LlmAdapter, model: string, repoRo
   const tokensCss = readTokensCss(repoRoot, record.sampleName);
   record.s1 = scoreS1(result.text, tokensCss);
   record.s2 = Number(scoreS2(result.text).toFixed(4));
-  // S3 is computed only for samples with rendered PNGs; absence produces null.
-  record.s3 = null;
-  const coverage = runCoverage(repoRoot, { sampleName: record.sampleName, node: planned.node }, result.text);
+  await scoreVisual(repoRoot, record, planned.node, result.text, render);
+  writeOutput(repoRoot, record, result.text);
+}
+
+async function scoreVisual(repoRoot: string, record: EvalRun, node: string | undefined, text: string, render: RenderPort): Promise<void> {
+  const target = { sampleName: record.sampleName, node };
+  const coverage = runCoverage(repoRoot, target, text);
   record.coverageStatus = coverage.coverageStatus;
   if (coverage.coverage !== null) record.coverage = coverage.coverage;
   if (coverage.coverageError !== undefined) record.coverageError = coverage.coverageError;
-  writeOutput(repoRoot, record, result.text);
+  record.s3 = null;
+  if (coverage.coverageStatus !== "measured") return;
+
+  const expected = expectedVariants(repoRoot, target);
+  const s3 = await measureS3({ repoRoot, target, expected, text, render, readPng });
+  record.s3 = s3.s3;
+  record.s3Status = s3.s3Status;
+  record.s3Detail = s3.s3Detail;
+  if (s3.s3Status === "error" && s3.s3Detail.errors.some((entry) => entry.code === "DOM_DISAGREEMENT")) {
+    record.coverageStatus = "error";
+    record.coverageError = "DOM_DISAGREEMENT";
+    delete record.coverage;
+  }
 }
 
 /**
@@ -260,6 +281,7 @@ function readTokensCss(repoRoot: string, sampleName: string): string | null {
  */
 export async function runMatrix(options: RunOptions): Promise<RunSummary> {
   const adapter = options.adapter;
+  const render = options.render ?? renderVariants;
   const planned = plan(options, adapter.kind);
   const started = Date.now();
   const sendable = planned.filter((p) => p.record.skipped === undefined);
@@ -276,7 +298,7 @@ export async function runMatrix(options: RunOptions): Promise<RunSummary> {
     }
     inFlight += 1;
     try {
-      await send(item, adapter, options.matrix.model, options.repoRoot);
+      await send(item, adapter, options.matrix.model, options.repoRoot, render);
     } finally {
       inFlight -= 1;
     }

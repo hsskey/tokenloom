@@ -1,9 +1,6 @@
-import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import { PNG } from "pngjs";
-import { comparePngs, expectedPngPath, PIXELMATCH_THRESHOLD, RENDER_SCALE } from "../src/visual";
-
-const repoRoot = resolve(import.meta.dirname, "../../..");
+import { comparePngs, PIXELMATCH_THRESHOLD, RENDER_SCALE } from "../src/visual";
 
 /** Synthetic PNG used to verify mismatch ratios without launching a browser (TESTS 10). */
 function solid(width: number, height: number, rgb: [number, number, number]): Buffer {
@@ -58,9 +55,5 @@ describe("S3 visual difference (SPEC 9.5)", () => {
   it("uses the SPEC 9.5 threshold and scale", () => {
     expect(PIXELMATCH_THRESHOLD).toBe(0.1);
     expect(RENDER_SCALE).toBe(2);
-  });
-
-  it("returns a null path when the sample has no rendered PNG", () => {
-    expect(expectedPngPath(repoRoot, "button", "12:35")).toBe(null);
   });
 });
