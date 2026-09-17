@@ -7,7 +7,8 @@ import { z } from "zod";
 import { AgentError, estimateTokens, stableStringify } from "@tokenloom/schema";
 import {
   createSessionPort, type ChildRunWithStdin, type RunnableTrajectoryCondition, type ToolPort, type TrajectoryCondition,
-  type TrajectoryRecovery, type TrajectoryRun, type TrajectoryTaskSpec, type TrajectoryToolCall, type TrajectoryTurn,
+  type TrajectoryRecovery, type TrajectoryRun, type TrajectoryTask, type TrajectoryTaskSpec, type TrajectoryToolCall,
+  type TrajectoryTurn,
 } from "./agent-session-port";
 import type { HarnessCommit, LlmAdapter, LlmResult, ModelResolution, ProviderCallEvidence } from "./model-port";
 import { promptHash } from "./prompt";
@@ -316,13 +317,6 @@ export function readTrajectoryRuns(repoRoot: string): TrajectoryRun[] {
 /** Total input of one run: the three provider input categories, so prompt caching cannot move it. */
 export const totalInput = (run: TrajectoryRun): number => run.inputTokens + run.cacheCreation + run.cacheRead;
 
-export interface ConditionSummary {
-  condition: TrajectoryCondition; runs: number; incomparableRuns: number; successRate: number | null; inputTokensP50: number | null;
-  outputTokensP50: number | null; durationMsP50: number | null; turnsP50: number | null;
-  toolCalls: number; recoveries: number; costP50: number | null;
-  s1P50: number | null; s2P50: number | null;
-}
-
 /** Fake rows record the deterministic path and are excluded from every aggregate. */
 export const realTrajectoryRuns = (runs: TrajectoryRun[]): TrajectoryRun[] => runs.filter((r) => r.adapter === "claude");
 
@@ -332,35 +326,110 @@ export function trajectoryTotalCost(runs: TrajectoryRun[]): number | null {
     ? null : real.reduce((sum, run) => sum + (run.costUsd ?? 0), 0);
 }
 
-export interface TrajectoryPartition { promptHash: string; model: string; invocation: string }
+/** The comparison shape: required tasks and conditions mirror eval/trajectory.yaml, which the gate also reads. */
+export const REQUIRED_TASKS: readonly TrajectoryTask[] = ["known-component", "unknown-component", "variant-only", "recovery"];
+export const REQUIRED_CONDITIONS: readonly RunnableTrajectoryCondition[] = ["cli-canonical", "cli-agent", "mcp-agent"];
 
-/** Comparable invocation partitions in first-seen order. */
+/** The requested-model alias the header prints; a legacy row without the field falls back to `model`. */
+const requestedModelOf = (run: TrajectoryRun): string => run.requestedModel ?? run.model;
+/** Absent and explicit-null resolvedModel both normalize to null, and null equals only null. */
+const resolvedModelOf = (run: TrajectoryRun): string | null => run.resolvedModel ?? null;
+
+export interface TrajectoryPartition { promptHash: string; requestedModel: string; resolvedModel: string | null; invocation: string }
+
+const partitionOf = (run: TrajectoryRun): TrajectoryPartition => ({
+  promptHash: run.promptHash, requestedModel: requestedModelOf(run), resolvedModel: resolvedModelOf(run), invocation: run.invocation,
+});
+const inPartition = (run: TrajectoryRun, p: TrajectoryPartition): boolean =>
+  run.promptHash === p.promptHash && requestedModelOf(run) === p.requestedModel
+  && resolvedModelOf(run) === p.resolvedModel && run.invocation === p.invocation;
+const realInPartition = (runs: TrajectoryRun[], p: TrajectoryPartition): TrajectoryRun[] =>
+  realTrajectoryRuns(runs).filter((run) => inPartition(run, p));
+
+/** Comparable partitions in first-seen order; rows differing in prompt or model provenance never merge. */
 export function trajectoryPartitions(runs: TrajectoryRun[]): TrajectoryPartition[] {
   const unique = new Map<string, TrajectoryPartition>();
-  for (const run of realTrajectoryRuns(runs)) {
-    const partition = { promptHash: run.promptHash, model: run.model, invocation: run.invocation };
-    unique.set(JSON.stringify(partition), partition);
-  }
+  for (const run of realTrajectoryRuns(runs)) unique.set(JSON.stringify(partitionOf(run)), partitionOf(run));
   return [...unique.values()];
 }
 
-/** Per-condition medians for one comparable invocation partition. */
+/** One (task, condition) cell: recorded rows, comparable rows (usage present), and successes among comparable. */
+export interface TrajectoryCell {
+  task: TrajectoryTask; condition: RunnableTrajectoryCondition; recorded: number; comparable: number; successes: number;
+}
+
+export function trajectoryCells(runs: TrajectoryRun[], partition: TrajectoryPartition): TrajectoryCell[] {
+  const rows = realInPartition(runs, partition);
+  return REQUIRED_TASKS.flatMap((task) => REQUIRED_CONDITIONS.map((condition) => {
+    const all = rows.filter((run) => run.task === task && run.condition === condition);
+    const comparable = all.filter((run) => run.incomparable !== true);
+    return { task, condition, recorded: all.length, comparable: comparable.length, successes: comparable.filter((run) => run.success).length };
+  }));
+}
+
+/** Required (task, repeat) slots with no recorded row; the incomplete-task-coverage flag, distinct from incomparable. */
+function conditionMissingRuns(rows: TrajectoryRun[], condition: TrajectoryCondition): number {
+  return REQUIRED_TASKS.reduce((sum, task) => {
+    const recorded = rows.filter((run) => run.condition === condition && run.task === task).length;
+    return sum + Math.max(0, TRAJECTORY_REPEATS - recorded);
+  }, 0);
+}
+
+/** Raw success count for one cell; never a percentage, and a small `r` is marked `short`. */
+export function renderCountCell(cell: TrajectoryCell): string {
+  if (cell.recorded === 0) return "-";
+  const short = cell.recorded < TRAJECTORY_REPEATS ? " short" : "";
+  const incomparable = cell.recorded - cell.comparable;
+  const suffix = incomparable > 0 ? ` (+${incomparable} incomparable)` : "";
+  return `${cell.successes}/${cell.comparable}${short}${suffix}`;
+}
+
+/** A condition-wide count only when every required task has a full comparable set; otherwise a word, no number. */
+export function renderAllTasksCell(cells: TrajectoryCell[]): string {
+  if (cells.every((cell) => cell.comparable >= TRAJECTORY_REPEATS)) {
+    const successes = cells.reduce((sum, cell) => sum + cell.successes, 0);
+    const comparable = cells.reduce((sum, cell) => sum + cell.comparable, 0);
+    return `${successes}/${comparable}`;
+  }
+  const missing = cells.reduce((sum, cell) => sum + Math.max(0, TRAJECTORY_REPEATS - cell.recorded), 0);
+  return missing > 0 ? "incomplete" : "incomparable";
+}
+
+/** Per-condition diagnostics; medians over each condition's own runs, so this is not the fair comparison. */
+export interface ConditionSummary {
+  condition: TrajectoryCondition; primary: boolean; runs: number; incomparableRuns: number; missingRuns: number;
+  inputTokensP50: number | null; outputTokensP50: number | null; durationMsP50: number | null; turnsP50: number | null;
+  toolCalls: number; recoveries: number; costP50: number | null; s1P50: number | null; s2P50: number | null;
+  coverageP50: number | null; s3P50: number | null;
+}
+
+const coverageRecallOf = (run: TrajectoryRun): number =>
+  run.coverageStatus === "measured" && run.coverage != null ? run.coverage.variantRecall : Number.NaN;
+const s3Of = (run: TrajectoryRun): number => typeof run.s3 === "number" ? run.s3 : Number.NaN;
+const isRequiredCondition = (condition: TrajectoryCondition): boolean =>
+  (REQUIRED_CONDITIONS as readonly string[]).includes(condition);
+
+/** Diagnostics rows: required conditions first in config order, then any other recorded condition alphabetically. */
 export function summarizeTrajectory(runs: TrajectoryRun[], partition: TrajectoryPartition): ConditionSummary[] {
-  const rows = realTrajectoryRuns(runs).filter((run) => run.promptHash === partition.promptHash
-    && run.model === partition.model && run.invocation === partition.invocation);
-  return [...new Set(rows.map((run) => run.condition))].map((condition) => {
+  const rows = realInPartition(runs, partition);
+  const present = [...new Set(rows.map((run) => run.condition))];
+  const ordered = [
+    ...REQUIRED_CONDITIONS.filter((condition) => present.includes(condition)),
+    ...present.filter((condition) => !isRequiredCondition(condition)).sort(),
+  ];
+  return ordered.map((condition) => {
     const all = rows.filter((run) => run.condition === condition);
     const group = all.filter((run) => run.incomparable !== true);
     const at50 = (of: (run: TrajectoryRun) => number): number | null => percentile(group.map(of), MEDIAN);
     return {
-      condition, runs: group.length, incomparableRuns: all.length - group.length,
-      successRate: group.length === 0 ? null : group.filter((run) => run.success).length / group.length,
+      condition, primary: isRequiredCondition(condition), runs: group.length, incomparableRuns: all.length - group.length,
+      missingRuns: conditionMissingRuns(rows, condition),
       inputTokensP50: at50(totalInput), outputTokensP50: at50((run) => run.outputTokens),
       durationMsP50: at50((run) => run.durationMs), turnsP50: at50((run) => run.turns),
       toolCalls: group.reduce((sum, run) => sum + run.toolCalls.length, 0),
       recoveries: group.reduce((sum, run) => sum + run.recovery.length, 0),
       costP50: at50((run) => run.costUsd ?? Number.NaN), s1P50: at50((run) => run.s1 ?? Number.NaN),
-      s2P50: at50((run) => run.s2 ?? Number.NaN),
+      s2P50: at50((run) => run.s2 ?? Number.NaN), coverageP50: at50(coverageRecallOf), s3P50: at50(s3Of),
     };
   });
 }
