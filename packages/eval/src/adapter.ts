@@ -6,10 +6,13 @@ import { join } from "node:path";
 import { resolve } from "node:path";
 import { estimateTokens } from "@tokenloom/schema";
 import { realRun } from "./child";
-import type { ChildRun, LlmAdapter, LlmUsage } from "./model-port";
+import type {
+  ChildRun, LlmAdapter, LlmUsage, ModelResolution, ProviderCallEvidence,
+} from "./model-port";
 
 const EMPTY: LlmUsage = { inputTokens: 0, cacheCreation: 0, cacheRead: 0, outputTokens: 0, costUsd: null };
 const DIAGNOSTIC_CHARS = 400;
+const UNRESOLVED = { resolvedModel: null, modelResolution: null } as const;
 
 /**
  * `claude -p --output-format json` reports its own refusals on stdout, so a failed call is
@@ -20,21 +23,24 @@ function childDiagnostic(res: { code: number; stdout: string; stderr: string }):
   return [`exit ${String(res.code)}`, res.stdout.trim().slice(0, DIAGNOSTIC_CHARS),
     res.stderr.trim().slice(-DIAGNOSTIC_CHARS)].filter((part) => part !== "").join(" | ");
 }
-const RESTRICTED = "claude -p --output-format json --restricted --model <id>";
+const RESTRICTED = "claude -p --output-format stream-json --verbose --restricted --model <id>";
 
 /** Fixed responses for `TOKENLOOM_LLM=fake`; tests, the verifier self-test, and --dry-run always use this path. */
 export const fakeAdapter: LlmAdapter = {
   kind: "fake",
   async run(prompt, context) {
+    const provenance = { requestedModel: context.model, ...UNRESOLVED, providerEvidence: null };
     const path = resolve(context.repoRoot, "packages/eval/samples/fake-responses", `${context.sampleName}.md`);
     if (!existsSync(path)) {
-      return { ...EMPTY, text: "", model: "fake", ms: 0, invocation: "fake", error: `no fake response for ${context.sampleName}` };
+      return { ...EMPTY, text: "", model: "fake", ...provenance, ms: 0, invocation: "fake",
+        error: `no fake response for ${context.sampleName}` };
     }
     const text = readFileSync(path, "utf8");
     return {
       ...EMPTY,
       text,
       model: "fake",
+      ...provenance,
       ms: 0,
       invocation: "fake",
       inputTokens: estimateTokens(Buffer.byteLength(prompt, "utf8")),
@@ -44,7 +50,8 @@ export const fakeAdapter: LlmAdapter = {
   },
 };
 
-interface ClaudeJson {
+interface ClaudeResult {
+  type?: string;
   result?: string;
   total_cost_usd?: number;
   usage?: {
@@ -54,6 +61,61 @@ interface ClaudeJson {
     output_tokens?: number;
   };
   modelUsage?: Record<string, unknown>;
+}
+
+interface StreamEvent {
+  type?: string;
+  subtype?: string;
+  model?: string;
+  parent_tool_use_id?: string | null;
+  message?: { model?: string };
+}
+
+interface ModelStream {
+  parsedAny: boolean;
+  result: ClaudeResult | null;
+  initModel: string | null;
+  mainLoopModels: (string | undefined)[];
+}
+
+function parseModelStream(stream: string): ModelStream {
+  const out: ModelStream = { parsedAny: false, result: null, initModel: null, mainLoopModels: [] };
+  for (const line of stream.split("\n")) {
+    const trimmed = line.trim();
+    if (trimmed === "" || !trimmed.startsWith("{")) continue;
+    let event: StreamEvent;
+    try { event = JSON.parse(trimmed) as StreamEvent; } catch { continue; }
+    out.parsedAny = true;
+    if (event.type === "system" && event.subtype === "init") out.initModel = event.model ?? null;
+    if (event.type === "assistant" && (event.parent_tool_use_id ?? null) === null) {
+      out.mainLoopModels.push(event.message?.model);
+    }
+    if (event.type === "result") out.result = event as ClaudeResult;
+  }
+  return out;
+}
+
+function distinctAssistantModels(mainLoopModels: (string | undefined)[]): string[] {
+  return [...new Set(mainLoopModels.filter((m): m is string => typeof m === "string" && m.length > 0))];
+}
+
+function resolveModel(
+  mainLoopModels: (string | undefined)[], modelUsage: Record<string, unknown>,
+): { resolvedModel: string | null; modelResolution: ModelResolution | null } {
+  const usageKeys = Object.keys(modelUsage);
+  const soleKey = usageKeys.length === 1 ? usageKeys[0] ?? null : null;
+  if (mainLoopModels.length > 0) {
+    const named = distinctAssistantModels(mainLoopModels);
+    const everyMessageNamed = mainLoopModels.every((m) => typeof m === "string" && m.length > 0);
+    if (everyMessageNamed && named.length === 1) {
+      const value = named[0] as string;
+      if (soleKey !== null && soleKey !== value) return UNRESOLVED;
+      return { resolvedModel: value, modelResolution: "producing-message" };
+    }
+    return UNRESOLVED;
+  }
+  if (soleKey !== null) return { resolvedModel: soleKey, modelResolution: "sole-model-usage-key" };
+  return UNRESOLVED;
 }
 
 /**
@@ -68,17 +130,30 @@ export function createClaudeAdapter(run: ChildRun = realRun): LlmAdapter {
     kind: "claude",
     async run(prompt, context) {
       const started = Date.now();
-      const args = ["-p", prompt, "--output-format", "json", "--restricted", "--model", context.model];
+      const requestedModel = context.model;
+      const args = ["-p", prompt, "--output-format", "stream-json", "--verbose", "--restricted", "--model", requestedModel];
       const res = await run("claude", args, neutralCwd());
       const ms = Date.now() - started;
-      if (res.code !== 0 || res.stdout.trim() === "") {
-        return { ...EMPTY, text: "", model: context.model, ms, invocation: RESTRICTED, error: childDiagnostic(res) };
-      }
-      const parsed = JSON.parse(res.stdout) as ClaudeJson;
-      const usage = parsed.usage ?? {};
+      const failed = (evidence: ProviderCallEvidence | null) =>
+        ({ ...EMPTY, text: "", model: requestedModel, requestedModel, ...UNRESOLVED, providerEvidence: evidence,
+          ms, invocation: RESTRICTED, error: childDiagnostic(res) });
+      if (res.code !== 0 || res.stdout.trim() === "") return failed(null);
+      const stream = parseModelStream(res.stdout);
+      const modelUsage = stream.result?.modelUsage ?? {};
+      const evidence: ProviderCallEvidence | null = stream.parsedAny
+        ? { format: "stream-json", initModel: stream.initModel,
+            assistantModels: distinctAssistantModels(stream.mainLoopModels), modelUsage }
+        : null;
+      if (stream.result === null) return failed(evidence);
+      const usage = stream.result.usage ?? {};
+      const { resolvedModel, modelResolution } = resolveModel(stream.mainLoopModels, modelUsage);
       return {
-        text: parsed.result ?? "",
-        model: resolvedModel(parsed) ?? context.model,
+        text: stream.result.result ?? "",
+        model: resolvedModel ?? requestedModel,
+        requestedModel,
+        resolvedModel,
+        modelResolution,
+        providerEvidence: evidence,
         ms,
         invocation: RESTRICTED,
         inputTokens: usage.input_tokens ?? 0,
@@ -86,7 +161,7 @@ export function createClaudeAdapter(run: ChildRun = realRun): LlmAdapter {
         cacheRead: usage.cache_read_input_tokens ?? 0,
         outputTokens: usage.output_tokens ?? 0,
         // Provider-calculated cost is authoritative for the cumulative budget (SPEC 9.6).
-        costUsd: parsed.total_cost_usd ?? null,
+        costUsd: stream.result.total_cost_usd ?? null,
       };
     },
   };
@@ -99,12 +174,6 @@ let cachedCwd: string | undefined;
 function neutralCwd(): string {
   cachedCwd ??= mkdtempSync(join(tmpdir(), "tl-llm-"));
   return cachedCwd;
-}
-
-/** Records the model ID reported by the response instead of an alias such as `--model opus`. */
-function resolvedModel(parsed: ClaudeJson): string | undefined {
-  const keys = Object.keys(parsed.modelUsage ?? {});
-  return keys.length === 1 ? keys[0] : undefined;
 }
 
 export function selectAdapter(env: NodeJS.ProcessEnv = process.env): LlmAdapter {

@@ -33,13 +33,16 @@ function recorder(stdout: string): { run: ChildRunWithStdin; calls: string[][] }
   return { run, calls };
 }
 
+const resultStream = (body: Record<string, unknown>): string =>
+  JSON.stringify({ type: "result", subtype: "success", ...body }) + "\n";
+
 const rpcRun = (stdout: string, code = 0): ChildRunWithStdin =>
   () => Promise.resolve({ code, stdout, stderr: "" });
 
 const turn = (prompt: string, text: string): TrajectoryTurn => ({
   index: 0, toolCall: null,
   prompt,
-  result: { text, model: "fake", ms: 0, invocation: "fake", inputTokens: 0, cacheCreation: 0, cacheRead: 0, outputTokens: 0, costUsd: 0 },
+  result: { text, model: "fake", requestedModel: "fake", resolvedModel: null, modelResolution: null, providerEvidence: null, ms: 0, invocation: "fake", inputTokens: 0, cacheCreation: 0, cacheRead: 0, outputTokens: 0, costUsd: 0 },
 });
 
 describe("child boundary", () => {
@@ -149,7 +152,7 @@ describe("session port turn composition", () => {
 
 describe("claude session adapter", () => {
   it("puts the harness dollar ceiling on every provider call as --max-budget-usd", async () => {
-    const { run, calls } = recorder(JSON.stringify({ result: "ok", total_cost_usd: 0.5, usage: {} }));
+    const { run, calls } = recorder(resultStream({ result: "ok", total_cost_usd: 0.5, usage: {} }));
 
     await createClaudeSessionAdapter(0.25, run).run("prompt", { sampleName: "button", model: "opus", repoRoot });
 
@@ -158,7 +161,7 @@ describe("claude session adapter", () => {
   });
 
   it("rounds the provider ceiling down to the supported precision", async () => {
-    const { run, calls } = recorder(JSON.stringify({ result: "ok", total_cost_usd: 0.05, usage: {} }));
+    const { run, calls } = recorder(resultStream({ result: "ok", total_cost_usd: 0.05, usage: {} }));
 
     await createClaudeSessionAdapter(0.07496, run).run("prompt", { sampleName: "button", model: "opus", repoRoot });
 
@@ -166,16 +169,16 @@ describe("claude session adapter", () => {
   });
 
   it("records the command shape that includes the per-call budget", async () => {
-    const { run } = recorder(JSON.stringify({ result: "ok", total_cost_usd: 0.5, usage: {} }));
+    const { run } = recorder(resultStream({ result: "ok", total_cost_usd: 0.5, usage: {} }));
 
     const res = await createClaudeSessionAdapter(0.25, run).run("p", { sampleName: "button", model: "opus", repoRoot });
 
-    expect(res.invocation).toBe("claude -p --output-format json --restricted --model <id> --max-budget-usd <bound>");
+    expect(res.invocation).toBe("claude -p --output-format stream-json --verbose --restricted --model <id> --max-budget-usd <bound>");
     expect(res.costUsd).toBe(0.5);
   });
 
   it("marks an authoritative response with an omitted usage category incomparable", async () => {
-    const { run } = recorder(JSON.stringify({
+    const { run } = recorder(resultStream({
       result: "ok", total_cost_usd: 0.5,
       usage: { input_tokens: 1, cache_creation_input_tokens: 2, output_tokens: 3 },
     }));
@@ -199,7 +202,7 @@ describe("claude session adapter", () => {
       expected: { inputTokens: 1, cacheCreation: 2, cacheRead: 3, outputTokens: 4, costUsd: null },
     },
   ])("treats $name as absent provider data", async ({ body, expected }) => {
-    const { run } = recorder(JSON.stringify({ result: "ok", ...body }));
+    const { run } = recorder(resultStream({ result: "ok", ...body }));
 
     const res = await createClaudeSessionAdapter(0.25, run).run("p", { sampleName: "button", model: "opus", repoRoot });
 
