@@ -1,5 +1,8 @@
 {
   "s1": 0.9,
   "s2": 0.95,
-  "s3": 0.05
+  "s3": 0.05,
+  "variantRecall": 1,
+  "variantPrecision": 1,
+  "duplicateVariantsMax": 0
 }

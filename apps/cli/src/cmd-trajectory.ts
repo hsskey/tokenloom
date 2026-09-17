@@ -21,7 +21,7 @@ export async function cmdEvalTrajectory(parsed: Parsed): Promise<number> {
   const root = repoRoot(process.cwd());
   const matrixFile = resolve(root, matrixPath);
   if (!existsSync(matrixFile)) return usageError(`eval trajectory: --matrix ${matrixPath} does not exist`);
-  const matrixConfig = loadTrajectoryMatrix(matrixFile);
+  const matrixConfig = loadTrajectoryMatrix(matrixFile, root);
   if (budgetUsd !== undefined && budgetUsd > matrixConfig.budgetUsd) {
     return usageError(`eval trajectory: --budget-usd ${budgetRaw} exceeds matrix budgetUsd ${matrixConfig.budgetUsd}`);
   }

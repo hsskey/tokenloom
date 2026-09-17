@@ -190,7 +190,7 @@ describe("real-file separation and cost columns in passing rows (SPEC 9.6)", () 
 });
 
 describe("S1 cause text (SPEC 9.6)", () => {
-  const thresholds = { s1: 0.9, s2: 0.95, s3: 0.05 };
+  const thresholds = { s1: 0.9, s2: 0.95, s3: 0.05, variantRecall: 1, variantPrecision: 1, duplicateVariantsMax: 0 };
 
   it("describes raw-row S1 failure as an input property and cites the diagnosis", () => {
     const failures = buildFailures([snapshotLine({ target: "button/raw", inputVariant: "raw", s1: 0 })], thresholds);
@@ -215,7 +215,7 @@ describe("S1 cause text (SPEC 9.6)", () => {
 });
 
 describe("rescored rows and null S1 (SPEC 9.5, 9.6)", () => {
-  const thresholds = { s1: 0.9, s2: 0.95, s3: 0.05 };
+  const thresholds = { s1: 0.9, s2: 0.95, s3: 0.05, variantRecall: 1, variantPrecision: 1, duplicateVariantsMax: 0 };
   const compact = (over: Partial<EvalRun>): EvalRun =>
     snapshotLine({ sampleName: "real-design-system", target: "real-design-system/4185:3778/compact", inputVariant: "compact", ...over });
   const mark = { at: "2026-09-06", reason: "S1 against samples/real-design-system/reference/css/tokens.css" };
@@ -297,7 +297,7 @@ describe("input-token p50 counts cache writes only (SPEC 9.6)", () => {
 });
 
 describe("failure table folds by target (SPEC 9.6)", () => {
-  const thresholds = { s1: 0.9, s2: 0.95, s3: 0.05 };
+  const thresholds = { s1: 0.9, s2: 0.95, s3: 0.05, variantRecall: 1, variantPrecision: 1, duplicateVariantsMax: 0 };
 
   it("folds repeated target rows into one row with both values and repeat numbers", () => {
     const failures = buildFailures([

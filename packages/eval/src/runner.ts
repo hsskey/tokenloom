@@ -9,6 +9,7 @@ import {
   type BudgetPlanning, type CostBasis, type OutputBasis, type Rate,
 } from "./stats";
 import { readTrackedRuns, runsDir, type EvalRun } from "./runs";
+import { runCoverage } from "./coverage";
 import { scoreS1, scoreS2 } from "./score";
 import { readFileSync, existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
@@ -163,6 +164,8 @@ function breakdown(planned: Planned[]): InputBreakdown[] {
 interface Planned {
   record: EvalRun;
   prompt: string;
+  /** Component-set id, carried so coverage resolves the same set the prompt was built from. */
+  node: string | undefined;
 }
 
 /** Separates sendable and oversized inputs up front; an oversized input is a result, not a failure. */
@@ -203,7 +206,7 @@ export function plan(options: PlanningOptions, adapterKind: LlmAdapter["kind"]):
     if (estTokens > options.matrix.maxInputTokens) {
       record.skipped = "MAX_INPUT_TOKENS";
     }
-    return { record, prompt };
+    return { record, prompt, node: combo.node };
   });
 }
 
@@ -226,6 +229,10 @@ async function send(planned: Planned, adapter: LlmAdapter, model: string, repoRo
   record.s2 = Number(scoreS2(result.text).toFixed(4));
   // S3 is computed only for samples with rendered PNGs; absence produces null.
   record.s3 = null;
+  const coverage = runCoverage(repoRoot, { sampleName: record.sampleName, node: planned.node }, result.text);
+  record.coverageStatus = coverage.coverageStatus;
+  if (coverage.coverage !== null) record.coverage = coverage.coverage;
+  if (coverage.coverageError !== undefined) record.coverageError = coverage.coverageError;
   writeOutput(repoRoot, record, result.text);
 }
 

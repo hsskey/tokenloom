@@ -1382,10 +1382,16 @@ Design IR
 | S1 parsing | 1 when PostCSS parsing succeeds and every `var(--x)` exists in `tokens.css`. | 1 for at least 90% of runs. |
 | S2 compliance | `refs / (refs + literals)`, where refs count `var(--` and literals count `#hex`, `rgb(`, `hsl(`, nonzero `<n>px`, and `var()` fallback literals outside comments. | At least 0.95. |
 | S3 visual difference | For each variant, align the 2x sample PNG and 2x rendered screenshot to the same box, then measure the pixelmatch mismatch ratio at threshold 0.1. A missing PNG produces `null`. | At most 0.05. |
+| Coverage | Over the `data-variant` markers of the generated HTML, `variantRecall` is `matched / expected` and `variantPrecision` is `matched / actual`; duplicates and unresolved markers are counted separately. | recall and precision 1, no duplicate. |
 | S4 cost | Input tokens, output tokens, and wall-clock seconds. | Recorded only. |
 
 Without `reference/css/tokens.css`, S1 is `null` because no reference name set exists; an unmeasurable value is not a failure.
 An empty token file is a measured set with zero names and therefore yields 0.
+Coverage is a separate metric and never folds into S1 or S2, so a response that generates one of twenty variants still fails coverage while S1 and S2 pass.
+The expected set is `base.props` plus every `variants[].props` from the task's design context, limited to the requested selector for a variant-only request, so it is identical across raw, compact, annotated, agent, and MCP inputs.
+Markers are read by a start-tag tokenizer, not a regex, so a marker inside a script string, escaped text, or inert `template` content is not counted, and each marker is normalized through the public `selectVariant` CLI selector rules.
+`variantRecall`, `variantPrecision`, and `duplicateVariantsMax` are thresholds in `eval/thresholds.json`. A missing variant lowers recall, so it never receives a fully passing evaluation.
+Coverage carries an explicit status: `measured`, or `error` with a code such as `NO_HTML_BLOCK`, `NO_OUTPUT`, or `EXPECTED_SET_UNRESOLVED`. A coverage `error` or `fail` makes the run verdict `overall` false; a legacy row without coverage is `not-recorded` and its `overall` is `null`.
 
 Adversarial scorer cases must cover fallback literals, hex inside comments, `0px`, missing `var(--x)`, uppercase `#FFF`, numbers inside `rgb(`, empty CSS, HTML-only output, a third fenced block, `var(--a,var(--b))`, `1px solid #000`, and valid fully compliant output.
 The `A<nn>` test descriptions in `packages/eval/test/scorer.adversarial.test.ts` are the case catalog.
@@ -1397,7 +1403,7 @@ The render page at `packages/eval/render/index.html` loads `tokens.css`, generat
 ```
 # tokenloom eval <date> / model <id> / prompt <hash> / mcp captures <n>/<sets>
 ## What works
-| Sample class | Input | Input variant | S1 | S2 | S3 | Input tokens p50 (cache-write rows) | Cost p50 | Latency p50 |
+| Sample class | Input | Input variant | S1 | S2 | S3 | Coverage | Input tokens p50 (cache-write rows) | Cost p50 | Latency p50 |
 ## What does not work
 | Target | Failure | Retry condition |
 ## Fixed cost by input source
@@ -1408,6 +1414,7 @@ The render page at `packages/eval/render/index.html` loads `tokens.css`, generat
 - If run rows contain multiple prompt hashes, emit all four sections once per hash in first-seen order. Each section header is calculated only from its hash. `--prompt-hash` selects one set. Never combine hashes because comparisons require equal model IDs and prompt hashes.
 - Header `model` is the matrix alias. If run rows lack the actual ID because `modelUsage` did not contain one key, append the alias mapping from `eval/pricing.json` and `id not recorded in run lines`. Without a mapping, show only the alias. Never present an inferred ID alone as a measurement.
 - What works separates `Sample designs` and `Synthetic test data`, even for equal input sources and input variants. MCP rows can exist only for sample designs. Classification uses run-line `sampleName`; versioned readers normalize the legacy `fixture` field from historical rows. The `real-` prefix marks sample designs, while Snapshot `source.kind` remains authoritative in repository data.
+- `Coverage` is the mean `variantRecall` of the group's rows that recorded coverage, or `n/a` when none did, which is every row recorded before the metric existed.
 - `Cost p50` is the p50 of sent-row `costUsd` within a group, or `n/a` when every value is absent.
 - `Input tokens p50 (cache-write rows)` is the p50 of `inputTokens + cacheCreation` among sent cache-write rows, using the same predicate as `costBasis`. Repeated prompts use cache reads and are excluded so the column means first-input cost. A group without a write is `n/a`, and each section explains this below the table.
 - What does not work emits one row per `target`, folding repeats and failure types into values with `r<n>` markers. Join distinct failures with `;`. Put the full cause once in Sample size and limitations; raw and MCP S1 cells link to that explanation.
