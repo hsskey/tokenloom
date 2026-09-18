@@ -165,6 +165,62 @@ tokenloom이 제공한 디자인 정보와 실제 프로젝트 코드를 함께 
 tokenloom은 `.fig` 파일 파서나 범용 UI 코드 생성기가 아니며, Figma 파일 전체를 그대로 LLM에
 전달하는 도구도 아닙니다.
 
+## Evaluation harness
+
+위에서 다룬 tokenloom CLI(`snapshot`, `context`, `tokens`)는 로컬에서 결정적으로 동작하며 language
+model을 호출하지 않습니다. 이 저장소에는 별도의 development evaluation harness가 함께 들어 있고,
+실제 model call을 하는 부분은 이 harness뿐입니다. 배포되는 CLI workflow의 일부가 아니라 개발용
+도구입니다. 목적은 design-context 표현 방식을 바꿨을 때 coding agent가 생성하는 컴포넌트와 그 생성에
+드는 model usage가 어떻게 달라지는지 측정하는 것입니다.
+
+### What it measures
+
+* **S1 (token reference validity)** — 생성된 CSS가 파싱되고, 사용한 모든 `var(--x)`가 reference
+  `tokens.css`에 존재하는지.
+* **S2 (token compliance)** — 생성된 CSS에서 design-token reference 대 하드코딩 literal의 비율.
+* **Variant coverage** — 요구되는 variant 집합과 생성된 HTML의 `data-variant` marker를 비교해 recall,
+  precision과 함께 duplicate, missing, unexpected variant를 보고합니다. Coverage는 별도의 failure
+  dimension이며 S1이나 S2에 합쳐지지 않습니다.
+* **S3 (visual difference)** — reference render가 있는 expected variant마다 reference와 생성된 variant의
+  pixel mismatch를 측정합니다. Gated value는 가장 나쁜 variant의 mismatch이고, mean은 diagnostic으로
+  함께 기록합니다. reference render가 있는 expected variant가 없으면 S3는 not applicable입니다.
+  Coverage와 S3는 서로 독립적인 failure dimension입니다.
+* **Usage metrics** — run별 input/output token, cost estimate, latency, model provenance(요청한 alias와
+  provider가 resolve한 model id).
+
+### How results are recorded
+
+* 각 run은 JSONL run record로 저장하고, report는 그 record에서 계산하며 숫자를 직접 입력하지 않습니다.
+* run은 같은 prompt hash와 model provenance를 공유하는 집합 안에서만 비교합니다. prompt나 model이
+  바뀌면 새로운 comparison set이 시작됩니다.
+* threshold failure는 report에서 확인하며, threshold는 `eval/thresholds.json`에 있습니다.
+* run record는 append-only이며 재작성하지 않습니다.
+
+### Reproducing without spending money
+
+model call 없이 trajectory evaluation을 계획합니다.
+
+```sh
+pnpm tokenloom eval trajectory --matrix eval/trajectory.yaml --dry-run --json
+```
+
+fake adapter로 one-shot evaluation을 계획합니다. 이 역시 model call을 하지 않습니다.
+
+```sh
+TOKENLOOM_LLM=fake pnpm tokenloom eval run --matrix eval/matrix.mvp.yaml --dry-run
+```
+
+committed run record에서 report를 다시 생성합니다(`runs/*.jsonl`을 읽고 model call은 하지 않습니다).
+
+```sh
+pnpm tokenloom eval report --out reports/<date>.md
+```
+
+committed report 예시는 [`reports/2026-09-17.md`](./reports/2026-09-17.md)이며, 실제 run record에서
+계산한 S1, S2, token usage, cost, latency를 보여줍니다. 실제 model call은 fake adapter 없이 `eval run`
+또는 `eval trajectory`를 실행할 때만 발생하고 명시적 budget이 필요합니다. 전체 계약은
+[`docs/reference/spec.md`](./docs/reference/spec.md) section 9를 참고하세요.
+
 ## 문서
 
 더 자세한 동작과 설계는 다음 문서에서 확인할 수 있습니다.

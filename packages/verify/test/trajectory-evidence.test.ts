@@ -39,14 +39,25 @@ const rows = tasks.flatMap((task) => conditions.flatMap((condition) => [0, 1].ma
   costUsd: 0.1, s1: 1, s2: 0.98, artifact: { sampleName: "sample", tokensCssSha256, referenceLockCommit: "LOCK" },
   toolCalls: [], recovery: [],
 }))));
-const header = "| Condition | Runs | Incomparable | Success rate | Total input p50 | Output p50 | Duration ms p50"
-  + " | Turns p50 | Tool calls | Recoveries | Cost p50 | S1 p50 | S2 p50 |";
-/** The section renderTrajectoryReport emits for one prompt-hash partition, whose per-condition cost median is `cost`. */
-const section = (promptHash: string, cost: string): string => [
-  `## prompt ${promptHash} / model opus / invocation claude`, "", header, header.replace(/[^|]+/g, " --- "),
-  `| cli-canonical | 8 | 0 | 1.00 | 100 | 10 | 20 | 2 | 0 | 0 | ${cost} | 1.00 | 0.98 |`,
-  `| cli-agent | 8 | 0 | 1.00 | 80 | 10 | 20 | 2 | 0 | 0 | ${cost} | 1.00 | 0.98 |`,
-  `| mcp-agent | 8 | 0 | 1.00 | 80 | 10 | 20 | 2 | 0 | 0 | ${cost} | 1.00 | 0.98 |`,
+const primaryHeader = "| Task | cli-canonical | cli-agent | mcp-agent |";
+const diagHeader = "| Condition | Primary | Runs | Incomparable | Missing runs | Total input p50 | Output p50"
+  + " | Duration ms p50 | Turns p50 | Tool calls | Recoveries | Cost p50 | S1 p50 | S2 p50 | Coverage p50 | S3 p50 |";
+const sep = (columns: number): string => `| ${Array.from({ length: columns }, () => "---").join(" | ")} |`;
+/** One diagnostics row of a uniform fixture condition; coverage and S3 are n/a because the rows lack the fields. */
+const diagRow = (condition: string, primary: string, input: string, cost: string): string =>
+  `| ${condition} | ${primary} | 8 | 0 | 0 | ${input} | 10 | 20 | 2 | 0 | 0 | ${cost} | 1.00 | 0.98 | n/a | n/a |`;
+/** The section renderTrajectoryReport emits for one partition; every required cell is a full 2/2 set. */
+const section = (promptHash: string, cost: string, extraDiag: string[] = []): string => [
+  `## prompt ${promptHash} / model opus / resolved n/a / invocation claude`, "",
+  "### Task success by condition (raw counts)", "",
+  primaryHeader, sep(4),
+  "| known-component | 2/2 | 2/2 | 2/2 |", "| unknown-component | 2/2 | 2/2 | 2/2 |",
+  "| variant-only | 2/2 | 2/2 | 2/2 |", "| recovery | 2/2 | 2/2 | 2/2 |", "| All tasks | 8/8 | 8/8 | 8/8 |", "",
+  "### Per-condition diagnostics (medians over each condition's own runs; not the comparison)", "",
+  diagHeader, sep(16),
+  diagRow("cli-canonical", "yes", "100", cost), diagRow("cli-agent", "yes", "80", cost), diagRow("mcp-agent", "yes", "80", cost),
+  ...extraDiag, "",
+  "Total input is inputTokens + cacheCreation + cacheRead, summed over the turns of a run.",
 ].join("\n");
 const report = ["# tokenloom trajectory", "", "Total real cost: 2.40", "", section(HASH, "0.10"), ""].join("\n");
 const claimOf = (condition: string, hash: string): string => `adopted: ${condition} @${hash.slice(0, 12)}`;
@@ -105,7 +116,7 @@ describe("trajectory evidence", () => {
   });
 
   it("accepts a complete report recomputed from the required matrix", () => {
-    const partition = { promptHash: HASH, invocation: "claude", model: "opus" };
+    const partition = { promptHash: HASH, requestedModel: "opus", resolvedModel: null, invocation: "claude" };
 
     expect(trajectoryEvidence(fixture("complete", rows, report))).toEqual({
       errors: [],
@@ -124,7 +135,7 @@ describe("trajectory evidence", () => {
     const compact = format.filter((line) => line.includes('"condition":"cli-agent"'))
       .map((line) => JSON.stringify({ ...JSON.parse(line), condition: "cli-agent-compact", costUsd: 0.4 }));
     const both = ["# tokenloom trajectory", "", "Total real cost: 9.20", "", section(HASH, "0.10"), "",
-      section(FORMAT_HASH, "0.15"), "| cli-agent-compact | 8 | 0 | 1.00 | 80 | 10 | 20 | 2 | 0 | 0 | 0.40 | 1.00 | 0.98 |", ""].join("\n");
+      section(FORMAT_HASH, "0.15", [diagRow("cli-agent-compact", "no", "80", "0.40")]), ""].join("\n");
 
     expect(trajectoryEvidence(fixture("superset", [...rows, ...format, ...compact], both))).toMatchObject({
       errors: [],
@@ -258,18 +269,20 @@ describe("trajectory evidence", () => {
   });
 
   it("names the condition row that disagrees rather than the first report line", () => {
-    const wrongRow = report.replace("| mcp-agent | 8 | 0 | 1.00 | 80 |", "| mcp-agent | 8 | 0 | 1.00 | 70 |");
+    const wrongRow = report.replace("| mcp-agent | yes | 8 | 0 | 0 | 80 |", "| mcp-agent | yes | 8 | 0 | 0 | 70 |");
 
     expect(trajectoryEvidence(fixture("wrong-row", rows, wrongRow)).errors).toEqual([
-      "trajectory report measurements disagree: | mcp-agent | 8 | 0 | 1.00 | 70 | 10 | 20 | 2 | 0 | 0 | 0.10 | 1.00 | 0.98 |",
+      "trajectory report measurements disagree: | mcp-agent | yes | 8 | 0 | 0 | 70 | 10 | 20 | 2 | 0 | 0 | 0.10 | 1.00 | 0.98 | n/a | n/a |",
     ]);
   });
 
   it("accepts a run record recorded under the cli-agent-compact condition", () => {
-    const compact = rows.map((line) => line.replace('"condition":"cli-agent"', '"condition":"cli-agent-compact"'));
+    const compactRows = rows.filter((line) => line.includes('"condition":"cli-agent"'))
+      .map((line) => JSON.stringify({ ...JSON.parse(line), condition: "cli-agent-compact" }));
+    const body = ["# tokenloom trajectory", "", "Total real cost: 3.20", "",
+      section(HASH, "0.10", [diagRow("cli-agent-compact", "no", "80", "0.10")]), ""].join("\n");
 
-    expect(trajectoryEvidence(fixture("compact", compact, report.replaceAll("| cli-agent |", "| cli-agent-compact |"))))
-      .toMatchObject({ errors: [] });
+    expect(trajectoryEvidence(fixture("compact", [...rows, ...compactRows], body)).errors).toEqual([]);
   });
 
   it("verifies provenance against the locked tokens.css rather than the working tree", () => {
@@ -290,8 +303,21 @@ describe("trajectory evidence", () => {
   it("withholds adoption when the eight rows of a condition repeat one task instead of covering four", () => {
     const singleTask = rows.map((line, i) => JSON.stringify({
       ...JSON.parse(line), task: "known-component", repeat: Math.floor(i / 6) * 2 + i % 2 }));
+    const singleDiag = (condition: string, input: string): string =>
+      `| ${condition} | yes | 8 | 0 | 6 | ${input} | 10 | 20 | 2 | 0 | 0 | 0.10 | 1.00 | 0.98 | n/a | n/a |`;
+    const body = ["# tokenloom trajectory", "", "Total real cost: 2.40", "",
+      `## prompt ${HASH} / model opus / resolved n/a / invocation claude`, "",
+      "### Task success by condition (raw counts)", "",
+      primaryHeader, sep(4),
+      "| known-component | 8/8 | 8/8 | 8/8 |", "| unknown-component | - | - | - |",
+      "| variant-only | - | - | - |", "| recovery | - | - | - |",
+      "| All tasks | incomplete | incomplete | incomplete |", "",
+      "### Per-condition diagnostics (medians over each condition's own runs; not the comparison)", "",
+      diagHeader, sep(16),
+      singleDiag("cli-canonical", "100"), singleDiag("cli-agent", "80"), singleDiag("mcp-agent", "80"), "",
+      "Total input is inputTokens + cacheCreation + cacheRead, summed over the turns of a run.", ""].join("\n");
 
-    expect(trajectoryEvidence(fixture("single-task", singleTask, report))).toMatchObject({
+    expect(trajectoryEvidence(fixture("single-task", singleTask, body))).toMatchObject({
       errors: [], trajectoryCriteria: { conditions: [{ "cli-agent": { adopted: false, complete: false } }] },
     });
   });

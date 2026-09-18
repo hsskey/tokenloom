@@ -6,7 +6,8 @@ import { describe, expect, it, onTestFinished } from "vitest";
 import { estimateTokens } from "@tokenloom/schema";
 import {
   costUpperBound, createSessionPort, effectiveOutputTokenCap, fakeAdapter, loadTrajectoryMatrix,
-  readTrajectoryRuns, runTrajectory, trajectoryCombinations, planTrajectory, summarizeTrajectory, totalInput, trajectoryTotalCost,
+  readTrajectoryRuns, runTrajectory, trajectoryCombinations, planTrajectory, summarizeTrajectory, totalInput,
+  trajectoryPartitions, trajectoryTotalCost,
   type ChildOutput, type ChildRunWithStdin, type LlmAdapter, type LlmResult, type ProviderCallEvidence,
   type Rate, type ToolPort, type TrajectoryMatrixT, type TrajectoryOptions, type TrajectoryRun,
 } from "../src/index";
@@ -391,9 +392,8 @@ describe("budget enforcement", () => {
       matrix: oneTask(m), rate: RATE, makeAdapter: () => incomplete,
     }));
     const record = set.records[0] as TrajectoryRun;
-    const summary = summarizeTrajectory(set.records, {
-      promptHash: record.promptHash, model: record.model, invocation: record.invocation,
-    })[0];
+    const partition = trajectoryPartitions(set.records)[0];
+    const summary = summarizeTrajectory(set.records, partition ?? { promptHash: "", requestedModel: "", resolvedModel: null, invocation: "" })[0];
 
     expect(record).toMatchObject({ error: "PRICING_DEFECT", incomparable: true });
     expect(summary).toMatchObject({ runs: 0, incomparableRuns: 1, inputTokensP50: null, s1P50: null });

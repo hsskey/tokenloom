@@ -183,7 +183,9 @@ export function reportLiterals(ctx: VerifyContext): string[] {
 type TrajectoryRow = Record<string, unknown> & { condition: string; task: string; repeat: number; model: string; invocation: string;
   promptHash: string; success: boolean; incomparable?: boolean; turns: number; durationMs: number; inputTokens: number;
   cacheCreation: number; cacheRead: number; outputTokens: number; costUsd: number | null; s1: number | null; s2: number | null;
-  artifact: Record<string, unknown> | null; toolCalls: unknown[]; recovery: unknown[] };
+  artifact: Record<string, unknown> | null; toolCalls: unknown[]; recovery: unknown[];
+  requestedModel?: string; resolvedModel?: string | null; coverageStatus?: string; coverage?: { variantRecall: number } | null;
+  s3?: number | null };
 const TASKS = ["known-component", "unknown-component", "variant-only", "recovery"];
 /** Adoption compares the three; a record may also carry the concluded `cli-agent-compact` of docs/reference/spec.md 4.14. */
 const CONDITIONS = ["cli-canonical", "cli-agent", "mcp-agent"], RECORD_CONDITIONS = [...CONDITIONS, "cli-agent-compact"], REPEATS = 2;
@@ -195,9 +197,38 @@ const unevaluated = (reason: string) => ({ errors: [reason], trajectoryCriteria:
 const median = (values: number[]): number | null => [...values].sort((a, b) => a - b)[Math.ceil(values.length / 2) - 1] ?? null;
 const shown = (value: number | null, digits?: number): string => value === null ? "n/a" : digits === undefined
   ? String(Math.round(value)) : value.toFixed(digits);
-const key = (r: TrajectoryRow): string => `${r.promptHash}\0${r.model}\0${r.invocation}`;
+/** The requested-model alias the header prints; a legacy row without the field falls back to `model`. */
+const requestedModelOf = (r: TrajectoryRow): string => typeof r.requestedModel === "string" ? r.requestedModel : r.model;
+/** Absent and explicit-null resolvedModel both normalize to null; null equals only null. */
+const resolvedModelOf = (r: TrajectoryRow): string | null => r.resolvedModel ?? null;
+interface Partition { promptHash: string; requestedModel: string; resolvedModel: string | null; invocation: string }
+const partitionOf = (r: TrajectoryRow): Partition => ({
+  promptHash: r.promptHash, requestedModel: requestedModelOf(r), resolvedModel: resolvedModelOf(r), invocation: r.invocation,
+});
+const key = (r: TrajectoryRow): string => JSON.stringify(partitionOf(r));
 const sumCost = (rs: TrajectoryRow[]): number | null => rs.some((r) => r.costUsd === null) ? null
   : rs.reduce((n, r) => n + (r.costUsd ?? 0), 0);
+/** One (task, condition) cell of the primary matrix, recomputed independently of the report producer. */
+const cellOf = (group: TrajectoryRow[], task: string, condition: string): { recorded: number; comparable: number; successes: number } => {
+  const all = group.filter((r) => r.task === task && r.condition === condition);
+  const comparable = all.filter((r) => r.incomparable !== true);
+  return { recorded: all.length, comparable: comparable.length, successes: comparable.filter((r) => r.success).length };
+};
+const countCell = (c: { recorded: number; comparable: number; successes: number }): string => {
+  if (c.recorded === 0) return "-";
+  const inc = c.recorded - c.comparable;
+  return `${c.successes}/${c.comparable}${c.recorded < REPEATS ? " short" : ""}${inc > 0 ? ` (+${inc} incomparable)` : ""}`;
+};
+const allTasksCell = (cells: { recorded: number; comparable: number; successes: number }[]): string => {
+  if (cells.every((c) => c.comparable >= REPEATS)) {
+    return `${cells.reduce((n, c) => n + c.successes, 0)}/${cells.reduce((n, c) => n + c.comparable, 0)}`;
+  }
+  return cells.reduce((n, c) => n + Math.max(0, REPEATS - c.recorded), 0) > 0 ? "incomplete" : "incomparable";
+};
+const missingOf = (group: TrajectoryRow[], condition: string): number => TASKS.reduce((n, task) =>
+  n + Math.max(0, REPEATS - group.filter((r) => r.condition === condition && r.task === task).length), 0);
+const coverageRecall = (r: TrajectoryRow): number | null =>
+  r.coverageStatus === "measured" && r.coverage != null ? r.coverage.variantRecall : null;
 const validRow = (r: TrajectoryRow): boolean => r.adapter === "claude" && TASKS.includes(r.task) && RECORD_CONDITIONS.includes(r.condition)
   && Number.isInteger(r.repeat) && r.repeat >= 0 && [r.model, r.invocation, r.promptHash].every((v) => typeof v === "string")
   && typeof r.success === "boolean" && [r.turns, r.durationMs, r.inputTokens, r.cacheCreation, r.cacheRead, r.outputTokens]
@@ -221,24 +252,37 @@ export function trajectoryEvidence(ctx: VerifyContext): { errors: string[]; traj
   if (!rows.every(validRow)) return unevaluated("invalid trajectory run record");
   if (!ctx.files.includes(REPORT_PATH)) return unevaluated(`report missing: ${REPORT_PATH}`);
   const lines = read(ctx, REPORT_PATH).split("\n"), lock = git(ctx, ["log", "-1", "--format=%H", "--", "samples/manifest.json"]).trim();
-  const byKey = new Map(rows.map((r) => [key(r), { promptHash: r.promptHash, model: r.model, invocation: r.invocation }]));
+  const byKey = new Map(rows.map((r) => [key(r), partitionOf(r)]));
   const partitions = [...byKey.values()], groups = [...byKey.keys()].map((k) => rows.filter((r) => key(r) === k));
   const summarize = (group: TrajectoryRow[], condition: string) => {
     const all = group.filter((r) => r.condition === condition), good = all.filter((r) => r.incomparable !== true);
     const at = (get: (r: TrajectoryRow) => number | null) => median(good.map(get).filter((v): v is number => v !== null));
-    return { condition, runs: good.length, incomparable: all.length - good.length,
+    return { condition, primary: CONDITIONS.includes(condition), runs: good.length, incomparable: all.length - good.length,
+      missing: missingOf(group, condition),
       success: good.length === 0 ? null : good.filter((r) => r.success).length / good.length,
       input: at((r) => r.inputTokens + r.cacheCreation + r.cacheRead), output: at((r) => r.outputTokens),
       duration: at((r) => r.durationMs), turns: at((r) => r.turns), calls: good.flatMap((r) => r.toolCalls).length,
-      recoveries: good.flatMap((r) => r.recovery).length, cost: at((r) => r.costUsd), s1: at((r) => r.s1), s2: at((r) => r.s2) }; };
-  const summaries = groups.map((group) => [...new Set(group.map((r) => r.condition))].map((c) => summarize(group, c)));
+      recoveries: good.flatMap((r) => r.recovery).length, cost: at((r) => r.costUsd), s1: at((r) => r.s1), s2: at((r) => r.s2),
+      coverage: at(coverageRecall), s3: at((r) => typeof r.s3 === "number" ? r.s3 : null) }; };
+  const conditionsPresent = (group: TrajectoryRow[]): string[] => {
+    const present = [...new Set(group.map((r) => r.condition))];
+    return [...CONDITIONS.filter((c) => present.includes(c)), ...present.filter((c) => !CONDITIONS.includes(c)).sort()]; };
+  const primaryTable = (group: TrajectoryRow[]): string[] => [
+    ...TASKS.map((task) => `| ${[task, ...CONDITIONS.map((c) => countCell(cellOf(group, task, c)))].join(" | ")} |`),
+    `| ${["All tasks", ...CONDITIONS.map((c) => allTasksCell(TASKS.map((task) => cellOf(group, task, c))))].join(" | ")} |`];
+  const diagnosticTable = (group: TrajectoryRow[]): string[] => conditionsPresent(group).map((condition) => {
+    const s = summarize(group, condition);
+    return `| ${[s.condition, s.primary ? "yes" : "no", s.runs, s.incomparable, s.missing, shown(s.input), shown(s.output),
+      shown(s.duration), shown(s.turns), s.calls, s.recoveries, shown(s.cost, 2), shown(s.s1, 2), shown(s.s2, 2),
+      shown(s.coverage, 2), shown(s.s3, 2)].join(" | ")} |`; });
   const isRequired = (r: TrajectoryRow): boolean => CONDITIONS.includes(r.condition) && r.repeat < REPEATS, total = sumCost(rows);
   const excludedCost = sumCost(rows.filter((r) => !isRequired(r))), requiredCost = groups.map((g) => sumCost(g.filter(isRequired)));
+  const header = (p: Partition): string =>
+    `## prompt ${p.promptHash} / model ${p.requestedModel} / resolved ${p.resolvedModel ?? "n/a"} / invocation ${p.invocation}`;
   const expected = [`Total real cost: ${shown(total, 2)}`,
-    ...partitions.flatMap((p, i) => [`## prompt ${p.promptHash} / model ${p.model} / invocation ${p.invocation}`,
-      ...(summaries[i] ?? []).map((s) => `| ${[s.condition, s.runs, s.incomparable, shown(s.success, 2), shown(s.input), shown(s.output),
-        shown(s.duration), shown(s.turns), s.calls, s.recoveries, shown(s.cost, 2), shown(s.s1, 2), shown(s.s2, 2)].join(" | ")} |`)])];
-  const actual = lines.filter((line) => /^Total real cost:|^## prompt |^\| (?:cli|mcp)-/.test(line));
+    ...partitions.flatMap((p, i) => [header(p), ...primaryTable(groups[i] ?? []), ...diagnosticTable(groups[i] ?? [])])];
+  const actual = lines.filter((line) => /^Total real cost:|^## prompt /.test(line)
+    || (/^\| /.test(line) && !/^\| ---|^\| Task |^\| Condition /.test(line)));
   const disagreeing = lines.find((line) => line.match(NUMBER) !== null && !actual.includes(line) && !CLAIM.test(line))
     ?? actual.find((line, i) => line !== expected[i]) ?? expected[actual.length];
   const errors = disagreeing === undefined ? [] : [`trajectory report measurements disagree: ${disagreeing}`];

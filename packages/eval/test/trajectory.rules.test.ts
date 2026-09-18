@@ -1,13 +1,14 @@
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
-  buildPromptInput, InputVariant, loadTrajectoryMatrix, percentile, renderTrajectoryReport, summarizeTrajectory,
-  totalInput, trajectoryPartitions, trajectoryTotalCost, type TrajectoryRun,
+  buildPromptInput, InputVariant, loadTrajectoryMatrix, renderTrajectoryReport, summarizeTrajectory,
+  trajectoryPartitions, trajectoryTotalCost, type CoverageT, type TrajectoryRun,
 } from "../src/index";
 
 const root = resolve(import.meta.dirname, "../../..");
 const TRAJECTORY_MATRIX = resolve(root, "eval/trajectory.yaml");
-const MEDIAN = 50;
+const TASKS = ["known-component", "unknown-component", "variant-only", "recovery"] as const;
+const CONDITIONS = ["cli-canonical", "cli-agent", "mcp-agent"] as const;
 
 function record(over: Partial<TrajectoryRun>): TrajectoryRun {
   return {
@@ -18,96 +19,119 @@ function record(over: Partial<TrajectoryRun>): TrajectoryRun {
   };
 }
 
-const CALL = { turn: 0, tool: "context", args: [], exitCode: 0, bytes: 10 };
-const RECOVERY = { turn: 0, code: "COMPONENT_NOT_FOUND", resolved: true };
-const RUNS: TrajectoryRun[] = [
-  record({ repeat: 0, inputTokens: 100, toolCalls: [CALL], recovery: [RECOVERY] }),
-  record({
-    repeat: 1, inputTokens: 300, outputTokens: 1100, durationMs: 30, turns: 3, costUsd: 0.2,
-    toolCalls: [CALL, { ...CALL, turn: 1 }], recovery: [RECOVERY, { ...RECOVERY, turn: 1 }],
-  }),
-  record({ condition: "cli-canonical", inputTokens: 500, turns: 4, costUsd: 0.3, success: false }),
-  record({ condition: "cli-canonical", repeat: 1, inputTokens: 700, turns: 4, costUsd: 0.4 }),
-  record({ adapter: "fake", inputTokens: 999_999, costUsd: 0 }),
-  record({ promptHash: "bbbbbbbbbbbb", inputTokens: 42 }),
-];
+/** The required 4 x 3 x 2 real set; `over` lets a case fail or mark specific cells. */
+function completeSet(over: (task: string, condition: string, repeat: number) => Partial<TrajectoryRun> = () => ({})): TrajectoryRun[] {
+  return TASKS.flatMap((task) => CONDITIONS.flatMap((condition) =>
+    [0, 1].map((repeat) => record({ task, condition, repeat, ...over(task, condition, repeat) }))));
+}
+
+const coverage = (variantRecall: number): CoverageT => ({
+  scope: "variant", expected: 1, actual: 1, matched: 1, variantRecall, variantPrecision: 1,
+  duplicates: 0, unresolved: 0, missing: [], unexpected: [],
+});
+
+/** The line of a table headed by `heading` that begins with `prefix`. */
+const rowStartingWith = (report: string, heading: string, prefix: string): string | undefined =>
+  (report.split(heading)[1] ?? "").split("\n").find((line) => line.startsWith(prefix));
 
 describe("Trajectory report rules from docs/reference/spec.md section 4.12", () => {
-  it("A10: every printed measurement equals the value recomputed from the run records", () => {
-    const agent = RUNS.filter((run) => run.adapter === "claude" && run.promptHash === "aaaaaaaaaaaa"
-      && run.condition === "cli-agent");
-    const report = renderTrajectoryReport(RUNS);
+  it("A10: prints each task x condition cell as a raw success count, never a percentage", () => {
+    const report = renderTrajectoryReport(completeSet());
 
-    const inputP50 = percentile(agent.map(totalInput), MEDIAN);
-    const outputP50 = percentile(agent.map((run) => run.outputTokens), MEDIAN);
-    const durationP50 = percentile(agent.map((run) => run.durationMs), MEDIAN);
-    const turnsP50 = percentile(agent.map((run) => run.turns), MEDIAN);
-    const toolCalls = agent.reduce((sum, run) => sum + run.toolCalls.length, 0);
-    const recoveries = agent.reduce((sum, run) => sum + run.recovery.length, 0);
-    const totalCost = RUNS.filter((run) => run.adapter === "claude")
-      .reduce((sum, run) => sum + (run.costUsd ?? 0), 0);
-    expect({ inputP50, outputP50, durationP50, turnsP50, toolCalls, recoveries }).toEqual({
-      inputP50: 11_144, outputP50: 900, durationP50: 10, turnsP50: 2, toolCalls: 3, recoveries: 3,
-    });
-    expect(report).toContain(
-      `| cli-agent | 2 | 0 | 1.00 | ${inputP50} | ${outputP50} | ${durationP50} | ${turnsP50} | ${toolCalls} | ${recoveries} | 0.11 | 1.00 | 0.97 |`,
-    );
-    expect(trajectoryTotalCost(RUNS)).toBeCloseTo(totalCost, 10);
-    expect(report).toContain(`Total real cost: ${totalCost.toFixed(2)}`);
+    expect(report).toContain("### Task success by condition (raw counts)");
+    expect(report).toContain("| known-component | 2/2 | 2/2 | 2/2 |");
+    expect(report).toContain("| All tasks | 8/8 | 8/8 | 8/8 |");
+    expect(report).not.toMatch(/Success rate/);
   });
 
-  it("A10: a failed run lowers the printed success rate of its condition", () => {
-    const canonical = summarizeTrajectory(RUNS, {
-      promptHash: "aaaaaaaaaaaa", model: "opus", invocation: "claude",
-    }).find((s) => s.condition === "cli-canonical");
+  it("A10: a failed run lowers the raw count of its own cell only", () => {
+    const runs = completeSet((task, condition, repeat) =>
+      task === "known-component" && condition === "cli-canonical" && repeat === 0 ? { success: false } : {});
 
-    expect(canonical?.successRate).toBe(0.5);
-    expect(renderTrajectoryReport(RUNS)).toContain("| cli-canonical | 2 | 0 | 0.50 |");
+    expect(renderTrajectoryReport(runs)).toContain("| known-component | 1/2 | 2/2 | 2/2 |");
   });
 
-  it("A10: incomplete provider usage is counted but excluded from measurements", () => {
-    const runs = [...RUNS, record({ incomparable: true, error: "MISSING_AUTHORITATIVE_USAGE", inputTokens: 999_999 })];
-    const agent = summarizeTrajectory(runs, {
-      promptHash: "aaaaaaaaaaaa", model: "opus", invocation: "claude",
-    }).find((summary) => summary.condition === "cli-agent");
+  it("A10: a task a condition never ran prints '-' and marks the condition incomplete with no success rate", () => {
+    const runs = completeSet().filter((r) => !(r.condition === "mcp-agent" && r.task === "recovery"))
+      .filter((r) => !(r.condition === "cli-agent" && r.task === "recovery" && r.repeat === 1));
+    const report = renderTrajectoryReport(runs);
 
-    expect(agent).toMatchObject({ runs: 2, incomparableRuns: 1, inputTokensP50: 11_144 });
-    expect(renderTrajectoryReport(runs)).toContain("| cli-agent | 2 | 1 | 1.00 | 11144 |");
+    expect(report).toContain("| recovery | 2/2 | 1/1 short | - |");
+    expect(report).toContain("| All tasks | 8/8 | incomplete | incomplete |");
+    expect(report).not.toMatch(/Success rate/);
+  });
+
+  it("A10: an incomparable run is excluded from the cell count, flagged in the cell, and counted in diagnostics", () => {
+    const runs = completeSet((task, condition, repeat) =>
+      task === "known-component" && condition === "cli-agent" && repeat === 0
+        ? { incomparable: true, error: "MISSING_AUTHORITATIVE_USAGE" } : {});
+    const report = renderTrajectoryReport(runs);
+
+    expect(report).toContain("| known-component | 2/2 | 1/1 (+1 incomparable) | 2/2 |");
+    expect(rowStartingWith(report, "### Per-condition diagnostics", "| cli-agent |")
+      ?.startsWith("| cli-agent | yes | 7 | 1 | 0 |")).toBe(true);
   });
 
   it("A10: fake rows never reach a printed number", () => {
-    const summary = summarizeTrajectory(RUNS, {
-      promptHash: "aaaaaaaaaaaa", model: "opus", invocation: "claude",
-    });
+    const runs = [...completeSet(), record({ adapter: "fake", inputTokens: 999_999, costUsd: 0 })];
 
-    expect(summary.every((row) => row.runs === 2)).toBe(true);
-    expect(renderTrajectoryReport(RUNS)).not.toContain("999999");
+    expect(renderTrajectoryReport(runs)).not.toContain("999999");
   });
 
-  it("A10: unlike prompt, model, or invocation records get separate sections", () => {
+  it("A10: the diagnostics medians equal the values recomputed from the run records", () => {
+    const runs = completeSet((task, condition) => condition === "cli-canonical" ? { inputTokens: 500 } : {});
+    const partition = trajectoryPartitions(runs)[0];
+    if (partition === undefined) throw new Error("expected one partition");
+    const summary = summarizeTrajectory(runs, partition).find((s) => s.condition === "cli-canonical");
+
+    // totalInput = 500 + 200 + 10844 for every cli-canonical row.
+    expect(summary?.inputTokensP50).toBe(11_544);
+    expect(renderTrajectoryReport(runs)).toContain("| cli-canonical | yes | 8 | 0 | 0 | 11544 |");
+  });
+
+  it("A10: rows differing in prompt, requested model, resolved model, or invocation get separate sections", () => {
     const runs = [
-      ...RUNS,
-      record({ model: "opus-revision", inputTokens: 43 }),
-      record({ invocation: "claude --new-shape", inputTokens: 44 }),
+      record({ resolvedModel: "claude-opus-5" }),
+      record({ promptHash: "bbbbbbbbbbbb", resolvedModel: "claude-opus-5" }),
+      record({ requestedModel: "sonnet", resolvedModel: "claude-sonnet-5" }),
+      record({ resolvedModel: "claude-opus-6" }),
+      record({ invocation: "claude --new", resolvedModel: "claude-opus-5" }),
     ];
+    const report = renderTrajectoryReport(runs);
 
-    expect({
-      partitions: trajectoryPartitions(runs),
-      reportHasRevision: renderTrajectoryReport(runs).includes(
-        "## prompt aaaaaaaaaaaa / model opus-revision / invocation claude",
-      ),
-    }).toEqual({
-      partitions: [
-        { promptHash: "aaaaaaaaaaaa", model: "opus", invocation: "claude" },
-        { promptHash: "bbbbbbbbbbbb", model: "opus", invocation: "claude" },
-        { promptHash: "aaaaaaaaaaaa", model: "opus-revision", invocation: "claude" },
-        { promptHash: "aaaaaaaaaaaa", model: "opus", invocation: "claude --new-shape" },
-      ],
-      reportHasRevision: true,
-    });
+    expect(trajectoryPartitions(runs)).toHaveLength(5);
+    expect(report).toContain("## prompt aaaaaaaaaaaa / model opus / resolved claude-opus-5 / invocation claude");
+    expect(report).toContain("## prompt aaaaaaaaaaaa / model sonnet / resolved claude-sonnet-5 / invocation claude");
+    expect(report).toContain("## prompt aaaaaaaaaaaa / model opus / resolved claude-opus-6 / invocation claude");
   });
 
-  it("A10: an empty record set prints no measurement at all", () => {
+  it("A10: a legacy row without resolvedModel never shares a section with a resolved-value row", () => {
+    const runs = [record({}), record({ resolvedModel: "claude-opus-5" })];
+
+    expect(trajectoryPartitions(runs)).toHaveLength(2);
+    const report = renderTrajectoryReport(runs);
+    expect(report).toContain("## prompt aaaaaaaaaaaa / model opus / resolved n/a / invocation claude");
+    expect(report).toContain("## prompt aaaaaaaaaaaa / model opus / resolved claude-opus-5 / invocation claude");
+  });
+
+  it("A10: legacy rows without coverage or S3 print n/a and are never promoted to a passing measurement", () => {
+    const report = renderTrajectoryReport(completeSet());
+
+    expect(rowStartingWith(report, "### Per-condition diagnostics", "| cli-canonical |")?.endsWith("| n/a | n/a |")).toBe(true);
+  });
+
+  it("A10: coverage and S3 measurements appear in their own diagnostics columns", () => {
+    const runs = completeSet(() => ({ coverageStatus: "measured", coverage: coverage(1), s3Status: "measured", s3: 0.02 }));
+    const report = renderTrajectoryReport(runs);
+
+    expect(rowStartingWith(report, "### Per-condition diagnostics", "| cli-canonical |")?.endsWith("| 1.00 | 0.02 |")).toBe(true);
+  });
+
+  it("A10: Total real cost sums every real run and an empty record set prints no measurement", () => {
+    const runs = completeSet();
+    const total = trajectoryTotalCost(runs) ?? 0;
+
+    expect(renderTrajectoryReport(runs)).toContain(`Total real cost: ${total.toFixed(2)}`);
     expect(renderTrajectoryReport([])).toContain("no trajectory run records");
   });
 });
@@ -122,6 +146,15 @@ describe("Alternate representation rules from docs/reference/spec.md section 4.1
     expect(InputVariant.options).toEqual(["raw", "compact", "compact+annotations", "agent"]);
     expect(loadTrajectoryMatrix(TRAJECTORY_MATRIX).conditions)
       .toEqual(["cli-canonical", "cli-agent", "mcp-agent"]);
+  });
+
+  it("A11: the rejected cli-agent-compact condition gets no primary column and stays a diagnostics-only record", () => {
+    const runs = [...completeSet(),
+      ...TASKS.flatMap((task) => [0, 1].map((repeat) => record({ condition: "cli-agent-compact", task, repeat })))];
+    const report = renderTrajectoryReport(runs);
+
+    expect(report.split("### Per-condition diagnostics")[0]).not.toContain("cli-agent-compact");
+    expect(report).toContain("| cli-agent-compact | no |");
   });
 
   it("A11: the agent view an evaluation sends is still JSON, so no alternate encoding has been adopted", () => {

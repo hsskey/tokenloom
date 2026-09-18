@@ -260,7 +260,7 @@ Only a complete `pnpm verify` run covers the whole contract.
 | A07 | component discovery는 이름, node id, Variant 수로 distinguishable item의 total order를 정하고, 최대 20개 complete item과 4,096 UTF-8 serialized bytes를 모두 지키는 가장 긴 prefix를 반환한다. item당 최대 4필드이고 전체 건수와 반환 건수를 구분한다. |
 | A08 | discovery zero-result와 Agent JSON 오류는 명시적인 구조를 반환한다. discovery/error에만 다음 command template을 제공한다. |
 | A09 | MCP public tool은 `design_context`, `tokens` 정확히 2개이고 합산 schema 추정값은 800 token 이하이다. |
-| A10 | trajectory report의 success/token/cost/duration/turn 값은 JSONL event에서 계산하며 숫자를 report code에 직접 입력하지 않는다. |
+| A10 | trajectory report의 모든 값은 JSONL event에서 계산하며 숫자를 report code에 직접 입력하지 않는다. task success는 rate가 아니라 (task, condition)별 raw count로 적고, required task run이 빠진 set에는 condition 단위 success 숫자를 출력하지 않는다. |
 | A11 | alternate format/delta는 채택 기준을 통과한 경우에만 public contract가 된다. 실패한 실험은 결과 문서만 남기고 default contract를 바꾸지 않는다. |
 
 A01-A11은 `docs/reference/spec.md`의 계약이고, 해당 `*.rules.test.ts` 제목에 ID를 넣어 `rules` gate가 추적한다.
@@ -402,6 +402,11 @@ TypeScript structural interface와 함수 인자로 기존 seam을 유지한다.
 
 report는 run record를 읽어 집계하고, 결과 숫자를 직접 입력하지 않는다.
 실제 run 전에는 fake adapter와 dry-run이 모두 통과해야 한다.
+
+report는 required task × required condition 행렬로 task success를 raw count(`s/k`)로 적고, required task run이 빠진 condition에는 condition 단위 success rate를 출력하지 않는다(`incomplete` 또는 `incomparable`).
+coverage와 S3는 per-condition diagnostics의 median으로만 나타나며, 해당 field가 없는 legacy row에서는 `n/a`다.
+comparison section은 prompt hash와 requested/resolved model, invocation으로 나눈다.
+아래 채택 기준 자체는 이 표현 변경과 무관하게 동일하며, gate가 report를 독립적으로 재계산해 대조한다.
 
 Agent view 채택 기준:
 

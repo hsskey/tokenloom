@@ -730,7 +730,7 @@ A10 and A11 govern the evidence a trajectory experiment produces rather than wha
 | A07 | Component discovery sorts by name, node id, then variant count, so distinguishable emitted items have a total order. It returns the longest leading prefix within both 20 complete items and 4,096 UTF-8 serialized bytes, uses at most four fields per item, and reports `count` for every match alongside `returned` for the page. `--match` is a case-insensitive substring filter and does not change which fields an item carries. |
 | A08 | Discovery zero results and Agent JSON failures return an explicit structure rather than empty output. Only discovery and failure responses carry `next`; a successful code-generation context carries none. |
 | A09 | The public MCP surface stays exactly `design_context` and `tokens`, and the combined schema estimate stays at or below 800 tokens. |
-| A10 | The trajectory report computes its success, token, cost, duration, and turn values from the JSONL run records and never writes those numbers into report code. |
+| A10 | The trajectory report computes every value from the JSONL run records and never writes a number into report code. It states task success as a raw per-(task, condition) count rather than a rate, and emits no condition-wide success number for a set missing a required task run. |
 | A11 | An alternate format or delta representation becomes a public contract only when it passes the adoption criteria. A failed experiment keeps its result note and leaves the default contract unchanged. |
 
 A discovery item carries `name` and `variants`, the number of entries `component.variants` would hold.
@@ -1464,6 +1464,13 @@ Trajectory results use a separate `cmd: "trajectory"` record; they do not widen 
 If any provider input-usage category is absent or invalid, the record is marked incomparable and excluded from usage and quality adoption aggregates rather than substituting zero; any terminal cost or pricing error remains recorded independently.
 Each run is capped at six turns.
 A run stopped by that cap or by its budget records `success: false` together with the turns and cost actually paid.
+
+The trajectory report at `reports/trajectory.md` groups runs into comparison sections keyed by prompt hash, requested model, resolved model, and invocation shape; runs with unlike provenance, including a resolved model absent from the older rows, never share a section.
+Each section states task success as a matrix of the required tasks by the three required conditions, where every cell is a raw comparable-success count `s/k` rather than a rate.
+A short cell is marked `short`, a cell with no runs is `-`, and a cell that dropped an incomparable run appends `(+n incomparable)`.
+An `All tasks` row prints a raw count only when every required task has a full comparable set, and otherwise reads `incomplete` or `incomparable`, so a set missing a required task never presents a directly comparable success number.
+A separate per-condition diagnostics table carries the medians, including coverage and S3 recall which are `n/a` for rows recorded before those metrics existed, and is labelled as not the comparison.
+A run recorded under the concluded `cli-agent-compact` condition of section 4.14 never appears as a primary comparison column and remains only a diagnostics record.
 
 ## 10. Likely long-term failure modes
 
