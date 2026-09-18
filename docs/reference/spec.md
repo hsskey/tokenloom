@@ -1431,7 +1431,7 @@ The render page at `packages/eval/render/index.html` loads `tokens.css`, generat
 - Header `mcp captures <n>/<sets>` comes from run rows. `<n>` counts sent MCP rows and `<sets>` counts their distinct targets. With no sent MCP row, write `0/0`; never list set names in the header.
 - Scripts calculate every report number from `runs/*.jsonl`. Thresholds come from `eval/thresholds.json` as `{ "s1": 0.9, "s2": 0.95, "s3": 0.05 }`. Numeric literals other than 0, 1, and 2 in report code fail the scoring gate.
 - `combinations` in Sample size and limitations counts distinct run-line targets, not rows. A later sent row removes the same target's earlier skipped row from aggregation. Never delete historical rows from append-only JSONL.
-- A rescore appends `rescored` with `at` and `reason` and replaces the earlier equal `target`, `repeat`, `promptHash`, and `invocation` row in aggregation. Two unmarked sent rows remain separate runs, and source rows remain in the file.
+- A rescore appends `rescored` with `at` and `reason` and replaces the earlier equal `target`, `repeat`, `promptHash`, and `invocation` row in aggregation. Two unmarked sent rows remain separate runs, and source rows remain in the file. This one-shot `rescored` marker is a different mechanism from the section 9.7 trajectory `attemptId` supersede: `rescored` replaces one row's score from its own embedded `artifact.output`, while `attemptId` supersede excludes an entire earlier trajectory row of a slot from aggregation.
 - A rescore reads only the row's own embedded `artifact.output`; there is no path that ingests an external `runs/out/` raw file back into a row, so rescoring is forward-only. The original one-shot raw outputs `runs/out/2026-09-03` and `runs/out/2026-09-05` are confirmed absent and unrecoverable, so the historical one-shot rows from those two dates are permanently non-rescorable. A row written before `artifact.output` embedding carries no stored response and is refused by this ordinary rule with no date or era special case, the same way section 9.5 treats a missing artifact as incomparable.
 - When `sent < combinations`, the difference contains `skipped: MAX_INPUT_TOKENS` rows. What does not work includes their combination names and estimated token counts.
 - `--dry-run` returns run count, estimated input tokens, and estimated pricing without calls. `estCostUsd` charges each distinct prompt once at the cache-write rate, then charges per-call session prefixes and repeated prompts at the cache-read rate. Derive prompt-token coefficients, overhead, and prefix size from committed cache-write rows using least squares and p50. Return the hash, row count, coefficients, overhead, and prefix size in `costBasis`. Without enough rows, input and total cost are `null` while token totals remain valid.
@@ -1471,6 +1471,21 @@ A short cell is marked `short`, a cell with no runs is `-`, and a cell that drop
 An `All tasks` row prints a raw count only when every required task has a full comparable set, and otherwise reads `incomplete` or `incomparable`, so a set missing a required task never presents a directly comparable success number.
 A separate per-condition diagnostics table carries the medians, including coverage and S3 recall which are `n/a` for rows recorded before those metrics existed, and is labelled as not the comparison.
 A run recorded under the concluded `cli-agent-compact` condition of section 4.14 never appears as a primary comparison column and remains only a diagnostics record.
+
+Run records carry an optional `attemptId`, the exact `new Date().toISOString()` instant captured once when `runTrajectory` begins and written on every record that invocation produces.
+A record without `attemptId` is a legacy row and aggregates as the empty string, which sorts before every real instant, so all legacy rows form one earliest attempt.
+The report and its gate read `attemptId` as data and never read the clock, so the report stays a deterministic function of the record file.
+
+Before partitioning, aggregation supersedes rows by experiment slot.
+A slot is `{promptHash, requestedModel, invocation, task, condition, repeat}`; `resolvedModel` is excluded because it is the outcome of a row, not the cell the row was asked to fill.
+Within a slot the surviving rows are those whose key `(comparable ? 1 : 0, attemptId)` equals the slot maximum: a comparable row outranks an errored one regardless of age, and among equal comparability the greatest `attemptId` wins.
+Rows that share the maximal key all survive, so an intra-attempt duplicate remains an over-count and no new dedup is introduced.
+Every superseded row is excluded from partitioning, the success cells, the diagnostics medians, S1, S2, coverage, S3, and the total, while remaining untouched in the append-only file.
+Comparability is the existing predicate the cells already use; supersede introduces none.
+Because supersede runs before partitioning and keys on the request rather than the outcome, a partition may hold rows from more than one attempt: `attemptId` is a dedup key, not a comparability key, and partition identity `{promptHash, requestedModel, resolvedModel, invocation}` is unchanged.
+
+`Total real cost` sums `costUsd` over the real surviving rows, and a null among them still reads `n/a` under the section 9.6 rule.
+The report prints one line `Superseded rows: <n>` giving the count of real rows that supersede excluded, so an excluded row stays visible without adding a second cost figure.
 
 ## 10. Likely long-term failure modes
 

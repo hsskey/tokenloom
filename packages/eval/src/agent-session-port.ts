@@ -42,6 +42,8 @@ export interface TrajectoryRun {
   s3?: number | null; s3Status?: S3StatusT; s3Detail?: S3DetailT;
   requestedModel?: string; resolvedModel?: string | null; modelResolution?: ModelResolution | null;
   providerEvidence?: ProviderCallEvidence[]; harnessCommit?: HarnessCommit; referenceLockCommit?: string;
+  /** The `runTrajectory` invocation instant that wrote this row (SPEC 9.7); a missing value is the earliest attempt. */
+  attemptId?: string;
 }
 
 /** `ChildRun` extended with stdin. MCP stdio needs JSON-RPC input; CLI conditions need full stderr. */

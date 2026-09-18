@@ -66,6 +66,7 @@ function options(over: Partial<TrajectoryOptions> = {}): TrajectoryOptions {
   onTestFinished(() => { process.env.TOKENLOOM_RUNS_DIR = saved; });
   return {
     repoRoot, matrix: matrix(), utcDate: "2026-09-07", rate: null, child: gitLock,
+    attemptId: "2026-09-07T00:00:00.000Z",
     makeAdapter: () => fakeAdapter,
     toolPortFor: () => stubPort([{ content: "{}", exitCode: 0 }]).port,
     ...over,

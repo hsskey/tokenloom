@@ -3,7 +3,7 @@
 import { fixed, integer } from "./stats";
 import {
   REQUIRED_CONDITIONS, REQUIRED_TASKS, renderAllTasksCell, renderCountCell, summarizeTrajectory,
-  trajectoryCells, trajectoryPartitions, trajectoryTotalCost,
+  supersededTrajectoryCount, survivingTrajectoryRuns, trajectoryCells, trajectoryPartitions, trajectoryTotalCost,
   type ConditionSummary, type TrajectoryCell, type TrajectoryPartition,
 } from "./trajectory";
 import type { TrajectoryRun } from "./agent-session-port";
@@ -61,12 +61,15 @@ const section = (runs: TrajectoryRun[], partition: TrajectoryPartition): string 
 };
 
 export function renderTrajectoryReport(runs: TrajectoryRun[]): string {
-  const partitions = trajectoryPartitions(runs);
+  // Supersede runs once over the whole record set before partitioning, so every table below reflects survivors only.
+  const survivors = survivingTrajectoryRuns(runs);
+  const partitions = trajectoryPartitions(survivors);
   const body = partitions.length === 0
     ? ["no trajectory run records"]
-    : partitions.map((partition) => section(runs, partition));
+    : partitions.map((partition) => section(survivors, partition));
   return [
-    `# tokenloom ${TRAJECTORY_REPORT_SECTION}`, "", `Total real cost: ${fixed(trajectoryTotalCost(runs), DIGITS)}`,
+    `# tokenloom ${TRAJECTORY_REPORT_SECTION}`, "", `Total real cost: ${fixed(trajectoryTotalCost(survivors), DIGITS)}`,
+    `Superseded rows: ${supersededTrajectoryCount(runs)}`,
     "", ...body, "",
   ].join("\n");
 }
