@@ -81,13 +81,17 @@ export interface TrajectoryOptions {
   rate: Rate | null;
   /** Used once, to read the reference lock commit that pins a scored artifact's input. */
   child: ChildRunWithStdin;
+  /** The attempt stamp written on every record of this run; defaults to the invocation instant. Injected so tests stay byte-stable. */
+  attemptId?: string;
 }
 
 /** `stopped` names why the set ended early, or null when every combination ran. */
 export interface TrajectorySet { records: TrajectoryRun[]; costUsd: number; stopped: Stop; path: string | null }
 type Stop = "budget" | "pricing" | null;
 interface Combination { spec: TrajectoryTaskSpec; condition: RunnableTrajectoryCondition; repeat: number }
-interface SetState { lock: string; harnessCommit: HarnessCommit; adapter: LlmAdapter["kind"]; remaining: number; stopped: Stop }
+interface SetState {
+  lock: string; harnessCommit: HarnessCommit; adapter: LlmAdapter["kind"]; remaining: number; stopped: Stop; attemptId: string;
+}
 
 /**
  * Pre-call bound from the prompt, both measured per-call blocks, and capped output. Reserving the
@@ -247,7 +251,7 @@ async function runOne(options: TrajectoryOptions, combo: Combination, state: Set
       : null,
     promptHash: promptHash(port.template), toolCalls, recovery, ...(incomparable ? { incomparable } : {}),
     requestedModel: matrix.model, resolvedModel: resolved.resolvedModel, modelResolution: resolved.modelResolution,
-    providerEvidence, harnessCommit: state.harnessCommit, referenceLockCommit: state.lock,
+    providerEvidence, harnessCommit: state.harnessCommit, referenceLockCommit: state.lock, attemptId: state.attemptId,
     ...(error === undefined ? {} : { error }),
   };
 }
@@ -274,8 +278,10 @@ export async function runTrajectory(options: TrajectoryOptions): Promise<Traject
   const harnessCommit = await readHarnessCommit(options.child, options.repoRoot);
   const adapter = options.makeAdapter(0, 0);
   if (adapter.kind === "claude" && options.rate === null) throw new Error("trajectory: missing pricing for claude adapter");
+  // One stamp per invocation, captured before the first provider call, so every record of this attempt shares it.
+  const attemptId = options.attemptId ?? new Date().toISOString();
   const state: SetState = {
-    lock, harnessCommit, adapter: adapter.kind, remaining: options.matrix.budgetUsd, stopped: null,
+    lock, harnessCommit, adapter: adapter.kind, remaining: options.matrix.budgetUsd, stopped: null, attemptId,
   };
   const records: TrajectoryRun[] = [];
   for (const combo of trajectoryCombinations(options.matrix)) {
@@ -302,6 +308,7 @@ const TrajectoryRow = z.object({
   cacheRead: z.number(), outputTokens: z.number(), costUsd: z.number().nullable(),
   s1: z.number().nullable(), s2: z.number().nullable(), toolCalls: z.array(z.unknown()),
   recovery: z.array(z.unknown()), incomparable: z.boolean().optional(), error: z.string().optional(),
+  attemptId: z.string().optional(),
 }).passthrough();
 
 /** Trajectory rows in the runs directory. The eval reader keeps `cmd: "eval"`, so the two never mix. */
@@ -334,6 +341,39 @@ export const REQUIRED_CONDITIONS: readonly RunnableTrajectoryCondition[] = ["cli
 const requestedModelOf = (run: TrajectoryRun): string => run.requestedModel ?? run.model;
 /** Absent and explicit-null resolvedModel both normalize to null, and null equals only null. */
 const resolvedModelOf = (run: TrajectoryRun): string | null => run.resolvedModel ?? null;
+
+/**
+ * The experiment slot a row fills (SPEC 9.7). `resolvedModel` is deliberately excluded: it is the outcome, not the
+ * request, so a row that errored before resolving a model still shares the slot of a comparable retry of the same cell.
+ */
+const trajectorySlotKey = (run: TrajectoryRun): string => JSON.stringify([
+  run.promptHash, requestedModelOf(run), run.invocation, run.task, run.condition, run.repeat,
+]);
+/** Supersede rank: a comparable row outranks an errored one; among equal comparability the greatest attemptId wins. */
+const supersedeRank = (run: TrajectoryRun): [number, string] => [run.incomparable === true ? 0 : 1, run.attemptId ?? ""];
+const outranks = (candidate: [number, string], held: [number, string]): boolean =>
+  candidate[0] > held[0] || (candidate[0] === held[0] && candidate[1] > held[1]);
+
+/**
+ * Real rows that survive supersede-in-aggregation (SPEC 9.7): per slot, the rows whose rank equals the slot maximum.
+ * A later attempt or a comparable row supersedes the rest; rows sharing the maximal rank all survive, so an
+ * intra-attempt duplicate stays an over-count. Applied before partitioning, so a partition may hold >1 attempt.
+ */
+export function survivingTrajectoryRuns(runs: TrajectoryRun[]): TrajectoryRun[] {
+  const real = realTrajectoryRuns(runs);
+  const best = new Map<string, [number, string]>();
+  for (const run of real) {
+    const slot = trajectorySlotKey(run);
+    const rank = supersedeRank(run);
+    const held = best.get(slot);
+    if (held === undefined || outranks(rank, held)) best.set(slot, rank);
+  }
+  return real.filter((run) => !outranks(best.get(trajectorySlotKey(run)) as [number, string], supersedeRank(run)));
+}
+
+/** Real rows excluded by supersede; the report prints this count so an excluded row stays visible in the file. */
+export const supersededTrajectoryCount = (runs: TrajectoryRun[]): number =>
+  realTrajectoryRuns(runs).length - survivingTrajectoryRuns(runs).length;
 
 export interface TrajectoryPartition { promptHash: string; requestedModel: string; resolvedModel: string | null; invocation: string }
 

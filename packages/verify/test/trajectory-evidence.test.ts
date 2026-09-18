@@ -59,7 +59,7 @@ const section = (promptHash: string, cost: string, extraDiag: string[] = []): st
   ...extraDiag, "",
   "Total input is inputTokens + cacheCreation + cacheRead, summed over the turns of a run.",
 ].join("\n");
-const report = ["# tokenloom trajectory", "", "Total real cost: 2.40", "", section(HASH, "0.10"), ""].join("\n");
+const report = ["# tokenloom trajectory", "", "Total real cost: 2.40", "Superseded rows: 0", "", section(HASH, "0.10"), ""].join("\n");
 const claimOf = (condition: string, hash: string): string => `adopted: ${condition} @${hash.slice(0, 12)}`;
 
 function fixture(name: string, runLines: string[], body: string | null, trackManifest = true): VerifyContext {
@@ -134,7 +134,7 @@ describe("trajectory evidence", () => {
     const format = rows.map((line) => JSON.stringify({ ...JSON.parse(line), promptHash: FORMAT_HASH, costUsd: 0.15 }));
     const compact = format.filter((line) => line.includes('"condition":"cli-agent"'))
       .map((line) => JSON.stringify({ ...JSON.parse(line), condition: "cli-agent-compact", costUsd: 0.4 }));
-    const both = ["# tokenloom trajectory", "", "Total real cost: 9.20", "", section(HASH, "0.10"), "",
+    const both = ["# tokenloom trajectory", "", "Total real cost: 9.20", "Superseded rows: 0", "", section(HASH, "0.10"), "",
       section(FORMAT_HASH, "0.15", [diagRow("cli-agent-compact", "no", "80", "0.40")]), ""].join("\n");
 
     expect(trajectoryEvidence(fixture("superset", [...rows, ...format, ...compact], both))).toMatchObject({
@@ -198,7 +198,7 @@ describe("trajectory evidence", () => {
     const lowReduction = rows.map((line) => line.includes('"condition":"cli-agent"')
       ? line.replace('"inputTokens":80', '"inputTokens":90') : line);
     const format = rows.map((line) => JSON.stringify({ ...JSON.parse(line), promptHash: FORMAT_HASH }));
-    const body = (claim: string): string => ["# tokenloom trajectory", "", "Total real cost: 4.80", "",
+    const body = (claim: string): string => ["# tokenloom trajectory", "", "Total real cost: 4.80", "Superseded rows: 0", "",
       section(HASH, "0.10").replace("| 80 | 10", "| 90 | 10"), "", section(FORMAT_HASH, "0.10"), claim, ""].join("\n");
     const runLines = [...lowReduction, ...format];
 
@@ -279,7 +279,7 @@ describe("trajectory evidence", () => {
   it("accepts a run record recorded under the cli-agent-compact condition", () => {
     const compactRows = rows.filter((line) => line.includes('"condition":"cli-agent"'))
       .map((line) => JSON.stringify({ ...JSON.parse(line), condition: "cli-agent-compact" }));
-    const body = ["# tokenloom trajectory", "", "Total real cost: 3.20", "",
+    const body = ["# tokenloom trajectory", "", "Total real cost: 3.20", "Superseded rows: 0", "",
       section(HASH, "0.10", [diagRow("cli-agent-compact", "no", "80", "0.10")]), ""].join("\n");
 
     expect(trajectoryEvidence(fixture("compact", [...rows, ...compactRows], body)).errors).toEqual([]);
@@ -305,7 +305,7 @@ describe("trajectory evidence", () => {
       ...JSON.parse(line), task: "known-component", repeat: Math.floor(i / 6) * 2 + i % 2 }));
     const singleDiag = (condition: string, input: string): string =>
       `| ${condition} | yes | 8 | 0 | 6 | ${input} | 10 | 20 | 2 | 0 | 0 | 0.10 | 1.00 | 0.98 | n/a | n/a |`;
-    const body = ["# tokenloom trajectory", "", "Total real cost: 2.40", "",
+    const body = ["# tokenloom trajectory", "", "Total real cost: 2.40", "Superseded rows: 0", "",
       `## prompt ${HASH} / model opus / resolved n/a / invocation claude`, "",
       "### Task success by condition (raw counts)", "",
       primaryHeader, sep(4),
@@ -364,5 +364,29 @@ describe("trajectory evidence", () => {
     const evidence = trajectoryEvidence(fixture("no-records", [], null));
 
     expect(evidence).toEqual({ errors: [], trajectoryCriteria: "trajectory criteria: not evaluated (no records)" });
+  });
+
+  /** SPEC 9.7: a later comparable retry supersedes the earlier aborted errored row of the same slot before aggregation. */
+  const RETRY = "2026-09-18T00:00:00.000Z";
+  const abortedSlot = '"task":"known-component","condition":"cli-agent","repeat":1';
+  const retried = rows.map((line) => JSON.stringify({ ...JSON.parse(line), attemptId: RETRY }));
+  const legacyErrored = JSON.stringify({
+    ...JSON.parse(rows.find((line) => line.includes(abortedSlot)) as string),
+    incomparable: true, success: false, costUsd: null,
+  });
+  const supersedeRecords = [...retried, legacyErrored];
+  const supersedeReport = ["# tokenloom trajectory", "", "Total real cost: 2.40", "Superseded rows: 1", "",
+    section(HASH, "0.10"), ""].join("\n");
+
+  it("accepts a report whose superseded aborted row is excluded from every table and the total", () => {
+    expect(trajectoryEvidence(fixture("supersede-accept", supersedeRecords, supersedeReport)).errors).toEqual([]);
+  });
+
+  it("rejects a report that leaves a superseded aborted row in the aggregation", () => {
+    const notApplied = supersedeReport.replace("Superseded rows: 1", "Superseded rows: 0");
+
+    expect(trajectoryEvidence(fixture("supersede-reject", supersedeRecords, notApplied)).errors).toEqual([
+      "trajectory report measurements disagree: Superseded rows: 0",
+    ]);
   });
 });

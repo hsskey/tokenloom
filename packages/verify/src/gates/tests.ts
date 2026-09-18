@@ -185,7 +185,7 @@ type TrajectoryRow = Record<string, unknown> & { condition: string; task: string
   cacheCreation: number; cacheRead: number; outputTokens: number; costUsd: number | null; s1: number | null; s2: number | null;
   artifact: Record<string, unknown> | null; toolCalls: unknown[]; recovery: unknown[];
   requestedModel?: string; resolvedModel?: string | null; coverageStatus?: string; coverage?: { variantRecall: number } | null;
-  s3?: number | null };
+  s3?: number | null; attemptId?: string };
 const TASKS = ["known-component", "unknown-component", "variant-only", "recovery"];
 /** Adoption compares the three; a record may also carry the concluded `cli-agent-compact` of docs/reference/spec.md 4.14. */
 const CONDITIONS = ["cli-canonical", "cli-agent", "mcp-agent"], RECORD_CONDITIONS = [...CONDITIONS, "cli-agent-compact"], REPEATS = 2;
@@ -206,6 +206,20 @@ const partitionOf = (r: TrajectoryRow): Partition => ({
   promptHash: r.promptHash, requestedModel: requestedModelOf(r), resolvedModel: resolvedModelOf(r), invocation: r.invocation,
 });
 const key = (r: TrajectoryRow): string => JSON.stringify(partitionOf(r));
+/** Supersede slot (SPEC 9.7), recomputed independently of the producer; resolvedModel is the outcome, not the request. */
+const slotKey = (r: TrajectoryRow): string =>
+  JSON.stringify([r.promptHash, requestedModelOf(r), r.invocation, r.task, r.condition, r.repeat]);
+const supersedeRank = (r: TrajectoryRow): [number, string] => [r.incomparable === true ? 0 : 1, r.attemptId ?? ""];
+const outranks = (a: [number, string], b: [number, string]): boolean => a[0] > b[0] || (a[0] === b[0] && a[1] > b[1]);
+/** Per slot, keep the rows whose rank equals the maximum; a later attempt or comparable row supersedes the rest. */
+const survivorsOf = (rows: TrajectoryRow[]): TrajectoryRow[] => {
+  const best = new Map<string, [number, string]>();
+  for (const r of rows) {
+    const slot = slotKey(r), rank = supersedeRank(r), held = best.get(slot);
+    if (held === undefined || outranks(rank, held)) best.set(slot, rank);
+  }
+  return rows.filter((r) => !outranks(best.get(slotKey(r)) as [number, string], supersedeRank(r)));
+};
 const sumCost = (rs: TrajectoryRow[]): number | null => rs.some((r) => r.costUsd === null) ? null
   : rs.reduce((n, r) => n + (r.costUsd ?? 0), 0);
 /** One (task, condition) cell of the primary matrix, recomputed independently of the report producer. */
@@ -252,8 +266,10 @@ export function trajectoryEvidence(ctx: VerifyContext): { errors: string[]; traj
   if (!rows.every(validRow)) return unevaluated("invalid trajectory run record");
   if (!ctx.files.includes(REPORT_PATH)) return unevaluated(`report missing: ${REPORT_PATH}`);
   const lines = read(ctx, REPORT_PATH).split("\n"), lock = git(ctx, ["log", "-1", "--format=%H", "--", "samples/manifest.json"]).trim();
-  const byKey = new Map(rows.map((r) => [key(r), partitionOf(r)]));
-  const partitions = [...byKey.values()], groups = [...byKey.keys()].map((k) => rows.filter((r) => key(r) === k));
+  // Supersede before partitioning (SPEC 9.7); every table and total below is over survivors, superseded is the excluded count.
+  const survivors = survivorsOf(rows), superseded = rows.length - survivors.length;
+  const byKey = new Map(survivors.map((r) => [key(r), partitionOf(r)]));
+  const partitions = [...byKey.values()], groups = [...byKey.keys()].map((k) => survivors.filter((r) => key(r) === k));
   const summarize = (group: TrajectoryRow[], condition: string) => {
     const all = group.filter((r) => r.condition === condition), good = all.filter((r) => r.incomparable !== true);
     const at = (get: (r: TrajectoryRow) => number | null) => median(good.map(get).filter((v): v is number => v !== null));
@@ -275,13 +291,13 @@ export function trajectoryEvidence(ctx: VerifyContext): { errors: string[]; traj
     return `| ${[s.condition, s.primary ? "yes" : "no", s.runs, s.incomparable, s.missing, shown(s.input), shown(s.output),
       shown(s.duration), shown(s.turns), s.calls, s.recoveries, shown(s.cost, 2), shown(s.s1, 2), shown(s.s2, 2),
       shown(s.coverage, 2), shown(s.s3, 2)].join(" | ")} |`; });
-  const isRequired = (r: TrajectoryRow): boolean => CONDITIONS.includes(r.condition) && r.repeat < REPEATS, total = sumCost(rows);
-  const excludedCost = sumCost(rows.filter((r) => !isRequired(r))), requiredCost = groups.map((g) => sumCost(g.filter(isRequired)));
+  const isRequired = (r: TrajectoryRow): boolean => CONDITIONS.includes(r.condition) && r.repeat < REPEATS, total = sumCost(survivors);
+  const excludedCost = sumCost(survivors.filter((r) => !isRequired(r))), requiredCost = groups.map((g) => sumCost(g.filter(isRequired)));
   const header = (p: Partition): string =>
     `## prompt ${p.promptHash} / model ${p.requestedModel} / resolved ${p.resolvedModel ?? "n/a"} / invocation ${p.invocation}`;
-  const expected = [`Total real cost: ${shown(total, 2)}`,
+  const expected = [`Total real cost: ${shown(total, 2)}`, `Superseded rows: ${superseded}`,
     ...partitions.flatMap((p, i) => [header(p), ...primaryTable(groups[i] ?? []), ...diagnosticTable(groups[i] ?? [])])];
-  const actual = lines.filter((line) => /^Total real cost:|^## prompt /.test(line)
+  const actual = lines.filter((line) => /^Total real cost:|^Superseded rows:|^## prompt /.test(line)
     || (/^\| /.test(line) && !/^\| ---|^\| Task |^\| Condition /.test(line)));
   const disagreeing = lines.find((line) => line.match(NUMBER) !== null && !actual.includes(line) && !CLAIM.test(line))
     ?? actual.find((line, i) => line !== expected[i]) ?? expected[actual.length];
