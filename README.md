@@ -103,9 +103,9 @@ and configuration always produce the same output.
 
 ## Responsibilities
 
-- **Figma plugin** — exports the currently open Figma page as a snapshot.
-- **tokenloom** — reads the snapshot and produces component context and design tokens.
-- **coding agent** — uses that design information with the existing project to implement the component.
+- **Figma plugin** - exports the currently open Figma page as a snapshot.
+- **tokenloom** - reads the snapshot and produces component context and design tokens.
+- **coding agent** - uses that design information with the existing project to implement the component.
 
 tokenloom is not a `.fig` file parser or a general-purpose UI code generator, and it does not send the
 complete Figma file to an LLM.
@@ -122,9 +122,9 @@ model calls, which require an explicit budget. See
 
 ## Documentation
 
-- [`docs/reference/spec.md`](./docs/reference/spec.md) — CLI and data contracts
-- [`docs/architecture.md`](./docs/architecture.md) — module boundaries and data flow
-- [`docs/adr/`](./docs/adr/) — major design decisions
+- [`docs/reference/spec.md`](./docs/reference/spec.md) - CLI and data contracts
+- [`docs/architecture.md`](./docs/architecture.md) - module boundaries and data flow
+- [`docs/adr/`](./docs/adr/) - major design decisions
 
 ## License
 

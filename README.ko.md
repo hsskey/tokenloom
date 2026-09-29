@@ -103,9 +103,9 @@ DTCG token document, CSS custom properties, Swift와 Kotlin source를 만듭니�
 
 ## 역할 구분
 
-- **Figma plugin** — 현재 열려 있는 Figma 페이지를 snapshot으로 export합니다.
-- **tokenloom** — snapshot을 읽고 컴포넌트 맥락과 디자인 토큰을 만듭니다.
-- **coding agent** — 그 디자인 정보와 기존 프로젝트 코드를 함께 보고 컴포넌트를 구현합니다.
+- **Figma plugin** - 현재 열려 있는 Figma 페이지를 snapshot으로 export합니다.
+- **tokenloom** - snapshot을 읽고 컴포넌트 맥락과 디자인 토큰을 만듭니다.
+- **coding agent** - 그 디자인 정보와 기존 프로젝트 코드를 함께 보고 컴포넌트를 구현합니다.
 
 tokenloom은 `.fig` 파일 파서나 범용 UI 코드 생성기가 아니며, Figma 파일 전체를 그대로 LLM에 전달하지도
 않습니다.
@@ -121,9 +121,9 @@ tokenloom은 `.fig` 파일 파서나 범용 UI 코드 생성기가 아니며, Fi
 
 ## 문서
 
-- [`docs/reference/spec.md`](./docs/reference/spec.md) — CLI와 데이터 계약
-- [`docs/architecture.md`](./docs/architecture.md) — 모듈 경계와 데이터 흐름
-- [`docs/adr/`](./docs/adr/) — 주요 설계 결정
+- [`docs/reference/spec.md`](./docs/reference/spec.md) - CLI와 데이터 계약
+- [`docs/architecture.md`](./docs/architecture.md) - 모듈 경계와 데이터 흐름
+- [`docs/adr/`](./docs/adr/) - 주요 설계 결정
 
 ## License
 
