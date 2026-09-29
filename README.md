@@ -7,7 +7,7 @@
   <a href="./LICENSE"
     ><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue?style=flat-square"
   /></a>
-  <img alt="Node >= 22" src="https://img.shields.io/badge/node-%3E%3D22-blue?style=flat-square" />
+  <img alt="Node &gt;= 22" src="https://img.shields.io/badge/node-%3E%3D22-blue?style=flat-square" />
 </p>
 
 <h3 align="center">Give a coding agent only the Figma context it needs to build a component.</h3>
