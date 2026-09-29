@@ -49,7 +49,7 @@ Common flags
   --strict                   Exit 2 when warnings exist.
 
 Exit codes
-  0 success   1 usage or fatal error   2 --strict warning   3 network or budget failure   4 reference mismatch
+  0 success   1 usage or fatal error   2 --strict warning   3 network or budget failure   4 reference-output mismatch
 
 Examples
   tokenloom context Button --from samples/button/snapshot.json --view agent --json
