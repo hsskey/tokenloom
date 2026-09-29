@@ -4,6 +4,7 @@ export * from "./agent-context";
 export * from "./agent-query";
 export * from "./run";
 export * from "./verify";
+export * from "./shard";
 export * from "./stable";
 export * from "./names";
 export * from "./pool";

@@ -26,3 +26,6 @@ export type VerifyReportT = z.infer<typeof VerifyReport>;
 
 /** Every gate runs on every verification; the list also fixes the order gates are reported in. */
 export const ALL_GATES: GateIdT[] = GateId.options;
+
+/** The gates a host process runs directly. The self-test gate is excluded because it re-runs the others. */
+export const HOST_GATES: GateIdT[] = ALL_GATES.filter((g) => g !== "selftest");

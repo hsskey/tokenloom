@@ -3,6 +3,7 @@
 This document defines the verification harness.
 `pnpm verify` runs every gate and writes `verify/verify-<utc>.json`.
 `pnpm verify --gate <name>[,<name>]` runs a subset for diagnosis.
+Section 13 describes a non-authoritative shard experiment that never replaces a complete run.
 Only an explicit maintainer decision changes a gate contract.
 When a gate appears incorrect, stop the work it covers and take an exact reproduction to a maintainer rather than weakening the gate.
 
@@ -454,3 +455,35 @@ Agent용 짧은 delta path는 Variant-heavy sample에서 Agent JSON의 RFC6901 �
 
 dependency allowlist는 9절이 소유한다.
 새 dependency가 꼭 필요하면 maintainer 승인을 먼저 받는다.
+
+## 13. Non-authoritative shard experiment
+
+`.github/workflows/verify-shard.yml` measures whether splitting the self-test across runners shortens complete-feedback time.
+It runs only on manual dispatch and gates nothing.
+Only a complete `pnpm verify` run covers the whole contract, and the `full` job in `verify.yml` remains the verification of record.
+
+| Command | Output on stdout | Scope |
+|---|---|---|
+| `pnpm verify --gate host` | Gate results keyed by gate | Every gate except `selftest`, with benchmarks last |
+| `TOKENLOOM_SELFTEST_SHARD=<i>/<n> pnpm verify --shard-fragment` | A `shard-fragment` record | A clean baseline of every host gate, then each sample whose sorted position mod `n` equals `i` |
+| `pnpm verify --aggregate <dir> --shards <n>` | A `shard-aggregate` record | The fail-closed merge of the host record and `n` fragments |
+
+A fragment runs its samples through the same reachability and expectation rules as the self-test gate, and runs benchmark gates one copy at a time within the shard.
+Only `--shard-fragment` reads `TOKENLOOM_SELFTEST_SHARD`: it refuses to run without the variable and rejects a malformed or out-of-range value.
+The self-test gate never reads it, so `pnpm verify` always runs every sample.
+Fragments and aggregates record the full `git rev-parse HEAD` revision, `GITHUB_RUN_ID`, and `GITHUB_RUN_ATTEMPT`, and neither is a `verify.json` record.
+
+The aggregate is green only when all of the following hold:
+
+- Both producer jobs concluded `success`.
+- Every fragment is present, parses, and declares its own shard index and the expected shard count.
+- Every fragment carries the aggregate's revision, run, and attempt, so a partial rerun that mixes attempts is red.
+- Every shard's clean copy passed every host gate.
+- The fragments cover each sample at the revision exactly once, with at least one sample per host gate.
+- Every sample is as expected and ran exactly the gates its overlay reaches at the revision.
+- Every host gate result is present and passes.
+
+The aggregate's `authoritative` field is always `false`.
+It does not judge the section 2 duration limit, because no single process spans the experiment; each fragment records its own `timing` instead.
+Read a red, skipped, cancelled, or missing aggregate as a failed experiment run.
+Unit tests cover the merge rules; only a dispatched run shows how GitHub schedules and concludes the jobs.

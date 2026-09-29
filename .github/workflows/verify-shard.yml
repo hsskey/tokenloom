@@ -1,0 +1,94 @@
+# Non-authoritative shard experiment for the verifier self-test. It runs only on manual dispatch and
+# gates nothing: the `full` job in verify.yml stays the complete verification, and only a complete
+# `pnpm verify` run covers the whole contract (docs/reference/verification.md section 13).
+#
+# - `host` runs the twelve host gates once.
+# - `shard` runs a clean baseline plus every SHARD_COUNT-th self-test sample, one job per matrix entry.
+# - `aggregate` merges the records fail-closed. A red, skipped, cancelled, or missing aggregate means
+#   the experiment run failed.
+name: verify-shard
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  # Must equal the number of `shard` matrix entries.
+  SHARD_COUNT: 4
+
+jobs:
+  host:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The scoring gate resolves reference-lock provenance from history.
+          fetch-depth: 0
+      - run: corepack enable
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - run: pnpm --silent verify --gate host > record.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: verify-shard-host
+          path: record.json
+
+  shard:
+    strategy:
+      fail-fast: false
+      matrix:
+        index: [0, 1, 2, 3]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: corepack enable
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - run: pnpm --silent verify --shard-fragment > record.json
+        env:
+          TOKENLOOM_SELFTEST_SHARD: ${{ matrix.index }}/${{ env.SHARD_COUNT }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: verify-shard-${{ matrix.index }}-of-${{ env.SHARD_COUNT }}
+          path: record.json
+
+  aggregate:
+    needs: [host, shard]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: corepack enable
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - uses: actions/download-artifact@v4
+        with:
+          path: shard-artifacts
+      # Runs even when the download fails, so the record names every absent input.
+      - if: always()
+        run: pnpm --silent verify --aggregate shard-artifacts --shards ${{ env.SHARD_COUNT }} > record.json
+        env:
+          TOKENLOOM_SHARD_HOST_RESULT: ${{ needs.host.result }}
+          TOKENLOOM_SHARD_FRAGMENTS_RESULT: ${{ needs.shard.result }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: verify-shard-aggregate
+          path: record.json
