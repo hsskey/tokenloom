@@ -9,8 +9,21 @@ import { cmdEvalCapture } from "./cmd-capture";
 import { cmdEvalTrajectory } from "./cmd-trajectory";
 import { cmdInit } from "./cmd-init";
 
-const USAGE = `tokenloom <command>
+// Replaced at build time (scripts/build.ts) with apps/cli/package.json version; undefined when run from source.
+declare const __TOKENLOOM_VERSION__: string | undefined;
+const VERSION = typeof __TOKENLOOM_VERSION__ === "string" ? __TOKENLOOM_VERSION__ : "0.0.0-dev";
 
+const HELP = `tokenloom v${VERSION} - deterministic design tokens and context from a Figma export
+
+Turn a Figma page export into design tokens (CSS, Swift, Kotlin) and a compact, deterministic
+design context for one component, so it can be implemented without reading the raw export by hand.
+
+Usage
+  tokenloom <command> [options]
+  tokenloom help | -h | --help          Show this help.
+  tokenloom -v | --version              Print the version.
+
+Commands
   tokens build --from <a.json[,b.json]> [--out dist/tokens] [--platform css] [--strict] [--json]
   context <componentName> [--node <id>] --from <a.json[,b.json]> [--level compact|full]
           [--view canonical|agent] [--variant=<key=value,...>] [--annotations] [--json] [--strict]
@@ -29,6 +42,20 @@ const USAGE = `tokenloom <command>
   budget       [--json]
   samples refresh --file <fileKey> --only <name>
   samples diff    --only <name> [--against <snapshot.json>] [--json]
+
+Common flags
+  --from <a.json[,b.json]>   Read Snapshot or plugin-export files instead of the cache.
+  --json                     Write only JSON to stdout; logs always go to stderr.
+  --strict                   Exit 2 when warnings exist.
+
+Exit codes
+  0 success   1 usage or fatal error   2 --strict warning   3 network or budget failure   4 reference mismatch
+
+Examples
+  tokenloom context Button --from samples/button/snapshot.json --view agent --json
+  tokenloom context --from samples/button/snapshot.json --view agent --match But
+  tokenloom tokens build --from samples/button/snapshot.json --out dist/tokens --platform css
+  tokenloom doctor --from samples/button/snapshot.json --json
 `;
 
 export async function run(argv: string[]): Promise<number> {
@@ -37,13 +64,17 @@ export async function run(argv: string[]): Promise<number> {
   if (parsed.unknownOptions.length > 0) {
     return usageError(`unknown option --${parsed.unknownOptions.sort().join(", --")}`);
   }
-  // An explicit --help is a successful request, so it answers on stdout and can be piped or saved.
-  if (parsed.flags.help !== undefined) {
-    process.stdout.write(USAGE);
+  // An explicit help request answers on stdout so it can be piped or saved; `help`, -h and --help are equivalent.
+  if (parsed.flags.help !== undefined || command === "help") {
+    process.stdout.write(HELP);
+    return EXIT.ok;
+  }
+  if (parsed.flags.version !== undefined) {
+    process.stdout.write(`${VERSION}\n`);
     return EXIT.ok;
   }
   if (command === undefined) {
-    process.stderr.write(USAGE);
+    process.stderr.write(HELP);
     return EXIT.fatal;
   }
   if (command === "tokens" && sub === "build") return cmdTokensBuild(parsed);

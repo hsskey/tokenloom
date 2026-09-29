@@ -23,7 +23,7 @@ this project is not installed from a registry, and no other build is known to be
 If the line above still reads as a literal placeholder, stop and ask the user to re-run `tokenloom init`;
 guessing a command would either fail or silently run a different version.
 
-There is no `--version` command, and an unrecognized option is rejected before anything is loaded.
+Run `{{TOKENLOOM_COMMAND}} help` (or `-h`/`--help`) for the command list, and `--version` (or `-v`) for the build version. An unrecognized option is still rejected before anything is loaded.
 
 ## Resolving the input path
 

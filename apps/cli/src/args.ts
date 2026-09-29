@@ -10,10 +10,13 @@ export interface Parsed {
 const KNOWN_OPTIONS = new Set([
   "against", "annotations", "budget-usd", "dry-run", "expect-exporter", "expect-sets", "file", "file-key",
   "from", "help", "input", "into", "json", "level", "match", "matrix", "node", "only", "out", "parallel",
-  "plan", "platform", "project", "prompt-hash", "sets", "since", "strict", "update", "variant", "view",
+  "plan", "platform", "project", "prompt-hash", "sets", "since", "strict", "update", "variant", "version", "view",
 ]);
 
-/** Accept --key value, --key=value, --flag, and the standard -- positional separator. */
+/** Single-dash aliases for the two root flags; other short tokens stay positional. */
+const SHORT_FLAGS: Record<string, string> = { "-h": "help", "-v": "version" };
+
+/** Accept --key value, --key=value, --flag, -h/-v, and the standard -- positional separator. */
 export function parseArgs(argv: string[]): Parsed {
   const positional: string[] = [];
   const flags: Record<string, string | true> = {};
@@ -23,6 +26,11 @@ export function parseArgs(argv: string[]): Parsed {
     const token = argv[i] as string;
     if (options && token === "--") {
       options = false;
+      continue;
+    }
+    const short = options ? SHORT_FLAGS[token] : undefined;
+    if (short !== undefined) {
+      flags[short] = true;
       continue;
     }
     if (!options || !token.startsWith("--")) {

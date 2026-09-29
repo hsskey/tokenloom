@@ -52,38 +52,75 @@ describe("design context CLI reference output (black box)", () => {
     expect(result.stdout).toContain("context <componentName>");
   });
 
-  it("--help without a command succeeds and writes usage to stdout", () => {
+  it("--help without a command succeeds and writes the versioned help header to stdout", () => {
     const result = run("--help", []);
 
-    expect({ status: result.status, stdout: result.stdout.split("\n")[0] })
-      .toEqual({ status: 0, stdout: "tokenloom <command>" });
+    expect({ status: result.status, header: /^tokenloom v\d+\.\d+\.\d+/.test(result.stdout.split("\n")[0] ?? "") })
+      .toEqual({ status: 0, header: true });
   });
 
   it("A11: CLI help advertises only the path-neutral option set", () => {
     const topLevel = run("--help", []);
     const context = run("context", ["--help"]);
     const options = [...new Set(topLevel.stdout.match(/--[a-z][a-z-]*/g) ?? [])].sort();
+    const contextShape = [
+      "  context <componentName> [--node <id>] --from <a.json[,b.json]> [--level compact|full]",
+      "          [--view canonical|agent] [--variant=<key=value,...>] [--annotations] [--json] [--strict]",
+      "  context --from <a.json[,b.json]> --view agent [--match <text>]",
+    ];
 
     expect({
       statuses: [topLevel.status, context.status],
       sameUsage: context.stdout === topLevel.stdout,
-      contextUsage: topLevel.stdout.split("\n").slice(3, 6),
+      documentsContextShape: contextShape.every((line) => topLevel.stdout.includes(line)),
       options,
     }).toEqual({
       statuses: [0, 0],
       sameUsage: true,
-      contextUsage: [
-        "  context <componentName> [--node <id>] --from <a.json[,b.json]> [--level compact|full]",
-        "          [--view canonical|agent] [--variant=<key=value,...>] [--annotations] [--json] [--strict]",
-        "  context --from <a.json[,b.json]> --view agent [--match <text>]",
-      ],
+      documentsContextShape: true,
       options: [
         "--against", "--annotations", "--budget-usd", "--dry-run", "--expect-exporter", "--file",
-        "--file-key", "--from", "--input", "--into", "--json", "--level", "--match", "--matrix",
+        "--file-key", "--from", "--help", "--input", "--into", "--json", "--level", "--match", "--matrix",
         "--node", "--only", "--out", "--parallel", "--plan", "--platform", "--project", "--sets",
-        "--since", "--strict", "--update", "--variant", "--view",
+        "--since", "--strict", "--update", "--variant", "--version", "--view",
       ],
     });
+  });
+
+  it("the -h flag and the help command print the same stdout help as --help", () => {
+    const long = run("--help", []);
+    const short = run("-h", []);
+    const positional = run("help", []);
+
+    expect({
+      short: { status: short.status, sameAsLong: short.stdout === long.stdout, stderr: short.stderr },
+      positional: { status: positional.status, sameAsLong: positional.stdout === long.stdout, stderr: positional.stderr },
+    }).toEqual({
+      short: { status: 0, sameAsLong: true, stderr: "" },
+      positional: { status: 0, sameAsLong: true, stderr: "" },
+    });
+  });
+
+  it("--version and -v print the packaged CLI version on stdout", () => {
+    const manifest = JSON.parse(readFileSync(resolve(root, "apps/cli/package.json"), "utf8")) as { version: string };
+    const long = run("--version", []);
+    const short = run("-v", []);
+
+    expect({
+      long: { status: long.status, stdout: long.stdout, stderr: long.stderr },
+      short: { status: short.status, stdout: short.stdout, stderr: short.stderr },
+    }).toEqual({
+      long: { status: 0, stdout: `${manifest.version}\n`, stderr: "" },
+      short: { status: 0, stdout: `${manifest.version}\n`, stderr: "" },
+    });
+  });
+
+  it("a bare invocation prints the help on stderr and exits 1", () => {
+    const bare = spawnSync(process.execPath, [cli], { cwd: root, encoding: "utf8" });
+    const help = run("--help", []);
+
+    expect({ status: bare.status, stdout: bare.stdout, stderrIsHelp: bare.stderr === help.stdout })
+      .toEqual({ status: 1, stdout: "", stderrIsHelp: true });
   });
 
   it("A11: Agent output keeps delta paths in RFC 6901 spelling", () => {

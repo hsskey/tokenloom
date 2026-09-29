@@ -57,6 +57,21 @@ describe("shared CLI argument parsing", () => {
     });
   });
 
+  it.each([
+    { name: "-h", argv: ["-h"], expected: { positional: [], flags: { help: true }, unknownOptions: [] } },
+    { name: "-v", argv: ["-v"], expected: { positional: [], flags: { version: true }, unknownOptions: [] } },
+  ])("maps the root short flag $name to its long option", ({ argv, expected }) => {
+    expect(parseArgs(argv)).toEqual(expected);
+  });
+
+  it("keeps a short flag after the separator as positional data", () => {
+    expect(parseArgs(["context", "--", "-h"])).toEqual({
+      positional: ["context", "-h"],
+      flags: {},
+      unknownOptions: [],
+    });
+  });
+
   it("reports an unknown option before the separator through the command boundary", () => {
     const result = spawnSync(process.execPath, [cli, "context", "Button", "--unknown=value"], {
       cwd: root, encoding: "utf8",
