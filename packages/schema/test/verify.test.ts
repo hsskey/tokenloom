@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ALL_GATES, GateId } from "../src/verify";
+import { ALL_GATES, GateId, HOST_GATES } from "../src/verify";
 
 describe("verification gate identifiers", () => {
   it("names every gate for the property it protects", () => {
@@ -15,5 +15,12 @@ describe("verification gate identifiers", () => {
 
   it("reports every declared gate, so none can be silently dropped from a run", () => {
     expect(ALL_GATES).toEqual(GateId.options);
+  });
+
+  it("lists every gate except the self-test as a host gate, in report order", () => {
+    expect(HOST_GATES).toEqual([
+      "types", "patterns", "tests", "reference", "determinism", "properties", "mutations",
+      "rules", "benchmarks", "scope", "scoring", "encoding",
+    ]);
   });
 });

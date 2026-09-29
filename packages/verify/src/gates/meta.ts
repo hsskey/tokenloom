@@ -3,7 +3,7 @@ import { cpSync, existsSync, lstatSync, mkdirSync, readFileSync, readdirSync, rm
 import { tmpdir } from "node:os";
 import { join, normalize } from "node:path";
 import type { GateIdT, GateResultT } from "@tokenloom/schema";
-import { ALL_GATES, pool } from "@tokenloom/schema";
+import { ALL_GATES, HOST_GATES, pool } from "@tokenloom/schema";
 import { spawn, spawnSync } from "node:child_process";
 import { fail, ok, type VerifyContext } from "../verify-context";
 
@@ -266,14 +266,26 @@ export function scopeSamples(samples: Sample[], gates: GateIdT[]): ScopedSamples
   return { run: samples, coverage, coverageWarnings: gates.filter((g) => coverage[g] === 0) };
 }
 
-export async function selftest(ctx: VerifyContext): Promise<GateResultT> {
-  const required: GateIdT[] = ALL_GATES.filter((g) => g !== "selftest");
-  const samples = listSamples(ctx.root).filter((s) => required.includes(s.gate));
-  const missing = required.filter((g) => !samples.some((s) => s.gate === g));
-  if (samples.length === 0) return fail("no selftest samples", { samples: 0, asExpected: 0 });
-  if (missing.length > 0) return fail(`no selftest sample for ${missing.join(",")}`, { samples: samples.length, missing });
-  const scoped = scopeSamples(samples, required);
+/** Samples whose owner is a host gate, in the sorted order `listSamples` returns. */
+export function selftestSamples(root: string): Sample[] {
+  return listSamples(root).filter((s) => HOST_GATES.includes(s.gate));
+}
 
+export interface CopyRun {
+  baseline: Record<string, GateResultT>;
+  baselineFails: GateIdT[];
+  /** Stage marks for `selftestTiming`: three when the clean baseline fails, six otherwise. */
+  marks: number[];
+  prepared: Array<{ sample: Sample; skipped: GateSkip[] }>;
+  cases: MetaCase[];
+}
+
+/**
+ * Runs every required gate on a clean copy, then each given sample in its own copy. Samples run only
+ * after the clean copy passes, because a failing baseline would make every sample verdict meaningless.
+ */
+export async function runSampleCopies(ctx: VerifyContext, samples: Sample[]): Promise<CopyRun> {
+  const required = HOST_GATES;
   const workdir = join(tmpdir(), `tl-selftest-${process.pid}`);
   rmSync(workdir, { recursive: true, force: true });
   mkdirSync(workdir, { recursive: true });
@@ -286,14 +298,10 @@ export async function selftest(ctx: VerifyContext): Promise<GateResultT> {
   const baselineGatedAt = Date.now();
   const baselineFails = required.filter((g) => baseline[g]?.pass !== true);
   if (baselineFails.length > 0) {
-    const first = baselineFails[0] as string;
-    return fail(`clean copy fails ${first}: ${String(baseline[first]?.reason ?? "")}`, {
-      samples: samples.length, baselineFails,
-      timing: selftestTiming([startedAt, baselinePreparedAt, baselineGatedAt]), ...selftestConcurrency(),
-    });
+    return { baseline, baselineFails, marks: [startedAt, baselinePreparedAt, baselineGatedAt], prepared: [], cases: [] };
   }
 
-  const prepared = scoped.run.map((sample) => {
+  const prepared = samples.map((sample) => {
     const dest = join(workdir, `${sample.gate}-${sample.name}`);
     prepare(ctx.root, dest, sample);
     const { run, skipped } = sampleReachableGates(sample, required);
@@ -330,19 +338,44 @@ export async function selftest(ctx: VerifyContext): Promise<GateResultT> {
   });
 
   rmSync(workdir, { recursive: true, force: true });
-  const bad = cases.filter((c) => !c.asExpected);
-  const skippedGates = prepared.flatMap(({ sample, skipped }) =>
+  return {
+    baseline, baselineFails,
+    marks: [startedAt, baselinePreparedAt, baselineGatedAt, samplesPreparedAt, parallelGatedAt, serialGatedAt],
+    prepared: prepared.map(({ sample, skipped }) => ({ sample, skipped })),
+    cases,
+  };
+}
+
+export async function selftest(ctx: VerifyContext): Promise<GateResultT> {
+  const required = HOST_GATES;
+  const samples = selftestSamples(ctx.root);
+  const missing = required.filter((g) => !samples.some((s) => s.gate === g));
+  if (samples.length === 0) return fail("no selftest samples", { samples: 0, asExpected: 0 });
+  if (missing.length > 0) return fail(`no selftest sample for ${missing.join(",")}`, { samples: samples.length, missing });
+  const scoped = scopeSamples(samples, required);
+
+  const run = await runSampleCopies(ctx, scoped.run);
+  if (run.baselineFails.length > 0) {
+    const first = run.baselineFails[0] as string;
+    return fail(`clean copy fails ${first}: ${String(run.baseline[first]?.reason ?? "")}`, {
+      samples: samples.length, baselineFails: run.baselineFails,
+      timing: selftestTiming(run.marks), ...selftestConcurrency(),
+    });
+  }
+
+  const bad = run.cases.filter((c) => !c.asExpected);
+  const skippedGates = run.prepared.flatMap(({ sample, skipped }) =>
     skipped.map((row) => ({ sample: `${sample.gate}/${sample.name}`, gate: row.gate, reason: row.reason })));
   const detail = {
-    samples: cases.length,
-    asExpected: cases.length - bad.length,
+    samples: run.cases.length,
+    asExpected: run.cases.length - bad.length,
     failures: bad,
     coverage: scoped.coverage,
     coverageWarnings: scoped.coverageWarnings,
-    notRunByScope: prepared.filter((p) => p.skipped.some((row) => row.gate === "benchmarks"))
+    notRunByScope: run.prepared.filter((p) => p.skipped.some((row) => row.gate === "benchmarks"))
       .map((p) => `${p.sample.gate}/${p.sample.name}`),
     skippedGates,
-    timing: selftestTiming([startedAt, baselinePreparedAt, baselineGatedAt, samplesPreparedAt, parallelGatedAt, serialGatedAt]),
+    timing: selftestTiming(run.marks),
     ...selftestConcurrency(),
   };
   return bad.length === 0 ? ok(detail) : fail(`${bad[0]?.gate}/${bad[0]?.sample}: ${bad[0]?.detail}`, detail);
