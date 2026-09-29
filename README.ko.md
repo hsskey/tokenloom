@@ -10,7 +10,7 @@
   <img alt="Node >= 22" src="https://img.shields.io/badge/node-%3E%3D22-blue?style=flat-square" />
 </p>
 
-<h3 align="center">코딩 에이전트에 컴포넌트 구현에 필요한 Figma 맥락만 전달합니다.</h3>
+<h3 align="center">컴포넌트 구현에 필요한 Figma 맥락만 코딩 에이전트에 전달합니다.</h3>
 
 <p align="center"><a href="./README.md">English</a></p>
 
@@ -36,15 +36,15 @@ snapshot
 - **필요한 맥락만.** 에이전트가 Figma 노드 트리 전체를 훑는 대신, tokenloom이 대상 컴포넌트와 variant를 찾아 그 부분만 전달합니다.
 - **결정적이고 로컬.** 같은 입력과 설정은 항상 같은 출력을 만들며, CLI 경로에서는 model call이 없습니다.
 - **실제 플랫폼용 토큰.** export 하나가 DTCG token document와 CSS custom properties, Swift, Kotlin source가 됩니다.
-- **에이전트 연동.** Claude Code Skill을 통해 에이전트가 구현 중에 직접 컴포넌트 맥락을 조회할 수 있습니다.
+- **에이전트 연동.** Claude Code Skill을 설치하면 에이전트가 구현 중에 직접 컴포넌트 맥락을 조회합니다.
 
 ## Quick Start
 
 Node.js 22 이상이 필요합니다.
 
 Figma 없이 tokenloom을 처음부터 끝까지 실행해 볼 수 있습니다. `samples/` 아래에 sample snapshot이 들어
-있어 `npx`로 배포된 패키지를 바로 돌려볼 수 있습니다. 저장소를 clone한 뒤 루트에서 bundled `Button`
-컴포넌트의 design context를 조회합니다.
+있어 `npx`로 배포된 패키지를 바로 돌려볼 수 있습니다. 저장소를 clone한 뒤 루트에서 sample의 `Button`
+컴포넌트 design context를 조회합니다.
 
 ```sh
 npx @hsskey/tokenloom context Button --from samples/button/snapshot.json --view agent --json
