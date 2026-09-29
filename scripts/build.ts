@@ -1,8 +1,12 @@
 /** Bundles apps/cli into the single executable dist/tokenloom.js (docs/reference/spec.md section 7). */
 import { build } from "esbuild";
+import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 const root = resolve(import.meta.dirname, "..");
+
+// The published version that `--version` reports is the CLI package manifest, embedded at build time.
+const manifest = JSON.parse(readFileSync(resolve(root, "apps/cli/package.json"), "utf8")) as { version: string };
 
 await build({
   entryPoints: [resolve(root, "apps/cli/src/main.ts")],
@@ -11,6 +15,7 @@ await build({
   platform: "node",
   target: "node22",
   format: "esm",
+  define: { __TOKENLOOM_VERSION__: JSON.stringify(manifest.version) },
   // Allows CommonJS dependencies such as yaml to call require inside the ESM bundle.
   banner: {
     js: [

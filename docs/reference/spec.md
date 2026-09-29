@@ -617,6 +617,9 @@ Common flags
 
 Exit codes: 0 success; 1 usage or fatal error; 2 --strict warning; 3 network or budget failure; 4 reference-output mismatch
 
+tokenloom help | -h | --help   Print the command list on stdout and exit 0. A --help anywhere prints it regardless of command; a bare invocation prints it on stderr and exits 1. There is no per-command help expansion.
+tokenloom --version | -v       Print the build-time CLI version on stdout and exit 0.
+
 tokenloom tokens build [--from] [--out dist/tokens] [--platform css,swift,kotlin] [--strict]
   Snapshot → <out>/tokens/{base,mode.*}.json → <out>/{css,swift,kotlin}/...
   --json: { files: [...], tokens: n, warnings: [...] }
